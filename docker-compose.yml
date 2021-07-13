@@ -20,6 +20,6 @@ services:
     env_file:
       - ./database/database.env
     volumes:
-      - ./database/.tmp/db:/var/lib/postgresql/data
+      - ./database/.data_tmp:/var/lib/postgresql/data
       - ./database/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
     
