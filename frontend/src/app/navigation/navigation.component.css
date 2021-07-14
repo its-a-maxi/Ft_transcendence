@@ -1,0 +1,26 @@
+a
+{
+    color: var(--gold) !important;
+    margin-right: 40px;
+}
+
+.navbar
+{
+    /* background-color: var(--black2) !important; */
+    background: linear-gradient(180deg, #30353B 0%, #1A1B1F 100%);
+    border-bottom: 1px solid var(--gray);
+}
+
+.navbar-brand
+{
+    font-size: 40px;
+    
+}
+
+.navbar-collapse
+{
+    justify-content: flex-end;
+    height: 100px;
+    margin-right: 40px;
+    font-size: 24px;
+}

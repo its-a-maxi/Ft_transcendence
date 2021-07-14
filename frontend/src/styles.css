@@ -1,0 +1,23 @@
+@import "~../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+
+:root{
+    --gold: #F4BD76;
+    --gold2: #F6CD8F;
+    --gray: #ffffff80;
+    --gray2: #f7d9d990;
+    --black1: #1A1B1F;
+    --black2: #30353B;
+    --shadow: 0 8px 8px;
+    --color_shadow: #00000033;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--black2);
+}

@@ -1,0 +1,39 @@
+
+
+.container
+{
+    position: relative;
+    width: 100vh;
+    height: 80vh;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: var(--black2);
+    box-shadow: 0px 0px 18px 0px rgba(147, 181, 199, 0.9);
+}
+
+.title
+{
+    position: relative;
+    left: 200px;
+    top: 80px
+}
+
+h1{
+    color: var(--gold);
+}
+
+.btn
+{
+    width: 100px;
+    position: relative;
+    left: 145px;
+    top: -20px;
+    background-color: var(--gold);
+}
+
+img
+{
+    position: relative;
+    top: 200px;
+    left: -65px;
+}
