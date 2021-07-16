@@ -5,5 +5,5 @@ export class LoginDto
 {
     @IsNotEmpty()
     @IsString()
-    username: string;
+    readonly codeUrl: string;
 }

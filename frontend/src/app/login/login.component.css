@@ -1,0 +1,27 @@
+.container
+{
+    position: relative;
+    width: 100vh;
+    height: 80vh;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: var(--black2);
+    box-shadow: 0px 0px 18px 0px rgba(147, 181, 199, 0.9);
+}
+
+.btn
+{
+    position: relative;
+    top: 160px;
+    left: 185px;
+    background-color: var(--gold);
+}
+
+img
+{
+    position: relative;
+    top: 40px;
+    left: 300px;
+    width: 20%;
+    height: 20%;
+}
