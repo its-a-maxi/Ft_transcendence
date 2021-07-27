@@ -1,11 +1,20 @@
-import { Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { LoginDto } from './dto';
 import { enviroment } from "../../enviroment";
 import axios from "axios";
+import { AuthGuard } from '@nestjs/passport';
+import { JwtService } from '@nestjs/jwt';
+import { UsersService } from 'src/users/users.service';
+import { verifyUser } from './strategies/auth.guard';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
-export class AuthController {
+export class AuthController
+{
+    constructor(private jwtService: JwtService,
+                private userService: UsersService,
+                private authService: AuthService) {}
 
     @Get('login')
     login()
@@ -31,30 +40,44 @@ export class AuthController {
         return req.logOut()
     }
 
+    @UseGuards(AuthGuard('oauth'))
     @Get('/callback')
-    async callback(@Req() urlcode, @Res() res: Response)
+    async callback(@Req() req, @Res({passthrough: true}) res: Response)
     {
-        const code = urlcode.query.code
-        const token = await axios.post(`https://api.intra.42.fr/oauth/token?grant_type=authorization_code&client_id=${enviroment.API_UID}&client_secret=${enviroment.SECRET}&code=${code}&redirect_uri=${enviroment.REDIRECT_URL}`)
-        const access_token = token.data.access_token
-        const about_me = await axios.get("https://api.intra.42.fr/v2/me", {
-            headers: {
-                Authorization: `Bearer ${access_token}`
-            }
-        })
-        console.log(about_me.data.login)
-        return res.redirect("http://localhost:4200/home")
-    }
+        res.cookie('clientID', req.user, {httpOnly: true});
+        const client = await this.jwtService.verifyAsync(req.user);
 
-    @Get('/getcode')
-    getcode(@Res() res: Response)
-    {
-        try {
-            return res.redirect(`https://api.intra.42.fr/oauth/authorize?client_id=${enviroment.API_UID}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback&response_type=code`)
-        }catch (err) {
-            console.log(err)
+        const clientData = await this.userService.getUser(client['id']);
+
+        if (!clientData)
+        {
+            return res.redirect("http://localhost:4200/register")
         }
-        
+        else
+            return res.redirect("http://localhost:4200/home")
     }
 
+    @UseGuards(verifyUser)
+    @Get('authUser')
+    authUser(@Req() req: Request)
+    {
+        const clientID = this.authService.clientID(req);
+        return this.userService.getUser(clientID); 
+    }
+
+    @UseGuards(verifyUser)
+    @Post('storeUser')
+    async storeUser(@Req() req: Request, @Body() user: LoginDto)
+    {
+        const clientID = await this.authService.clientID(req);
+        return this.userService.createUser(user, clientID)
+    }
+
+    @UseGuards(verifyUser)
+    @Get('allUsers')
+    async showUsers()
+    {
+        return this.userService.getAllUsers()
+    }
+    
 }

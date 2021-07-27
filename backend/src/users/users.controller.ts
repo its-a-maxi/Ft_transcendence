@@ -22,12 +22,12 @@ export class UsersController {
         return this.userService.getUser(id)
     }
 
-    @Post()
-    @Roles(Role.Admin)
-    createUser(@Body() user: CreateUserDto)
-    {
-        return this.userService.createUser(user)
-    }
+    // @Post()
+    // @Roles(Role.Admin)
+    // createUser(@Body() user: CreateUserDto)
+    // {
+    //     return this.userService.createUser(user)
+    // }
 
     @Put(':id')
     updateUser(@Param('id') id: string, @Body() dto: UpdateUserDto)

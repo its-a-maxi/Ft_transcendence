@@ -3,7 +3,9 @@ import { IsNotEmpty, IsString } from "class-validator";
 
 export class LoginDto
 {
+    id: number;
+
     @IsNotEmpty()
     @IsString()
-    readonly codeUrl: string;
+    nick: string;
 }

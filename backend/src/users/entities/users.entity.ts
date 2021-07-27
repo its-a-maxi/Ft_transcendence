@@ -7,11 +7,6 @@ export class User
     id: number;
 
     @Column()
-    login: string;
+    nick: string;
 
-    @Column()
-    email: string;
-
-    @Column()
-    password: string;
 }

@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { GameComponent } from './game/game.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {path: "home", component: HomeComponent},
   {path: "game", component: GameComponent},
   {path: "login", component: LoginComponent},
+  {path: "register", component: RegisterComponent},
   {path: '', redirectTo: "home", pathMatch: "full"},
   {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];

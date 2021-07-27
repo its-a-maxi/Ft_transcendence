@@ -1,0 +1,15 @@
+<div class="container">
+    <h1>Welcome! Now register</h1>
+    <div class="card">
+        <div class="card-body">
+            <form #FormRegister="ngForm" (ngSubmit)="userRegister(FormRegister)">
+                <div class="form-group">
+                    <label for="Inputnick">Nick</label>
+                    <input type="text" name="nick" class="form-control"
+                            placeholder="Nick" required [(ngModel)] ="authService.selectedUser.nick">
+                    <button type="submit" class="btn">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
