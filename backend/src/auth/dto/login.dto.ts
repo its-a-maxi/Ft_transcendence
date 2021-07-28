@@ -8,4 +8,6 @@ export class LoginDto
     @IsNotEmpty()
     @IsString()
     nick: string;
+
+    avatar: string;
 }

@@ -80,4 +80,32 @@ export class AuthController
         return this.userService.getAllUsers()
     }
     
+    @UseGuards(verifyUser)
+    @Post('logout')
+    async logOut(@Res({passthrough: true}) res: Response)
+    {
+        res.clearCookie('clientID')
+        return {message: "User LogOut!"}
+    }
+
+    @UseGuards(verifyUser)
+    @Post('userID')
+    async userId(@Body() nick: string)
+    {
+        //console.log(nick)
+        let aux: Number = 0;
+        (await this.userService.getAllUsers())
+        .map(res => {
+            if (res.nick === nick)
+            {
+                console.log("dentro")
+                aux = res.id
+            }
+            //console.log(aux)
+            return aux
+            
+        })
+        
+        return aux
+    }
 }

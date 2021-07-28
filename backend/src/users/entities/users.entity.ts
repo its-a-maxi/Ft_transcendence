@@ -9,4 +9,7 @@ export class User
     @Column()
     nick: string;
 
+    @Column()
+    avatar: string;
+
 }

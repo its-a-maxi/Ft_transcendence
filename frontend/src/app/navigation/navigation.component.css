@@ -2,6 +2,8 @@ a
 {
     color: var(--gold) !important;
     margin-right: 40px;
+    cursor: pointer;
+    padding-top: 40px;
 }
 
 .navbar
@@ -23,4 +25,18 @@ a
     height: 100px;
     margin-right: 40px;
     font-size: 24px;
+}
+
+.avatar
+{
+    width: 60px;
+    height: 60px;
+    position: relative;
+    top: 5px;
+    left: 20px;
+}
+
+p
+{
+    color: var(--gold) !important;
 }

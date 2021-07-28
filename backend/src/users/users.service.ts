@@ -24,7 +24,14 @@ export class UsersService {
     {
         user.id = clientID
         user.nick = user.nick
+        user.avatar = 'https://image.api.playstation.com/cdn/EP0102/NPEB00554_00/VdBGeflDDEoAO6W6xoiBP6DXTWIlxll8_160.png?w=960&h=960'
         const newUser = this.usersRepository.create(user)
         return await this.usersRepository.save(newUser)
+    }
+
+    async getUserId(id:number): Promise<number>
+    {
+        const user = await this.usersRepository.findOne(id)
+        return user.id
     }
 }
