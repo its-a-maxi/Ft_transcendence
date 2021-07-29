@@ -15,11 +15,8 @@ export class RegisterComponent implements OnInit {
 
 	ngOnInit(): void
 	{
-		//this.showUsers()
-		if (this.authService.getAuthUser() === undefined)
-			this.router.navigate(['/home'])
-		else
-			this.router.navigate(['/register'])
+		this.authService.getAuthUser()
+			.catch(() => this.router.navigate(['login']))
 
 	}
 
@@ -30,12 +27,6 @@ export class RegisterComponent implements OnInit {
 		form.reset()
 		NavigationComponent.updateUserStatus.next(true)
 		this.router.navigate(['/profile'])
-	}
-
-	showUsers()
-	{
-		this.authService.showAllUsers()
-		.then(res => res.data.map(obj => console.log(obj)))
 	}
 
 }

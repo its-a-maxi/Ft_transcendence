@@ -9,7 +9,7 @@ export class User{
       }
 
     id: Number;
-    nick: String
-    avatar: String;
+    nick: string
+    avatar: string;
 
 }

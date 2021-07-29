@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

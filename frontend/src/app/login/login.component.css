@@ -2,7 +2,8 @@
 {
     position: relative;
     width: 100vh;
-    height: 80vh;
+    height: 50vh;
+    top: 100px;
     margin-top: 20px;
     border-radius: 5px;
     background-color: var(--black2);
@@ -14,14 +15,15 @@
     position: relative;
     top:200px;
     left:210px;
+    padding: 20px;
     background-color: var(--gold);
 }
 
 img
 {
     position: relative;
-    top: 80px;
+    top: 50px;
     left: 350px;
     width: 20%;
-    height: 20%;
+    height: 40%;
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-game',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
+    if (!this.authService.statusLogin())
+      this.router.navigate(['login'])
   }
 
 }

@@ -50,11 +50,9 @@ export class AuthController
         const clientData = await this.userService.getUser(client['id']);
 
         if (!clientData)
-        {
             return res.redirect("http://localhost:4200/register")
-        }
         else
-            return res.redirect("http://localhost:4200/home")
+            return res.redirect("http://localhost:4200/profile")
     }
 
     @UseGuards(verifyUser)
@@ -86,26 +84,5 @@ export class AuthController
     {
         res.clearCookie('clientID')
         return {message: "User LogOut!"}
-    }
-
-    @UseGuards(verifyUser)
-    @Post('userID')
-    async userId(@Body() nick: string)
-    {
-        //console.log(nick)
-        let aux: Number = 0;
-        (await this.userService.getAllUsers())
-        .map(res => {
-            if (res.nick === nick)
-            {
-                console.log("dentro")
-                aux = res.id
-            }
-            //console.log(aux)
-            return aux
-            
-        })
-        
-        return aux
     }
 }

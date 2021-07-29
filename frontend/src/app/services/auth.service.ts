@@ -35,6 +35,9 @@ export class AuthService {
 
 	async logOutUser()
 	{
+		let option = confirm("DO YOU WANT EXIT?")
+		if (!option)
+			return null
 		NavigationComponent.updateUserStatus.next(false)
 		//localStorage.removeItem('clientID')
     	localStorage.removeItem('nick')
@@ -45,12 +48,5 @@ export class AuthService {
 	statusLogin()
 	{
 		return !!localStorage.getItem('nick')
-	}
-
-	getUserID(nick: string | null)
-	{
-
-		return axios.post('http://localhost:3000/auth/userID', nick)
-
 	}
 }

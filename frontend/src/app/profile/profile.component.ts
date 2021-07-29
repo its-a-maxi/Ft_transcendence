@@ -1,5 +1,6 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, DoCheck, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { User } from '../services/models/user';
 
@@ -10,19 +11,25 @@ import { User } from '../services/models/user';
 })
 export class ProfileComponent implements OnInit {
 
-	image: any;
-	nick: string | null = localStorage.getItem('nick')
+	nick: string = ""
 
+	constructor(public authService: AuthService, private router: Router) { }
 
-	constructor(public authService: AuthService) { }
-
-	ngOnInit(): void {
-
-		if (this.authService.getAuthUser() === undefined)
-			this.image = ""
-		if (localStorage.getItem('nick') !== null)
-			this.authService.getUserID(this.nick)
+	ngOnInit(): void
+	{
+		this.authService.getAuthUser()
+			.then(() => this.getNick())
+			.catch(() => this.router.navigate(['login']))
 	}
 
+	getNick()
+	{
+		this.authService.getAuthUser()
+			.then(res => res.data.nick)
+			.then(obj => {
+				this.nick = obj
+				localStorage.setItem('nick', this.nick as string)
+			})
+	}
 
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+	constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void {
-  }
+	ngOnInit(): void
+	{
+		
+		
+	}
 
+	showUsers()
+	{
+		this.authService.showAllUsers()
+		.then(res => res.data.map(obj => console.log(obj)))
+	}
+
+	getPlay()
+	{
+		if (this.authService.statusLogin())
+			this.router.navigate(['/game'])
+		else
+			this.router.navigate(['/login'])
+	}
 }

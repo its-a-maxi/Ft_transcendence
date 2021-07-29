@@ -8,7 +8,7 @@
         <ng-container *ngIf="this.state; else loggedOut">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" routerLink="game">Play Game</a>
+              <a class="nav-link" (click)="getPlay()">Play Game</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="profile">Profile</a>
@@ -25,7 +25,7 @@
         <ng-template #loggedOut>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" routerLink="game">Play Game</a>
+              <a class="nav-link" (click)="getPlay()">Play Game</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLink="login">LogIn</a>
