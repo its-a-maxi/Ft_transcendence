@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoginDto } from 'src/auth/dto';
+import { LoginDto, UpdateDto } from 'src/auth/dto';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos';
 import { User } from './entities/users.entity';
@@ -24,7 +24,7 @@ export class UsersService {
     {
         user.id = clientID
         user.nick = user.nick
-        user.avatar = 'https://image.api.playstation.com/cdn/EP0102/NPEB00554_00/VdBGeflDDEoAO6W6xoiBP6DXTWIlxll8_160.png?w=960&h=960'
+        user.avatar = 'http://localhost:3000/auth/assets/ryu.jpg'
         const newUser = this.usersRepository.create(user)
         return await this.usersRepository.save(newUser)
     }
@@ -33,5 +33,11 @@ export class UsersService {
     {
         const user = await this.usersRepository.findOne(id)
         return user.id
+    }
+
+    async updateUser(user: UpdateDto, clientID: number)//: Promise<User>
+    {
+        user.avatar = `http://localhost:3000/auth/assets/${user.avatar}`
+        return await this.usersRepository.update(clientID, user)
     }
 }

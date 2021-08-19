@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { NgForm } from "@angular/forms";
 import { NavigationComponent } from '../navigation/navigation.component';
 
@@ -22,10 +22,10 @@ export class RegisterComponent implements OnInit {
 
 	userRegister(form: NgForm)
 	{
+		NavigationComponent.updateUserStatus.next(true)
 		this.authService.postAuthUser(form.value)
 		localStorage.setItem('nick', form.value['nick'])
 		form.reset()
-		NavigationComponent.updateUserStatus.next(true)
 		this.router.navigate(['/profile'])
 	}
 

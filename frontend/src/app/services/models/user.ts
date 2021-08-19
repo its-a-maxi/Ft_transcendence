@@ -8,7 +8,7 @@ export class User{
 
       }
 
-    id: Number;
+    id: number;
     nick: string
     avatar: string;
 

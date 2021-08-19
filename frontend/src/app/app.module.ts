@@ -3,13 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { HomeComponent } from './home/home.component';
-import { GameComponent } from './game/game.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { HomeComponent } from './components/home/home.component';
+import { GameComponent } from './components/game/game.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { TwoFAComponent } from './components/two-fa/two-fa.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ProfileComponent } from './profile/profile.component';
     GameComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    TwoFAComponent
   ],
   imports: [
     BrowserModule,

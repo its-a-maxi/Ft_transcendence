@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
-import { NavigationComponent } from '../navigation/navigation.component';
+import { NavigationComponent } from '../components/navigation/navigation.component';
 import { User } from "./models/user";
 
 axios.defaults.withCredentials = true;
@@ -48,5 +48,28 @@ export class AuthService {
 	statusLogin()
 	{
 		return !!localStorage.getItem('nick')
+	}
+
+	async twoFactor(num: any)
+	{
+		return await axios.post('http://localhost:3000/auth/2fa', num)
+	}
+
+	async verifyCode(num: any)
+	{
+		return await axios.post('http://localhost:3000/auth/verify', num)
+	}
+
+	async createAvatar(image: File | undefined)
+	{
+		const fd = new FormData()
+		fd.append('image', <File>image)
+		return await axios.post('http://localhost:3000/auth/image', fd)
+	}
+
+	async updateUser(user: User)
+	{
+		//console.log(user.avatar)
+		return await axios.put<User>('http://localhost:3000/auth/updateUser', user)
 	}
 }
