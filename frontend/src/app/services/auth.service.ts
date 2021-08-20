@@ -39,9 +39,9 @@ export class AuthService {
 		if (!option)
 			return null
 		NavigationComponent.updateUserStatus.next(false)
-		//localStorage.removeItem('clientID')
     	localStorage.removeItem('nick')
-    	this.router.navigate(['/home'])
+		localStorage.removeItem('avatar')
+    	this.router.navigate(['/home']).finally(() => window.location.reload())
 		return await axios.post('http://localhost:3000/auth/logout')
 	}
 
@@ -69,7 +69,6 @@ export class AuthService {
 
 	async updateUser(user: User)
 	{
-		//console.log(user.avatar)
 		return await axios.put<User>('http://localhost:3000/auth/updateUser', user)
 	}
 }

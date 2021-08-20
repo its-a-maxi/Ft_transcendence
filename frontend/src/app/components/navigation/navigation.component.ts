@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { config } from 'dotenv';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-navigation',
@@ -12,7 +14,7 @@ export class NavigationComponent implements OnInit, DoCheck {
 
 
 	state: boolean = false
-	nick: String | null = this.authService.statusLogin() ? localStorage.getItem('nick') : ""
+	nick: String | null = localStorage.getItem('nick')!
 	public static updateUserStatus: Subject<boolean> = new Subject()
 	avatar: string = ""
 	name: String = this.nick!
@@ -23,13 +25,10 @@ export class NavigationComponent implements OnInit, DoCheck {
 
 	ngOnInit(): void
 	{
-		NavigationComponent.updateUserStatus.subscribe(
-			() => {
+		NavigationComponent.updateUserStatus.subscribe(() => {
 				this.nick = localStorage.getItem('nick')
-			},)
-		
+			})
 		this.getAvatar()
-		
 	}
 
 	ngDoCheck(): void
@@ -38,6 +37,7 @@ export class NavigationComponent implements OnInit, DoCheck {
 			this.state = false
 		else
 			this.state = true
+			
 	}
 
 	getAvatar()
@@ -47,9 +47,7 @@ export class NavigationComponent implements OnInit, DoCheck {
 			.then(obj => {
 				this.avatar = obj.avatar
 				this.nick = obj.nick
-			}).catch(() => {
-					return 
-			})
+			 }).catch(() => {return})
 	}
 
 	getPlay()

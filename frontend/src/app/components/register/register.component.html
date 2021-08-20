@@ -4,10 +4,10 @@
         <div class="card-body">
             <form #FormRegister="ngForm" (ngSubmit)="userRegister(FormRegister)">
                 <div class="form-group">
-                    <label for="Inputnick">Nick</label>
-                    <input type="text" name="nick" class="form-control"
+                    <label for="Inputnick">Choose a Nick</label>
+                    <input type="text" name="nick" class="form-control" id="nick"
                             placeholder="Nick" required [(ngModel)] ="authService.selectedUser.nick">
-                    <button type="submit" class="btn">Register</button>
+                    <button type="submit" class="btn" id="register">Register</button>
                 </div>
             </form>
         </div>

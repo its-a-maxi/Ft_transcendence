@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NgForm } from "@angular/forms";
 import { NavigationComponent } from '../navigation/navigation.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ import { NavigationComponent } from '../navigation/navigation.component';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(public authService: AuthService, private router: Router) { }
+  	constructor(public authService: AuthService, private router: Router) { }
 
 	ngOnInit(): void
 	{
@@ -22,11 +23,21 @@ export class RegisterComponent implements OnInit {
 
 	userRegister(form: NgForm)
 	{
+		let i = 0
+		while (form.value['nick'][i])
+			i++;
+		if (i < 4)
+		{
+			alert('Choose a Nick Name with at least 4 letters')
+			return
+		}
 		NavigationComponent.updateUserStatus.next(true)
-		this.authService.postAuthUser(form.value)
+		this.authService.postAuthUser(form.value).then(() => ProfileComponent.oldAvatar.next("ryu.jpg"))
 		localStorage.setItem('nick', form.value['nick'])
+		localStorage.setItem('avatar', "ryu.jpg")
 		form.reset()
-		this.router.navigate(['/profile'])
+		this.router.navigate(['/profile']).finally(() => {window.location.reload()})
+		
 	}
 
 }

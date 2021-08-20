@@ -15,7 +15,7 @@ import { diskStorage } from "multer";
 import axios from 'axios';
 
 
-const client = new Twilio(enviroment.ACOUNT_TWI, enviroment.TOKEN_TWI)
+//const client = new Twilio(enviroment.ACOUNT_TWI, enviroment.TOKEN_TWI)
 
 @Controller('auth')
 export class AuthController
