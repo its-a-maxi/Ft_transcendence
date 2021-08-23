@@ -50,9 +50,9 @@ export class AuthService {
 		return !!localStorage.getItem('nick')
 	}
 
-	async twoFactor(num: any)
+	async twoFactor()
 	{
-		return await axios.post('http://localhost:3000/auth/2fa', num)
+		return await axios.get('http://localhost:3000/auth/2fa')
 	}
 
 	async verifyCode(num: any)
@@ -70,5 +70,10 @@ export class AuthService {
 	async updateUser(user: User)
 	{
 		return await axios.put<User>('http://localhost:3000/auth/updateUser', user)
+	}
+
+	async enableTwofactor()
+	{
+		//return await axios.put<User>('http://localhost:3000/auth/updateUser', user)
 	}
 }

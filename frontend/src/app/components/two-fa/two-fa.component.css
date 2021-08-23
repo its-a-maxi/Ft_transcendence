@@ -22,7 +22,7 @@ h1{
     width: 125px;
     position: relative;
     left: -115px;
-    top: 90px;
+    top: -25px;
     background-color: var(--gold);
 }
 
@@ -31,15 +31,15 @@ h1{
     width: 125px;
     position: relative;
     left: -115px;
-    top: 190px;
+    top: 320px;
     background-color: var(--gold);
 }
 
 h5
 {
     position: relative;
-    left: 300px;
-    top: 60px;
+    left: 265px;
+    top: -40px;
     color: white;
     color: var(--gold);
 }
@@ -47,8 +47,8 @@ h5
 #msg_code
 {
     position: relative;
-    left: 345px;
-    top: 170px;
+    left: 350px;
+    top: 330px;
     color: white;
     color: var(--gold);
 }
@@ -64,12 +64,20 @@ form
 {
     position: relative;
     left: 45px;
-    top: 20px;
+    top: -80px;
 }
 
 #code
 {
     position: relative;
     left: 45px;
-    top: 125px;
+    top: 275px;
+}
+
+img
+{
+    position: relative;
+    left: 330px;
+    top: -40px;
+    width: 25%;
 }

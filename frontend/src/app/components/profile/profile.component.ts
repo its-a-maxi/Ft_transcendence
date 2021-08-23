@@ -20,9 +20,15 @@ interface HtmlImputEvent extends Event
 export class ProfileComponent implements OnInit, DoCheck {
 
 	nick: string = ""
+	userEmail: string = ""
+	userPhone: string = ""
+	userAvatar: string = ""
 	newNick: string = ""
+	newEmail: string = ""
+	newPhone: string = ""
 	userId: number = 0
 	check: boolean = false
+	authChoice:boolean = false
 	imageSelected: string | ArrayBuffer | undefined;
 	files: File | undefined;
 	public static oldAvatar: Subject<string> = new Subject()
@@ -52,11 +58,15 @@ export class ProfileComponent implements OnInit, DoCheck {
 			.then(obj => {
 				this.nick = obj.nick
 				this.userId = obj.id
+				this.userEmail = obj.email
+				this.userPhone = obj.phone
+				this.userAvatar = obj.avatar.substring(34)
 				localStorage.setItem('nick', this.nick as string)
+				localStorage.setItem('avatar', this.userAvatar)
 			})
 	}
 
-	onImageSelected(event: any)
+	onImageSelected(event: any): void
 	{
 		if (<HtmlImputEvent>event.target.files &&
 			<HtmlImputEvent>event.target.files[0])
@@ -69,7 +79,7 @@ export class ProfileComponent implements OnInit, DoCheck {
 		}
 	}
 
-	uploadImage()
+	uploadImage(): void
 	{
 		if (this.newNick.length == 0)
 			this.newNick = this.nick
@@ -78,18 +88,48 @@ export class ProfileComponent implements OnInit, DoCheck {
 			alert("Choose a Nick Name with at least 4 letters")
 			return
 		}
+		if (this.newEmail.length == 0)
+			this.newEmail = this.userEmail
+		if (this.newPhone.length == 0)
+			this.newPhone = this.userPhone
+		if (!this.enableTwoFactor(this.authChoice))
+			return
 		if (this.check)
 		{
 			NavigationComponent.updateUserStatus.next(true)
 			this.authService.createAvatar(this.files).then(() => this.newNick = "")
 		}
 		const updateUser: User = new User()
+		updateUser.authentication = this.authChoice
 		updateUser.nick = this.newNick
+		updateUser.email = this.newEmail
+		updateUser.phone = this.newPhone
 		updateUser.id = this.userId
 		updateUser.avatar = !this.files?.name! ?
 			localStorage.getItem('avatar')! : this.files?.name!
 		this.authService.updateUser(updateUser)
 			.then(() => localStorage.setItem('avatar', updateUser.avatar))
+			.then(() => {
+				if (this.authChoice)
+					this.router.navigate(['/twofa'])
+			})
 			.finally(() => window.location.reload())
+	}
+
+	enableTwoFactor(choice: boolean): boolean
+	{
+		if (choice)
+		{
+			const option = confirm("Are you sure to enable Two Factor Authentication?")
+			if (!option)
+				return false
+		}
+		else if (!choice)
+		{
+			const option = confirm("Are you sure to disable Two Factor Authentication?")
+			if (!option)
+				return false
+		}
+		return true
 	}
 }

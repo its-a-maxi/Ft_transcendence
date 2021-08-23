@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NgForm } from "@angular/forms";
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-two-fa',
@@ -12,32 +13,33 @@ export class TwoFAComponent implements OnInit {
 
   	phone: string = ""
 	code: string = ""
+	userPhone: string = ""
+	userEmail: string = ""
+	qrImage: string = ""
 
 	constructor(public authService: AuthService, private router: Router) { }
 
 	ngOnInit(): void
 	{
-
+		this.getQrCode()
 	}
 
-  	verifyNumber(form: NgForm)
+  	getQrCode()
 	{
-		if (this.phone)
-			this.authService.twoFactor(form.value)
-		else
-			alert("You need write your phone number!")
+		this.authService.twoFactor().then(res => this.qrImage =res.data.url)
 	}
 
 	verifyCode(form: NgForm)
 	{
-		if (this.code && this.code.length == 4 && this.phone)
-		{
-			this.authService.verifyCode(form.value)
-			//form.reset()
-			//this.router.navigate(['/home'])
-		}
-		else
-			alert("You need write your phone number and sms code!")
+		this.authService.verifyCode(form.value)
+			.then((res) => {
+				alert('2 Factor Authentication Success!!')
+				localStorage.setItem('nick', res.data.nick)
+				form.reset()
+				this.router.navigate(['/home'])})
+			.catch(() => {
+				alert('2 Factor Authentication Failure!!')
+			})
 	}
 
 }

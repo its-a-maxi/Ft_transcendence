@@ -13,14 +13,14 @@ export class HomeComponent implements OnInit {
 
 	ngOnInit(): void
 	{
-		//this.showUsers()
+		this.showUsers()
 		
 	}
 
 	showUsers()
 	{
 		this.authService.showAllUsers()
-		.then(res => res.data.map(obj => console.log(obj)))
+			.then(res => res.data.map(obj => console.log(obj)))
 	}
 
 	getPlay()

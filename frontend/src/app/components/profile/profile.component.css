@@ -13,14 +13,46 @@ h1{
     color: var(--gold);
     position: relative;
     left: 300px;
-    top: 60px;
+    top: 30px;
     margin-bottom: 75px;
 }
 
 #nick
 {
     position: relative;
+    left: 45px;
+    top: -75px;
+}
+
+#email
+{
+    position: relative;
+    left: 45px;
+    top: -30px;
+}
+
+#phone
+{
+    position: relative;
     left: 40px;
+}
+
+input[type='radio']
+{
+    position: relative;
+    top: 40px;
+    left: 105px;
+    transform: scale(1.5);
+    margin-bottom: 10px;
+}
+
+label
+{
+    color: var(--gold);
+    position: relative;
+    top: 35px;
+    left: 105px;
+    margin-left: 5px;
 }
 
 #btn_update
@@ -28,7 +60,7 @@ h1{
     width: 125px;
     position: relative;
     left: 70px;
-    top: 60px;
+    top: 90px;
     background-color: var(--gold);
 }
 #btn_auth
@@ -82,7 +114,7 @@ img
     height: 200px;
     width: 300px;
     position: relative;
-    top: 50px;
+    top: 60px;
     cursor: pointer;
     overflow: hidden;
     left: -14px;;

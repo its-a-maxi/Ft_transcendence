@@ -9,7 +9,19 @@ export class User
     @Column()
     nick: string;
 
+    @Column({ unique: true})
+    email: string;
+
+    @Column({ unique: true})
+    phone: string;
+
     @Column()
     avatar: string;
+
+    @Column()
+    authentication: boolean;
+
+    @Column({ nullable: true })
+    secret?: string;
 
 }

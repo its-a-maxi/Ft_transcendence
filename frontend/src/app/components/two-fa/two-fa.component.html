@@ -1,14 +1,10 @@
 <div class="container">
     <h1>Get Authentication Code</h1>
-    <h5>Introduce your telephone number with +34</h5>
-    <form #Form2factor="ngForm" (ngSubmit)="verifyNumber(Form2factor)">
-        <input type="tel" name="phone" id="phone" [(ngModel)]="this.phone">
-        <button type="submit" class="btn" id="btn_phone">Send me Code</button>
-    </form>
-    <h5 id="msg_code">Introduce your sms code</h5>
+    <h5>You must download Google Authenticator App</h5>
+    <h5 id="msg_code">Introduce your QRcode</h5>
     <form #Verify2factor="ngForm" (ngSubmit)="verifyCode(Verify2factor)">
-        <input type="hidden" name="phone_h" [(ngModel)]="this.phone">
         <input type="text" name="code" id="code" [(ngModel)]="this.code">
         <button type="submit" class="btn" id="btn_code">Verify</button>
     </form>
+    <img [src]="this.qrImage || '../../../assets/no-image.png'" alt="">
 </div>

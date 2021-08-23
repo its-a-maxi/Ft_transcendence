@@ -24,7 +24,10 @@ export class UsersService {
     {
         user.id = clientID
         user.nick = user.nick
+        user.email = user.email
+        user.phone = user.phone
         user.avatar = 'http://localhost:3000/auth/assets/ryu.jpg'
+        user.authentication = false
         const newUser = this.usersRepository.create(user)
         return await this.usersRepository.save(newUser)
     }
@@ -40,4 +43,8 @@ export class UsersService {
         user.avatar = `http://localhost:3000/auth/assets/${user.avatar}`
         return await this.usersRepository.update(clientID, user)
     }
+
+    async saveUserSecret(secret: string, clientID: number): Promise<any> {
+        return this.usersRepository.update(clientID, { secret });
+      }
 }

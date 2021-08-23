@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post, Put, Req, Res,
+        UnauthorizedException,
         UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { LoginDto, UpdateDto } from './dto';
@@ -9,13 +10,12 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { verifyUser } from './strategies/auth.guard';
 import { AuthService } from './auth.service';
-import { Twilio } from "twilio";
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from "multer";
+import { authenticator } from 'otplib'
+import  QRCode  from "qrcode";
 import axios from 'axios';
 
-
-//const client = new Twilio(enviroment.ACOUNT_TWI, enviroment.TOKEN_TWI)
 
 @Controller('auth')
 export class AuthController
@@ -59,6 +59,8 @@ export class AuthController
 
         if (!clientData)
             return res.redirect("http://localhost:4200/register")
+        else if (clientData && clientData.authentication === true)
+            return res.redirect("http://localhost:4200/twofa")
         else
             return res.redirect("http://localhost:4200/profile")
     }
@@ -95,50 +97,38 @@ export class AuthController
     }
 
     @UseGuards(verifyUser)
-    @Post('2fa')
+    @Get('2fa')
     async twoFactor(@Res() res: Response, @Req() req: Request)
     {
-        const phone: string = req.body.phone
-
-        // if (phone)
-        // {
-            
-        //     await client.verify.services(enviroment.SMS_VER).verifications.create({
-        //             to: phone,
-        //             channel: 'sms'
-        //     }).then(message => console.log(message)).catch(err => console.log(err))
-        // }
-        // else
-        // {
-        //     console.log("Wrong phone number!")
-        //     res.send("Wrong phone number!")
-        // }
+        const userID = await this.authService.clientID(req)
+        const client = await this.userService.getUser(userID)
+        const secret = authenticator.generateSecret()
+        await this.userService.saveUserSecret(secret, userID)
+        const optUrl = authenticator.keyuri(client.email, "FT_TRANSCENDENCE", secret)
+        await QRCode.toFile('./assets/qrImage.png', optUrl)
+        return res.send({url: 'http://localhost:3000/auth/assets/qrImage.png'})
     }
 
-    @UseGuards(verifyUser)
+    //@UseGuards(verifyUser)
     @Post('verify')
     async verifyCode(@Res() res: Response, @Req() req: Request)
     {
         const code = req.body.code
-        const phone = req.body.phone_h
-        // if (code && phone)
-        // {
-        //     await client.verify.services(enviroment.SMS_VER).verificationChecks.create({
-        //         to: phone,
-        //         code
-        //     }).then(message => console.log(message)).catch(err => console.log(err))
-        // }
-        // else
-        // {
-        //     console.log("Wrong code number!")
-        //     res.send("Wrong code number!")
-        // }
+        const userID = await this.authService.clientID(req)
+        const client = await this.userService.getUser(userID)
+        const verify = authenticator.verify({token: code, secret: client.secret})
+        if (!verify)
+            throw new UnauthorizedException('Wrong authentication code');
+        else
+            return res.json({nick: client.nick})
     }
 
+    @UseGuards(verifyUser)
     @Put('updateUser')
     async updateUser(@Req() req: Request, @Body() user: UpdateDto)
     {
         user.avatar = req.body.avatar
+        user.authentication = req.body.authentication
         const clientID = await this.authService.clientID(req);
         return await this.userService.updateUser(user, clientID)
     }

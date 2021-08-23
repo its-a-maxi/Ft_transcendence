@@ -57,4 +57,9 @@ export class NavigationComponent implements OnInit, DoCheck {
 		else
 			this.router.navigate(['/login'])
 	}
+
+	reload()
+	{
+		console.log("dentro")
+	}
 }
