@@ -1,0 +1,58 @@
+<div class="background">
+    <section>
+        <div class="container">
+            
+            <div class="top">
+                <nav class="tabs">
+                    <ul class="tabsText" id="tabsText">
+                        <a class="otherTab" routerLink="/mainPage/play" routerLinkActive="currentTab" (click)="clickTab()">Play</a>
+                        <a class="otherTab" routerLink="/mainPage/chat" routerLinkActive="currentTab" (click)="clickTab()">Chat</a>
+                        <a class="otherTab" routerLink="/mainPage/friends" routerLinkActive="currentTab" (click)="clickTab()">Friends</a>
+                        <a class="otherTab" routerLink="/mainPage/ranking" routerLinkActive="currentTab" (click)="clickTab()">Ranking</a>
+                        <a class="otherTab" routerLink="/mainPage/settings" routerLinkActive="currentTab" (click)="clickTab()">Settings</a>
+                    </ul>
+                    <div class="hamburger" (click)="clickNav()" id="hamburger"></div>
+                </nav>
+                <div class="profile" id="profile">
+                    <div class="profContainer">
+                        <div class="profileCircle">
+                            <img src={{account.profilePicture}} id="profilePicture" alt="Profile Picture" class="profilePicture">
+                            <a routerLink="">
+                                <img src="../../../assets/images/Logout.png" id="logout" alt="Logout" class="logout">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="namesContainer">
+                        <div class="halfContainer">
+                            <p id="nickname" class="nickname">{{account.nickname}}</p>
+                        </div>
+                        <div class="halfContainer">
+                            <p id="user" class="user">{{account.user}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content" id="content">     
+                <router-outlet></router-outlet>
+            </div>
+
+            <div class="bottom" id="bottom">
+                <div class="meta">
+                    <div class=logoContainer>
+                        <img src="../../../assets/images/LogoBig.png" alt="Page logo" class="logo">
+                    </div>
+                    <div class="liveUsersContainer">
+                        <div class="liveUsersNumContainer">
+                            <p id="liveUsers" class="liveUsersNum">{{liveUsers}}</p>
+                        </div>
+                        <div class="liveUsersTextContainer">
+                            <p class="liveUsersText">Live<br>users</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>

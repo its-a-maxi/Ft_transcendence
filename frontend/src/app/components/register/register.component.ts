@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
 		localStorage.setItem('nick', form.value['nick'])
 		localStorage.setItem('avatar', "ryu.jpg")
 		form.reset()
-		this.router.navigate(['/profile']).finally(() => {window.location.reload()})
+		this.router.navigate(['/mainPage/play']).finally(() => {window.location.reload()})
 		
 	}
 
