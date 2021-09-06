@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit, DoCheck {
 				this.userId = obj.id
 				this.userEmail = obj.email
 				this.userPhone = obj.phone
-				this.userAvatar = obj.avatar.substring(34)
+				this.userAvatar = ""//obj.avatar.substring(34)
 				localStorage.setItem('nick', this.nick as string)
 				localStorage.setItem('avatar', this.userAvatar)
 			})
@@ -108,7 +108,7 @@ export class ProfileComponent implements OnInit, DoCheck {
 		updateUser.avatar = !this.files?.name! ?
 			localStorage.getItem('avatar')! : this.files?.name!
 		this.authService.updateUser(updateUser)
-			.then(() => localStorage.setItem('avatar', updateUser.avatar))
+			//.then(() => localStorage.setItem('avatar', updateUser.avatar))
 			.then(() => {
 				if (this.authChoice)
 					this.router.navigate(['/twofa'])

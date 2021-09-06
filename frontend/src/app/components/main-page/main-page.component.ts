@@ -1,6 +1,8 @@
 import { Component, OnInit, Query } from '@angular/core';
 import { Router } from '@angular/router';
 import { Account } from 'src/app/models/Account';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/services/models/user';
 
 @Component({
   selector: 'app-main-page',
@@ -9,7 +11,7 @@ import { Account } from 'src/app/models/Account';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor(public router: Router) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   private tabsText: any;
   private hamburger: any;
@@ -19,19 +21,23 @@ export class MainPageComponent implements OnInit {
 
   private clicked: boolean = false;
 
-  account: Account = {
-    user: "mmonroy-",
-    nickname: localStorage.getItem('nick'),
-    profilePicture: "../../../assets/images/TuxedoPenguin.jpg"
-  }
+  private user?: User;
+  nick: string | undefined;
+  name: string | undefined;
+  picture: string | ArrayBuffer | undefined;
   liveUsers = "42"; 
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.authService.getAuthUser()
+    .then(response => console.log(this.user = response.data))
     this.tabsText = document.getElementById("tabsText");
     this.hamburger = document.getElementById("hamburger");
     this.profile = document.getElementById("profile");
     this.bottom = document.getElementById("bottom");
     this.content = document.getElementById("content");
+    this.nick = this.user?.nick;
+    this.name = this.user?.name;
+    this.picture = this.user?.avatar;
   }
 
   private openNav(): void

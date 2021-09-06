@@ -45,7 +45,7 @@ export class NavigationComponent implements OnInit, DoCheck {
 		this.authService.getAuthUser()
 			.then(res => res.data)
 			.then(obj => {
-				this.avatar = obj.avatar
+				this.avatar = ""//obj.avatar
 				this.nick = obj.nick
 			 }).catch(() => {return})
 	}

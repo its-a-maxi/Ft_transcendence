@@ -20,6 +20,7 @@ import { ChatComponent } from './components/main-page/chat/chat.component';
 import { FriendsComponent } from './components/main-page/friends/friends.component';
 import { RankingComponent } from './components/main-page/ranking/ranking.component';
 import { SettingsComponent } from './components/main-page/settings/settings.component';
+import { RegistrationComponent } from './components/landing-page/registration/registration.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { SettingsComponent } from './components/main-page/settings/settings.comp
     ChatComponent,
     FriendsComponent,
     RankingComponent,
-    SettingsComponent
+    SettingsComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

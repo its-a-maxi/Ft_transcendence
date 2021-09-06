@@ -2,6 +2,7 @@ export class User{
   
     constructor(id = 0,
               nick = "",
+              name = "",
               avatar = "",
               email = "",
               phone = "",
@@ -9,6 +10,7 @@ export class User{
         
         this.id = id;
         this.nick = nick;
+        this.name = name;
         this.avatar = avatar;
         this.email = email;
         this.phone = phone;
@@ -17,7 +19,8 @@ export class User{
 
     id: number;
     nick: string;
-    avatar: string;
+    avatar: string | ArrayBuffer;
+    name: string;
     email: string;
     phone: string;
     authentication?: boolean;

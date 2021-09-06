@@ -1,0 +1,55 @@
+<div class="container">
+	<div class="settingsContainer">
+		<form class="settingsForm" (ngSubmit)="userRegister(FormRegister)" #FormRegister="ngForm">
+			<div class="profilePictureContainer">
+				<div class="firstHalfContainer">
+					<label for="profilePicture">Select a Profile Picture:</label>
+				</div>
+				<div class="secondHalfContainer">
+					<div class="profilePictureFrame">
+						<img src={{profilePicture}} alt="Profile Picture"
+						class="profilePicture" (click)="imageInput.click()">
+						<input type="file" id="image" name="image"
+						class="profilePictureInput" (change)="onImageSelected($event)" #imageInput>
+					</div>
+				</div>
+			</div>
+			<div class="lineContainer">
+				<div class="firstHalfContainer">
+					<label for="nickname">Choose your nickname:</label>
+				</div>
+				<div class="secondHalfContainer">
+					<div class="inputContainer">
+  						<input class="textInput" type="text" id="nick" name="nick" placeholder="Your nickname"
+						  required [(ngModel)]="authService.selectedUser.nick">
+					</div>
+				</div>
+			</div>
+			<div class="lineContainer">
+				<div class="firstHalfContainer">
+					<label for="email">Enter your e-mail:</label>
+				</div>
+				<div class="secondHalfContainer">
+					<div class="inputContainer">
+  						<input class="textInput" type="text" id="email" name="email" placeholder="Your e-mail"
+						  required [(ngModel)]="authService.selectedUser.email">
+					</div>
+				</div>
+			</div>
+			<div class="lineContainer">
+				<div class="firstHalfContainer">
+					<label for="phoneNumber">Enter your telephone:</label>
+				</div>
+				<div class="secondHalfContainer">
+					<div class="inputContainer">
+  						<input class="textInput" type="text" id="phone" name="phone" placeholder="Your number"
+						  required [(ngModel)]="authService.selectedUser.phone">
+					</div>
+				</div>
+			</div>
+			<div class=submitContainer>
+				<button class="submitButton" type="submit" id="register">Register</button>
+			</div>
+		</form>
+	</div>
+</div>

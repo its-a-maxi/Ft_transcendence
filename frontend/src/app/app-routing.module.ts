@@ -15,12 +15,15 @@ import { ChatComponent } from './components/main-page/chat/chat.component';
 import { FriendsComponent } from './components/main-page/friends/friends.component';
 import { RankingComponent } from './components/main-page/ranking/ranking.component';
 import { SettingsComponent } from './components/main-page/settings/settings.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { RegistrationComponent } from './components/landing-page/registration/registration.component';
 
 const routes: Routes = [
   {path: '', redirectTo: "landingPage/start", pathMatch: "full"},
   /*{path: '**', redirectTo: 'landingPage/start', pathMatch: 'full'},*/
   { path: 'landingPage', component: LandingPageComponent, children: [
-    { path: 'start', component: StartComponent }
+    { path: 'start', component: StartComponent },
+    { path: 'registration', component:  RegistrationComponent}
   ]},
   { path: 'mainPage', component: MainPageComponent, children: [
     {path: 'play', component: PlayComponent},
@@ -30,6 +33,7 @@ const routes: Routes = [
     {path: 'settings', component: SettingsComponent}
   ]},
   {path: "home", component: HomeComponent},
+  {path: "navigation", component: NavigationComponent},
   {path: "game", component: GameComponent},
   {path: "login", component: LoginComponent},
   {path: "register", component: RegisterComponent},
