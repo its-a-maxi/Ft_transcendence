@@ -251,7 +251,7 @@ input:focus
 	margin: auto;
 	
 	background-color: rgba(237, 229, 242, .25);
-	border: 4px solid #ede5f2ff;
+	border: 0.5vh solid #ede5f2ff;
 	border-radius: 1000px;
 
 	color: #ede5f2ff;

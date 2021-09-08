@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/services/models/user';
 
 @Component({
   selector: 'app-ranking',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RankingComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void {
+  private users: User[] | undefined;
+
+  async ngOnInit()
+  {
+    let i: number = 0;
+    await this.authService.showAllUsers()
+      .then(response => this.users = response.data);
+    while (this.users && this.users[i])
+      console.log(this.users[i++]);
   }
 
 }

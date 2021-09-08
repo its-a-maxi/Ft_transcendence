@@ -1,0 +1,80 @@
+div{
+    border: 0px solid #ede5f2ff;
+}
+
+.container
+{
+	position: relative;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(19, 5, 11, .50);
+	box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+	border-radius: 35px;
+	border: 0.5vh solid #ede5f2ff;
+}
+
+.rankingContainer
+{
+	position: absolute;
+	width: 90%;
+	height: 90%;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	overflow: auto;
+}
+
+.content
+{
+	color: #ede5f2ff;
+	font-family: futura;
+
+	position: relative;
+	width: 110vh;
+	right: 0;
+	left: 0;
+	margin: auto;
+
+	border-collapse: separate;
+	border-spacing: 0 1vh;
+}
+
+th
+{
+	font-size: 3vh;
+	font-weight: normal;
+	letter-spacing: 0.2vh;
+}
+
+tr
+{
+	font-size: 2.5vh;
+	font-weight: normal;
+	letter-spacing: 0vh;
+}
+
+
+  /* width */
+  ::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: rgba(237, 229, 242, .25);
+	border-radius: 100px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: #ede5f2ff;
+	border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-corner {
+	  background: transparent;
+	}
