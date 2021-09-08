@@ -8,6 +8,8 @@ export class LoginDto
     @IsNotEmpty()
     @IsString()
     nick: string;
+    
+    avatar: string;
 
     @IsNotEmpty()
     @IsEmail()
@@ -17,7 +19,6 @@ export class LoginDto
     @IsPhoneNumber('ES')
     phone: string;
 
-    avatar: string;
 
     authentication: boolean;
 }

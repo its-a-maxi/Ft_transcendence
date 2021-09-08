@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
 
 	ngOnInit(): void
 	{
+		this.router.navigate(['/landingPage/registration']).finally(() => {window.location.reload()})
 		this.authService.getAuthUser()
 			.catch(() => this.router.navigate(['login']))
 

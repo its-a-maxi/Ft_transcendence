@@ -19,7 +19,7 @@ export class User{
 
     id: number;
     nick: string;
-    avatar: string | ArrayBuffer;
+    avatar: string | undefined;
     name: string;
     email: string;
     phone: string;

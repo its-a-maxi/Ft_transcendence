@@ -25,10 +25,6 @@ export class StartComponent implements OnInit {
 
 	getPlay()
 	{
-		//if (this.authService.statusLogin())
-			//this.router.navigate(['/game'])
-		//else
-			window.location.href = "http://localhost:3000/auth/callback";
-			//this.router.navigate(['/landingPage/registration'])
+		window.location.href = "http://localhost:3000/auth/callback";
 	}
 }

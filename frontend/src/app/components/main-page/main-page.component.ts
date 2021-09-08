@@ -29,7 +29,9 @@ export class MainPageComponent implements OnInit {
 
   async ngOnInit() {
     await this.authService.getAuthUser()
-    .then(response => console.log(this.user = response.data))
+      .then(response => console.log(this.user = response.data))
+    if (!this.user)
+      this.router.navigate(['/landingPage/start']);
     this.tabsText = document.getElementById("tabsText");
     this.hamburger = document.getElementById("hamburger");
     this.profile = document.getElementById("profile");

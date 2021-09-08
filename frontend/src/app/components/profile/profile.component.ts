@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit, DoCheck {
 
 	ngOnInit(): void
 	{
+		this.router.navigate(['/mainPage/play']).finally(() => {window.location.reload()})
 		if (!localStorage.getItem('avatar'))
 			ProfileComponent.oldAvatar.subscribe((res) => 
 				localStorage.setItem('avatar', res))
@@ -105,8 +106,8 @@ export class ProfileComponent implements OnInit, DoCheck {
 		updateUser.email = this.newEmail
 		updateUser.phone = this.newPhone
 		updateUser.id = this.userId
-		updateUser.avatar = !this.files?.name! ?
-			localStorage.getItem('avatar')! : this.files?.name!
+		updateUser.avatar = this.files?.name//! ?
+			//localStorage.getItem('avatar')! : this.files?.name!
 		this.authService.updateUser(updateUser)
 			//.then(() => localStorage.setItem('avatar', updateUser.avatar))
 			.then(() => {
