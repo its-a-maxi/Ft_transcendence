@@ -1,11 +1,12 @@
 import { stringify } from '@angular/compiler/src/util';
 import { Component, DoCheck, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth-service/auth.service';
 import { User } from '../../services/models/user';
 import { Form, NgForm } from "@angular/forms";
 import { NavigationComponent } from '../navigation/navigation.component';
 import { Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 interface HtmlImputEvent extends Event
 {
@@ -17,52 +18,68 @@ interface HtmlImputEvent extends Event
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit, DoCheck {
+export class ProfileComponent implements OnInit
+{
 
 	nick: string = ""
 	userEmail: string = ""
-	userPhone: string = ""
 	userAvatar: string = ""
 	newNick: string = ""
 	newEmail: string = ""
-	newPhone: string = ""
 	userId: number = 0
+	paramId: string = ""
 	check: boolean = false
 	authChoice:boolean = false
 	imageSelected: string | ArrayBuffer | undefined;
 	files: File | undefined;
-	public static oldAvatar: Subject<string> = new Subject()
+	oldAvatar!: string
 
-	constructor(public authService: AuthService, private router: Router) { }
+	paramsNav: any = {
+		idNav: this.paramId,
+		userNick: this.nick,
+		userAvatar: this.userAvatar
+	}
+ 
+	constructor(public authService: AuthService,
+				private router: Router,
+				private activateRoute: ActivatedRoute) { }
 
 	ngOnInit(): void
 	{
-		if (!localStorage.getItem('avatar'))
-			ProfileComponent.oldAvatar.subscribe((res) => 
-				localStorage.setItem('avatar', res))
-		
-		this.authService.getAuthUser()
-			.then(() => this.getNick())
-			.catch(() => this.router.navigate(['login']))
+		//this.showUsers()
+		this.paramId = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 5)!
+		sessionStorage.setItem('token', this.paramId)
+		this.findUser()
 	}
 
-	ngDoCheck()
+	showUsers()
 	{
-		
+		this.authService.showAllUsers()
+			.then(res => res.data.map(obj => console.log(obj)))
 	}
 
-	getNick()
+	findUser()
 	{
-		this.authService.getAuthUser()
-			.then(res => res.data)
-			.then(obj => {
-				this.nick = obj.nick
-				this.userId = obj.id
-				this.userEmail = obj.email
-				this.userPhone = obj.phone
-				this.userAvatar = obj.avatar.substring(34)
-				localStorage.setItem('nick', this.nick as string)
-				localStorage.setItem('avatar', this.userAvatar)
+		
+		this.authService.getUserById(this.paramId)
+			.then(res => {
+				if (res.data === "ERROR!!")
+				{
+					this.authService.logOutUser(false)
+					this.router.navigate(['/login'])
+				}
+				else
+				{
+					this.nick = res.data.nick
+					this.userEmail = res.data.email
+					this.userAvatar = res.data.avatar
+					this.oldAvatar = this.userAvatar.substring(34)
+					this.paramsNav = {
+						idNav: this.paramId,
+						userNick: this.nick,
+						userAvatar: this.userAvatar
+					}
+				}
 			})
 	}
 
@@ -90,25 +107,20 @@ export class ProfileComponent implements OnInit, DoCheck {
 		}
 		if (this.newEmail.length == 0)
 			this.newEmail = this.userEmail
-		if (this.newPhone.length == 0)
-			this.newPhone = this.userPhone
 		if (!this.enableTwoFactor(this.authChoice))
 			return
 		if (this.check)
 		{
-			NavigationComponent.updateUserStatus.next(true)
 			this.authService.createAvatar(this.files).then(() => this.newNick = "")
 		}
 		const updateUser: User = new User()
 		updateUser.authentication = this.authChoice
 		updateUser.nick = this.newNick
 		updateUser.email = this.newEmail
-		updateUser.phone = this.newPhone
-		updateUser.id = this.userId
+		updateUser.id = parseInt(this.paramId)
 		updateUser.avatar = !this.files?.name! ?
-			localStorage.getItem('avatar')! : this.files?.name!
+				this.oldAvatar : this.files?.name!
 		this.authService.updateUser(updateUser)
-			.then(() => localStorage.setItem('avatar', updateUser.avatar))
 			.then(() => {
 				if (this.authChoice)
 					this.router.navigate(['/twofa'])

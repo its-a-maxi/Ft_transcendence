@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, DoCheck, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DoCheck, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { config } from 'dotenv';
 import { Subject } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth-service/auth.service';
 
 
 @Component({
@@ -10,44 +10,15 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent implements OnInit, DoCheck {
-
-
-	state: boolean = false
-	nick: String | null = localStorage.getItem('nick')!
-	public static updateUserStatus: Subject<boolean> = new Subject()
-	avatar: string = ""
-	name: String = this.nick!
-	image: string = this.avatar
-
+export class NavigationComponent implements OnInit
+{
+	@Input() params!: any
 
 	constructor(public authService: AuthService, private router: Router) { }
 
 	ngOnInit(): void
 	{
-		NavigationComponent.updateUserStatus.subscribe(() => {
-				this.nick = localStorage.getItem('nick')
-			})
-		this.getAvatar()
-	}
-
-	ngDoCheck(): void
-	{
-		if (!this.authService.statusLogin())
-			this.state = false
-		else
-			this.state = true
-			
-	}
-
-	getAvatar()
-	{
-		this.authService.getAuthUser()
-			.then(res => res.data)
-			.then(obj => {
-				this.avatar = obj.avatar
-				this.nick = obj.nick
-			 }).catch(() => {return})
+	
 	}
 
 	getPlay()

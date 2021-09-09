@@ -1,3 +1,4 @@
+<app-navigation [params]="paramsNav"></app-navigation>
 <div class="container">
     <h1>Hello {{nick}}!</h1>
     <form #UpdateUser="ngForm" (ngSubmit)="uploadImage()">
@@ -8,10 +9,6 @@
         <div class="form-group">
             <input type="email" name="email" id="email"
                 placeholder="Update Email" [(ngModel)]="newEmail">
-        </div>
-        <div class="form-group">
-            <input type="tel" name="phone" id="phone"
-                placeholder="Update Phone Number" [(ngModel)]="newPhone">
         </div>
         <div class="form-group">
             <h5>Do you want enable 2 Factor Authentication?</h5>
@@ -33,5 +30,4 @@
        </div>
         <input class="btn" type="submit" value="Update" id="btn_update">
     </form>
-    <!-- <a class="btn" id="btn_auth" (click) ="enableTwoFactor()">Authentication</a> -->
 </div>

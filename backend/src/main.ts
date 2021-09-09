@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger('Ft_transcendence')
 
-  app.useWebSocketAdapter(new WsAdapter(app));
+  //app.useWebSocketAdapter(new WsAdapter(app));
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true
@@ -17,9 +17,10 @@ async function bootstrap() {
   app.enableCors({
     "origin": "http://localhost:4200",
     "credentials": true,
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 200
+    // "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    // "preflightContinue": false,
+    // "optionsSuccessStatus": 200,
+    
   })
 
   await app.listen(3000);

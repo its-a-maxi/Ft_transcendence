@@ -1,0 +1,59 @@
+
+
+.container
+{
+    position: absolute;
+    width: 20%;
+    max-width: 1200px;
+    overflow: hidden;
+    height: auto;
+    top: 10vh;
+}
+
+.users
+{
+    right: 3%;
+}
+
+.cmtcard
+{
+    padding: 20px;
+    color: #F4BD76;
+}
+
+.btn
+{
+    position: absolute;
+    bottom: 150px;
+    display: flex;
+    background-color: var(--gold);
+}
+
+.profile
+{
+    bottom: 100px;
+}
+
+.delete
+{
+    bottom: 40px;
+}
+
+mat-card
+{
+    height: 30vh;
+    width: 30vh;
+    margin-right: 5px;
+    top: 80px;
+}
+
+.card-custom
+{
+    width: 80vh;
+    height: 60vh;
+    position: absolute;
+    background-color: darkslategrey;
+    left: 50vh;
+    top: 10vh;
+    border-radius: 10px;
+}

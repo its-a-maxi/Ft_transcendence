@@ -4,14 +4,12 @@ export class User{
               nick = "",
               avatar = "",
               email = "",
-              phone = "",
               authentication = false) {
         
         this.id = id;
         this.nick = nick;
         this.avatar = avatar;
         this.email = email;
-        this.phone = phone;
         this.authentication = authentication;
       }
 
@@ -19,6 +17,5 @@ export class User{
     nick: string;
     avatar: string;
     email: string;
-    phone: string;
     authentication?: boolean;
 }

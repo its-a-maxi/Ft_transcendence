@@ -1,0 +1,19 @@
+p
+{
+    font-size: medium;
+    background-color: lightblue;
+    padding: 5px;
+    width: fit-content;
+    border-radius: 5px;
+    margin: 7px;
+}
+  
+.ownContainer
+{
+    justify-content: flex-end;
+}
+  
+.ownMessage
+{
+    background-color: lightgreen;
+}

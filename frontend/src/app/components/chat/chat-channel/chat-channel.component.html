@@ -1,0 +1,25 @@
+<div *ngIf="chatRoom; else no_chatroom_selected" >
+	<div class="title">
+		{{chatRoom.name.toUpperCase()}} <br> Admin {{chatRoom.ownerId}}
+	</div>
+	<div #messages class="message">
+		<span *ngFor="let message of (messagesPaginate$ | async)?.items">
+		  <app-chat-message [message]="message" [userId]="userId"></app-chat-message>
+		</span>
+	</div>
+	<div style="position: absolute; bottom: 0; display: flex; flex-direction: row; align-items: center;">
+		<mat-form-field style="width: 350px;" class="chatRoom">
+			<input #chatInput matInput [formControl]="chatMessage" type="text">
+		</mat-form-field>
+		<button mat-button [disabled]="!chatMessage.valid" (click)="sendMessage()">
+			<span style="display: flex; flex-direction: row; align-items: center;">
+				<mat-icon style="margin-left: 20px;">send</mat-icon>
+				<p style="margin-left:10px;">Send</p>
+			</span>
+		</button>
+	</div>
+</div>
+
+<ng-template #no_chatroom_selected>
+	<div class="title">No Chatroom Selected</div>
+</ng-template>
