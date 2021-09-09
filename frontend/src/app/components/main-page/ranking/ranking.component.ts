@@ -12,15 +12,45 @@ export class RankingComponent implements OnInit {
 
   constructor(public authService: AuthService, private router: Router) { }
 
-  private users: User[] | undefined;
+  allUsers: User[] | undefined;
+  //table: HTMLElement | null = document.getElementById("table");
 
   async ngOnInit()
   {
     let i: number = 0;
     await this.authService.showAllUsers()
-      .then(response => this.users = response.data);
-    while (this.users && this.users[i])
-      console.log(this.users[i++]);
+      .then(response => this.allUsers = response.data);   
+    this.rankByWins();
+  }
+
+  rankByWins(): void
+  {
+    for (let i = 1; this.allUsers && this.allUsers[i]; i++)
+    {
+      let j = i - 1;
+      let temp = this.allUsers[i];
+      while (j >= 0 && this.allUsers[j].wins < temp.wins)
+      {
+        this.allUsers[j + 1] = this.allUsers[j];
+        j--;
+      }
+      this.allUsers[j + 1] = temp;
+    }
+  }
+
+  rankByDefeats(): void
+  {
+    for (let i = 1; this.allUsers && this.allUsers[i]; i++)
+    {
+      let j = i - 1;
+      let temp = this.allUsers[i];
+      while (j >= 0 && this.allUsers[j].defeats < temp.defeats)
+      {
+        this.allUsers[j + 1] = this.allUsers[j];
+        j--;
+      }
+      this.allUsers[j + 1] = temp;
+    }
   }
 
 }

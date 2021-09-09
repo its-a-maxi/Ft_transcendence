@@ -1,27 +1,16 @@
 export class User{
   
-    constructor(id = 0,
-              nick = "",
-              name = "",
-              avatar = "",
-              email = "",
-              phone = "",
-              authentication = false) {
-        
-        this.id = id;
-        this.nick = nick;
-        this.name = name;
-        this.avatar = avatar;
-        this.email = email;
-        this.phone = phone;
-        this.authentication = authentication;
-      }
+    constructor(){}
 
-    id: number;
-    nick: string;
-    avatar: string | undefined;
-    name: string;
-    email: string;
-    phone: string;
-    authentication?: boolean;
+    id: number = 0;
+    nick: string = "";
+    avatar: string | undefined = "";
+    name: string = "";
+    email: string = "";
+    phone: string = "";
+    authentication?: boolean = false;
+    wins: number = 0;
+    defeats: number = 0;
+    coallition: string = "";
+    isConnected: boolean = false;
 }
