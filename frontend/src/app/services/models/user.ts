@@ -11,6 +11,6 @@ export class User{
     authentication?: boolean = false;
     wins: number = 0;
     defeats: number = 0;
-    coallition: string = "";
+    coalition: string = "";
     isConnected: boolean = false;
 }
