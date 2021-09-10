@@ -1,17 +1,17 @@
 <div class="background">
     <section>
-        <div class="container">
+        <div class="container" id="all">
             
             <div class="top">
                 <nav class="tabs">
                     <ul class="tabsText" id="tabsText">
-                        <a class="otherTab" routerLink="/mainPage/play" routerLinkActive="currentTab" (click)="clickTab()">Play</a>
-                        <a class="otherTab" routerLink="/mainPage/chat" routerLinkActive="currentTab" (click)="clickTab()">Chat</a>
-                        <a class="otherTab" routerLink="/mainPage/friends" routerLinkActive="currentTab" (click)="clickTab()">Friends</a>
-                        <a class="otherTab" routerLink="/mainPage/ranking" routerLinkActive="currentTab" (click)="clickTab()">Ranking</a>
-                        <a class="otherTab" routerLink="/mainPage/settings" routerLinkActive="currentTab" (click)="clickTab()">Settings</a>
+                        <a class="otherTab" routerLink="/mainPage/play" routerLinkActive="currentTab">Play</a>
+                        <a class="otherTab" routerLink="/mainPage/chat" routerLinkActive="currentTab">Chat</a>
+                        <a class="otherTab" routerLink="/mainPage/friends" routerLinkActive="currentTab">Friends</a>
+                        <a class="otherTab" routerLink="/mainPage/ranking" routerLinkActive="currentTab">Ranking</a>
+                        <a class="otherTab" routerLink="/mainPage/settings" routerLinkActive="currentTab">Settings</a>
                     </ul>
-                    <div class="hamburger" (click)="clickNav()" id="hamburger"></div>
+                    <div class="hamburger" (click)="showTabs()" id="hamburger"></div>
                 </nav>
                 <div class="profile" id="profile">
                     <div class="profContainer">
@@ -53,6 +53,18 @@
                 <router-outlet></router-outlet>
             </div>
 
+        </div>
+        <div class="pageBack" id="pageBack" (click)="hideTabs()"></div>
+        <div class="hiddenTabs" id="hiddenTabs">
+            <div class="tabsContainer">
+                <ul class="hiddenTabsBox">
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/play" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Play</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/chat" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Chat</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/friends" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Friends</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/ranking" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Ranking</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/settings" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Settings</a></li>
+                </ul>
+            </div>
         </div>
     </section>
 </div>
