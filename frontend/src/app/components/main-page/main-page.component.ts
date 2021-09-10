@@ -24,13 +24,14 @@ export class MainPageComponent implements OnInit {
   nick: string | undefined;
   name: string | undefined;
   picture: string | ArrayBuffer | undefined;
-  liveUsers = "42"; 
+  liveUsers: number = 0; 
 
   async ngOnInit() {
     await this.authService.getAuthUser()
       .then(response => console.log(this.user = response.data))
     if (!this.user)
       this.router.navigate(['/landingPage/start']);
+    this.getConnectedUsers();
     this.tabsText = document.getElementById("tabsText");
     this.hamburger = document.getElementById("hamburger");
     this.profile = document.getElementById("profile");
@@ -39,6 +40,17 @@ export class MainPageComponent implements OnInit {
     this.nick = this.user?.nick;
     this.name = this.user?.name;
     this.picture = this.user?.avatar;
+  }
+
+  private async getConnectedUsers()
+  {
+    let users: Array<User> = [];
+    await this.authService.showAllUsers()
+      .then(response => console.log(users = response.data))
+    for(let i = 0; users[i]; i++)
+      if (users[i].isConnected == true)
+        this.liveUsers++;
+    return;
   }
 
   private openNav(): void

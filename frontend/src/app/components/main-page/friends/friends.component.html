@@ -1,1 +1,23 @@
-<p>friends works!</p>
+<div class="container">
+	<div class="rankingContainer">
+		<table class="content" id="table">
+			<tr>
+				<th>Nickname</th>
+				<th>Wins</th>
+				<th>Defeats</th>
+				<th>User</th>
+				<th>Coalition</th>
+			</tr>
+			<tr *ngFor="let user of friends">
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.nick}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.wins}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.defeats}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.name}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.coalition}}</td>
+			</tr>
+		</table>
+	</div>
+	<div class=addFriendContainer>
+		<button class=addFriend (click)="addFriend()">+</button>
+	</div>
+</div>
