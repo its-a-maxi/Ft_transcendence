@@ -61,6 +61,19 @@ tr
 	color: rgba(237, 229, 242, .6);
 }
 
+.icon
+{
+	padding-left: 1vh;
+	opacity: 50%;
+	height: 3vh;
+}
+
+.icon:hover
+{
+	opacity: 100%;
+	cursor: pointer;
+}
+
 .sortBy
 {
 	position: absolute;
@@ -128,8 +141,8 @@ p
 
   /* width */
   ::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
+	width: 1vh;
+	height: 1vh;
   }
   
   /* Track */
@@ -147,3 +160,137 @@ p
   ::-webkit-scrollbar-corner {
 	  background: transparent;
 	}
+
+
+	/*  OVERLAY  */
+.overlayBack
+{
+	display: none;
+
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+
+.overlay
+{
+	display: none;
+
+	position: absolute;
+	height: 80%;
+	width: 46vh;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+
+	font-family: futura;
+	background-color: #ede5f2ff;
+	border-radius: 35px;
+}
+
+	.searchBar
+	{
+		position: absolute;
+		width: 80%;
+		height: 10%;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 5%;
+		margin: auto;
+	
+		background-color: rgba(19, 5, 11, .2);
+		border-radius: 35px;
+	}
+
+		.searchInput
+		{
+			background-color: transparent;
+			border: transparent;
+			width: 80%;
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			top: 0;
+			margin: auto;
+
+			letter-spacing: 0.2vh;
+			color: rgba(19, 5, 11, .8);
+			font-size: 2.5vh;
+		}
+
+		input:focus
+		{
+			outline: none;
+		}
+
+		input::placeholder
+		{
+			color: rgba(19, 5, 11, .5);
+		}
+
+	.overlayListContainer
+	{
+		position: absolute;
+		width: 90%;
+		height: 74%;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 5%;
+		margin: auto;
+		overflow: auto;
+	}
+
+	.overlayListElementsContainer
+	{
+		position: absolute;
+		width: 90%;
+		left: 0;
+		right: 0;
+		margin: auto;
+	}
+
+		.overlayList
+		{
+			width: 100%;
+			position: relative;
+
+			border: 0.5vh solid rgba(19, 5, 11, .2);
+			border-radius: 100px;
+			transition-duration: 0.1s;
+			font-size: 2vh;
+			color: rgba(19, 5, 11, .8);
+			list-style: none;
+		}
+
+		.overlayList:hover
+		{
+			background-color: rgba(19, 5, 11, .2);
+			border: 0.5vh solid rgba(19, 5, 11, 0);
+			cursor: pointer;
+		}
+  
+	.overlayListContainer::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	
+	.overlayListContainer::-webkit-scrollbar-thumb {
+		background: rgba(19, 5, 11, .2);
+	}
+
+@media only screen and (max-width: 476px)
+{
+	.overlay
+	{
+		width: 100%;
+	}
+}

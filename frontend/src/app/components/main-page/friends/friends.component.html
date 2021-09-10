@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="container">
 	<div class="rankingContainer">
 		<table class="content" id="table">
 			<tr>
@@ -9,7 +9,11 @@
 				<th>Coalition</th>
 			</tr>
 			<tr *ngFor="let user of friends">
-				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.nick}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.nick}}
+					&nbsp;
+					<img src="../../../assets/images/42icon.png" alt="42" class="icon" (click)="openUser(user.name)">
+					<img src="../../../assets/images/unfriendIcon.png" alt="Unfriend" class="icon" (click)="deleteFriend(user)">
+				</td>
 				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.wins}}</td>
 				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.defeats}}</td>
 				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.name}}</td>
@@ -18,6 +22,21 @@
 		</table>
 	</div>
 	<div class=addFriendContainer>
-		<button class=addFriend (click)="addFriend()">+</button>
+		<button class=addFriend (click)="showOverlay()">+</button>
+	</div>
+</div>
+
+<!--Add Friend-->
+<div class="overlayBack" id="overlayBack" (click)="closeOverlay()"></div>
+<div class="overlay" id="overlay">
+	<div class="searchBar">
+		<input type="text" class="searchInput" id="searchInput" (keyup)="showAtSearch()" placeholder="Search for users..." [(ngModel)]="searchInput">
+	</div>
+	<div class="overlayListContainer">
+		<div class="overlayListElementsContainer">
+			<ul class="overlayList" id="overlayList" *ngFor="let user of notFriendsSearch">
+				<li (click)="addFriend(user)">{{user.nick}} / {{user.name}}</li>
+			</ul>	
+		</div>
 	</div>
 </div>

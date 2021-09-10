@@ -110,8 +110,8 @@ p
 
   /* width */
   ::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
+	width: 1vh;
+	height: 1vh;
   }
   
   /* Track */
