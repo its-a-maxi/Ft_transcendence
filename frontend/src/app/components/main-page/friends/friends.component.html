@@ -21,12 +21,10 @@
 			</tr>
 		</table>
 	</div>
-	<div class=addFriendContainer>
-		<button class=addFriend (click)="showOverlay()">+</button>
-	</div>
 </div>
 
 <!--Add Friend-->
+<button class=addFriend id="addFriend" (click)="showOverlay()">+</button>
 <div class="overlayBack" id="overlayBack" (click)="closeOverlay()"></div>
 <div class="overlay" id="overlay">
 	<div class="searchBar">

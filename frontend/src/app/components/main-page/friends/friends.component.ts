@@ -52,7 +52,6 @@ export class FriendsComponent implements OnInit {
     this.allUsers.push(la);
     this.allUsers.push(la);
     this.allUsers.push(la);
-    this.allUsers.push(la);
     
   }
 
@@ -86,9 +85,18 @@ export class FriendsComponent implements OnInit {
     let container = document.getElementById("container");
     let overlayBack = document.getElementById("overlayBack");
     let overlay = document.getElementById("overlay");
+    let btn = document.getElementById("addFriend");
     container!.style.opacity = "50%";
     overlayBack!.style.display = "block";
-    overlay!.style.display = "block";
+    overlay!.style.opacity = "100%";
+    overlay!.style.height = "80%";
+    overlay!.style.width = "46vh";
+    btn!.style.height = "0vh";
+    btn!.style.width = "0vh";
+    btn!.style.opacity = "0%";
+
+/*height: 80%;
+	width: 46vh;*/
   }
 
   closeOverlay() : void
@@ -96,9 +104,15 @@ export class FriendsComponent implements OnInit {
     let container = document.getElementById("container");
     let overlayBack = document.getElementById("overlayBack");
     let overlay = document.getElementById("overlay");
+    let btn = document.getElementById("addFriend");
     container!.style.opacity = "100%";
     overlayBack!.style.display = "none";
-    overlay!.style.display = "none";
+    overlay!.style.opacity = "0%";
+    overlay!.style.height = "7vh";
+    overlay!.style.width = "7vh";
+    btn!.style.height = "7vh";
+    btn!.style.width = "7vh";
+    btn!.style.opacity = "100%";
   }
 
   showAtSearch()

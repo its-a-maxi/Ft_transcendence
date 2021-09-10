@@ -269,6 +269,7 @@ input:focus
 {
     background-color: #fbc900ff;
     border: 0px solid #ede5f2ff;
+	color: #805849ff;
     cursor: pointer;
 }
 

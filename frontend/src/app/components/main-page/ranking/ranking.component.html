@@ -9,7 +9,10 @@
 				<th>Coalition</th>
 			</tr>
 			<tr *ngFor="let user of allUsers">
-				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.nick}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.nick}}
+					&nbsp;
+					<img src="../../../assets/images/42icon.png" alt="42" class="icon" (click)="openUser(user.name)">
+				</td>
 				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.wins}}</td>
 				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.defeats}}</td>
 				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.name}}</td>

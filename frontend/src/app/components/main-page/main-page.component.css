@@ -38,6 +38,7 @@ section
     height: 100%;
     width: 90%;
     margin: auto;
+    transition-duration: 0.3s;
 }
 
     .top
@@ -393,60 +394,76 @@ section
     color: rgba(19, 5, 11, .8);
 }
 
-.tabsContainer
-{
-    position: absolute;
-    height: 65%;
-    width: 60%;
-    right: 10%;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-}
+    .icon
+    {
+        opacity: 40%;
+        position: absolute;
+        right:4vh;
+        top:4vh;
+        height: 6vh;
+        margin: auto;
+    }
 
-.hiddenTabsBox
-{
-    position: absolute;
-    left: 0;
-    margin: auto;
-}
+    .icon:hover
+    {
+        opacity: 80%;
+        cursor: pointer;
+    }
 
-li
-{
-    list-style: none;
-    margin-bottom: 20%;
-}
+    .tabsContainer
+    {
+        position: absolute;
+        height: 65%;
+        width: 60%;
+        right: 10%;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
 
-.otherHiddenTab
-{
-    object-fit: contain;
+        .hiddenTabsBox
+        {
+            position: absolute;
+            left: 0;
+            margin: auto;
+        }
 
-    color: rgba(19, 5, 11, .4);
-    text-transform: uppercase;
-    font-family: atarianSystem;
-    font-size: 6vh;
-    text-decoration: none;
-    letter-spacing: 0.4vh;
-}
+        li
+        {
+            list-style: none;
+            margin-bottom: 20%;
+        }
 
-.otherHiddenTab:hover
-{
-    cursor: pointer;
-    color: rgba(19, 5, 11, .8);
-}
+            .otherHiddenTab
+            {
+                object-fit: contain;
 
-.currentHiddenTab
-{
-    color: #fbc900ff;
-    text-transform: uppercase;
-    font-family: atarianSystem;
-    font-size: 6vh;
-    cursor: default;
-    letter-spacing: 0.4vh;
-}
+                color: rgba(19, 5, 11, .4);
+                text-transform: uppercase;
+                font-family: atarianSystem;
+                font-size: 6vh;
+                text-decoration: none;
+                letter-spacing: 0.4vh;
+            }
 
-.currentHiddenTab:hover
-{
-    cursor: pointer;
-    color: #fbc900ff;
-}
+            .otherHiddenTab:hover
+            {
+                cursor: pointer;
+                color: rgba(19, 5, 11, .8);
+            }
+
+            .currentHiddenTab
+            {
+                color: #fbc900ff;
+                text-transform: uppercase;
+                font-family: atarianSystem;
+                font-size: 6vh;
+                cursor: default;
+                letter-spacing: 0.4vh;
+            }
+
+            .currentHiddenTab:hover
+            {
+                cursor: pointer;
+                color: #fbc900ff;
+            }

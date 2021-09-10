@@ -13,14 +13,18 @@ export class RankingComponent implements OnInit {
   constructor(public authService: AuthService, private router: Router) { }
 
   allUsers: User[] | undefined;
-  //table: HTMLElement | null = document.getElementById("table");
 
   async ngOnInit()
   {
     let i: number = 0;
     await this.authService.showAllUsers()
-      .then(response => this.allUsers = response.data);   
+      .then(response => this.allUsers = response.data);
     this.rankByWins();
+  }
+
+  openUser(user: string): void
+  {
+    window.open("https://profile.intra.42.fr/users/" + user);
   }
 
   rankByWins(): void

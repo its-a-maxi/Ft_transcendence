@@ -84,6 +84,19 @@ p
 	letter-spacing: 0vh;
 }
 
+.icon
+{
+	padding-left: 1vh;
+	opacity: 50%;
+	height: 3vh;
+}
+
+.icon:hover
+{
+	opacity: 100%;
+	cursor: pointer;
+}
+
 .text
 {
 	left: 0;
