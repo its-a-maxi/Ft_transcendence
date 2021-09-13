@@ -22,7 +22,6 @@ export class FriendsComponent implements OnInit {
 
   async ngOnInit()
   {
-    let i: number = 0;
     await this.authService.getAuthUser()
       .then(response => this.mainUser = response.data);
     if (this.mainUser && this.mainUser.friends)
@@ -91,12 +90,7 @@ export class FriendsComponent implements OnInit {
     overlay!.style.opacity = "100%";
     overlay!.style.height = "80%";
     overlay!.style.width = "46vh";
-    btn!.style.height = "0vh";
-    btn!.style.width = "0vh";
-    btn!.style.opacity = "0%";
-
-/*height: 80%;
-	width: 46vh;*/
+    btn!.style.opacity = "50%";
   }
 
   closeOverlay() : void
@@ -108,10 +102,8 @@ export class FriendsComponent implements OnInit {
     container!.style.opacity = "100%";
     overlayBack!.style.display = "none";
     overlay!.style.opacity = "0%";
-    overlay!.style.height = "7vh";
-    overlay!.style.width = "7vh";
-    btn!.style.height = "7vh";
-    btn!.style.width = "7vh";
+    overlay!.style.height = "0vh";
+    overlay!.style.width = "0vh";
     btn!.style.opacity = "100%";
   }
 

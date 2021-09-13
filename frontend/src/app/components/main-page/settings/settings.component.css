@@ -134,7 +134,7 @@ label
 	color: #ede5f2ff;
 	text-align: right;
 	font-family: futura;
-	font-size: 3vh;
+	font-size: 2.5vh;
 	top: 10%;
 	margin: auto;
 	text-shadow: 2px 2px 15px rgba(19, 5, 11, .35);
@@ -170,13 +170,17 @@ label
 	color:#805849ff;
 	text-align: left;
 	font-family: futura;
-	font-size: 2.5vh;
-	text-shadow: 2px 2px 15px rgba(19, 5, 11, .35);
+	font-size: 2vh;
 }
 
 input:focus
 {
 	outline: none;
+}
+
+input::placeholder
+{
+	color: rgba(19, 5, 11, .5);
 }
 
 .switchContainer

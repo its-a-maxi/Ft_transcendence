@@ -1,5 +1,83 @@
-<div class="container">
-	<div class=friendsContainer></div>
-	<div class=channelsContainer></div>
-	<div class=chat></div>
+<div class="container" id="container">
+	<div class=friendsContainer>
+		<div class="currentChannel">
+			<h1 class="currentChannelText">Friends</h1>
+		</div>
+		<div class="listContainer">
+			<ul class="list" *ngFor="let friend of friends">
+				<li [className]="friend.isConnected ? '' : 'notConnected'" (click)="changeChat(friend)">{{friend.nick}}</li>
+			</ul>
+		</div>
+		<button class=add id="add" (click)="showOverlayAdd('friends')">+</button>
+	</div>
+	<div class=channelsContainer>
+		<div class="currentChannel">
+			<h1 class="currentChannelText">Channels</h1>
+		</div>
+		<div class="listContainer">
+			<ul class="list" *ngFor="let channel of myChannels">
+				<li (click)="changeChat(channel)">{{channel}}</li>
+			</ul>
+		</div>
+		<button class=add id="add" (click)="showOverlayAdd('channels')">+</button>
+	</div>
+	<div class=chat>
+		<div class="currentChannel">
+			<h1 class="currentChannelText">{{currentChat.nick || currentChat}}</h1>
+			<img src="../../../../assets/images/unfriendIcon.png" alt="leave" class="icon" id="closeChat" (click)="deleteChat(currentChat)">
+		</div>
+		<div class="chatBox"></div>
+		<form class="message" (ngSubmit)="sendMessage()">
+			<div class="inputContainer">
+				<input class="textInput" type="text" id="message" name="message" placeholder="Say something!" [(ngModel)]="message">
+			</div>
+		</form>
+	</div>
+	<img src="../../../../assets/images/openRightIcon.png" alt="openRightIcon" class="openRight" (click)="showOverlaySee('channels')">
+	<img src="../../../../assets/images/openLeftIcon.png" alt="openLeftIcon" class="openLeft" (click)="showOverlaySee('friends')">
+</div>
+
+<!--OVERLAYS-->
+<div class="overlayBack" id="overlayBack" (click)="closeOverlay()"></div>
+
+<div class="overlay" id="overlayFriends">
+	<div class="overlayCurrentChannel">
+		<h1 class="overlayCurrentChannelText">Friends</h1>
+	</div>
+	<div class="overlayListBox">
+		<ul class="overlayList" *ngFor="let friend of friends">
+			<li [className]="friend.isConnected ? '' : 'notConnected'" (click)="changeChat(friend)">{{friend.nick}}</li>
+		</ul>
+	</div>
+	<button class=overlayAdd id="overlayBtnFriend" (click)="showOverlayAdd('friends')">+</button>
+</div>
+
+<div class="overlay" id="overlayChannels">
+	<div class="overlayCurrentChannel">
+		<h1 class="overlayCurrentChannelText">Channels</h1>
+	</div>
+	<div class="overlayListBox">
+		<ul class="overlayList" *ngFor="let channel of myChannels">
+			<li (click)="changeChat(channel)" (click)="changeChat(channel)">{{channel}}</li>
+		</ul>
+	</div>
+	<button class=overlayAdd id="overlayBtnChannel" (click)="showOverlayAdd('channels')">+</button>
+</div>
+
+<div class="overlay" id="overlayAdd">
+	<div class="searchBar">
+		<input type="text" class="searchInput" id="searchInput" (keyup)="showAtSearch()" placeholder={{searchPlaceholder}} [(ngModel)]="searchInput">
+	</div>
+	<div class="overlayListContainer">
+		<div class="overlayListElementsContainer" id="addFriendsList">
+			<ul class="overlayList" id="overlayList" *ngFor="let user of searchResult">
+				<li (click)="addFriend(user)">{{user.nick}} / {{user.name}}</li>
+			</ul>	
+		</div>
+		<div class="overlayListElementsContainer" id="addChannelsList">
+			<ul class="overlayList" id="overlayList" *ngFor="let channel of searchResult">
+				<li (click)="addChannel(channel)">{{channel}}</li>
+			</ul>	
+		</div>
+	</div>
 </div>

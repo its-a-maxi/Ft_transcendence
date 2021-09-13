@@ -18,10 +18,10 @@ div{
 {
 	position: absolute;
 	width: 90%;
-	height: 85%;
+	height: 90%;
 	right: 0;
 	left: 0;
-	top: 4%;
+	top: 0;
 	margin: auto;
 	overflow: auto;
 }
@@ -66,7 +66,7 @@ tr
 	position: absolute;
 	width: 90%;
 	height: 7%;
-	top: 89%;
+	top: 90%;
 	right: 0;
 	left: 0;
 	margin: auto;

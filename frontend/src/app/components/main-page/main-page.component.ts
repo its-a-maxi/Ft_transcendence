@@ -20,7 +20,7 @@ export class MainPageComponent implements OnInit {
 
   async ngOnInit() {
     await this.authService.getAuthUser()
-      .then(response => console.log(this.user = response.data))
+      .then(response => this.user = response.data)
     if (!this.user)
       this.router.navigate(['/landingPage/start']);
     this.getConnectedUsers();
@@ -53,7 +53,7 @@ export class MainPageComponent implements OnInit {
   {
     let users: Array<User> = [];
     await this.authService.showAllUsers()
-      .then(response => console.log(users = response.data))
+      .then(response => users = response.data)
     for(let i = 0; users[i]; i++)
       if (users[i].isConnected == true)
         this.liveUsers++;
