@@ -59,11 +59,11 @@
             <img src="../../../assets/images/closeIcon.png" alt="close" class="icon" (click)="hideTabs()">
             <div class="tabsContainer">
                 <ul class="hiddenTabsBox">
-                    <li><a class="otherHiddenTab" routerLink="/mainPage/play" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Play</a></li>
-                    <li><a class="otherHiddenTab" routerLink="/mainPage/chat" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Chat</a></li>
-                    <li><a class="otherHiddenTab" routerLink="/mainPage/friends" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Friends</a></li>
-                    <li><a class="otherHiddenTab" routerLink="/mainPage/ranking" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Ranking</a></li>
-                    <li><a class="otherHiddenTab" routerLink="/mainPage/settings" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Settings</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/play/{{paramId}}" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Play</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/chat/{{paramId}}" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Chat</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/friends/{{paramId}}" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Friends</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/ranking/{{paramId}}" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Ranking</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/settings/{{paramId}}" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Settings</a></li>
                 </ul>
             </div>
         </div>
