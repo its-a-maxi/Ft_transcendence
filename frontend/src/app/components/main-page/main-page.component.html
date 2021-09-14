@@ -1,0 +1,71 @@
+<div class="background">
+    <section>
+        <div class="container" id="all">
+            
+            <div class="top">
+                <nav class="tabs">
+                    <ul class="tabsText" id="tabsText">
+                        <a class="otherTab" routerLink="/mainPage/play/{{paramId}}" routerLinkActive="currentTab">Play</a>
+                        <a class="otherTab" routerLink="/mainPage/chat/{{paramId}}" routerLinkActive="currentTab">Chat</a>
+                        <a class="otherTab" routerLink="/mainPage/friends/{{paramId}}" routerLinkActive="currentTab">Friends</a>
+                        <a class="otherTab" routerLink="/mainPage/ranking/{{paramId}}" routerLinkActive="currentTab">Ranking</a>
+                        <a class="otherTab" routerLink="/mainPage/settings/{{paramId}}" routerLinkActive="currentTab">Settings</a>
+                    </ul>
+                    <div class="hamburger" (click)="showTabs()" id="hamburger"></div>
+                </nav>
+                <div class="profile" id="profile">
+                    <div class="profContainer">
+                        <div class="profileCircle">
+                            <img src={{picture}} id="profilePicture" alt="Profile Picture" class="profilePicture">
+                            <a routerLink="">
+                                <img src="../../../assets/images/Logout.png" id="logout" alt="Logout" class="logout">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="namesContainer">
+                        <div class="halfContainer">
+                            <p id="nickname" class="nickname">{{nick}}</p>
+                        </div>
+                        <div class="halfContainer">
+                            <p id="user" class="user"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom" id="bottom">
+                <div class="meta">
+                    <div class=logoContainer>
+                        <img src="../../../assets/images/LogoBig.png" alt="Page logo" class="logo">
+                    </div>
+                    <div class="liveUsersContainer">
+                        <div class="liveUsersNumContainer">
+                            <p id="liveUsers" class="liveUsersNum">{{liveUsers}}</p>
+                        </div>
+                        <div class="liveUsersTextContainer">
+                            <p class="liveUsersText">Live<br>users</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content" id="content">     
+                <router-outlet></router-outlet>
+            </div>
+
+        </div>
+        <div class="pageBack" id="pageBack" (click)="hideTabs()"></div>
+        <div class="hiddenTabs" id="hiddenTabs">
+            <img src="../../../assets/images/closeIcon.png" alt="close" class="icon" (click)="hideTabs()">
+            <div class="tabsContainer">
+                <ul class="hiddenTabsBox">
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/play" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Play</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/chat" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Chat</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/friends" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Friends</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/ranking" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Ranking</a></li>
+                    <li><a class="otherHiddenTab" routerLink="/mainPage/settings" routerLinkActive="currentHiddenTab" (click)="hideTabs()">Settings</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>

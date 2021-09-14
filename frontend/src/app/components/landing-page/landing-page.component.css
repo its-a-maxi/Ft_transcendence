@@ -1,0 +1,21 @@
+
+.background{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+
+    background-image: url("../../../assets/images/LandingBackground.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+section
+{
+    height: 90vh;
+    position: relative;
+}

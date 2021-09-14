@@ -13,7 +13,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TwoFAComponent } from './components/two-fa/two-fa.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { ChatRoomComponent } from './components/chat/chat-room/chat-room.component';
+import { ChatChannelComponent } from './components/chat/chat-channel/chat-channel.component';
+import { ChatMessageComponent } from './components/chat/chat-message/chat-message.component';
 
 import { MatListModule } from "@angular/material/list";
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -29,9 +31,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { NgxPaginationModule } from 'ngx-pagination'
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { ChatRoomComponent } from './components/chat/chat-room/chat-room.component';
-import { ChatChannelComponent } from './components/chat/chat-channel/chat-channel.component';
-import { ChatMessageComponent } from './components/chat/chat-message/chat-message.component';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { StartComponent } from './components/landing-page/start/start.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
+import { SettingsComponent } from './components/main-page/settings/settings.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -50,7 +54,11 @@ export function tokenGetter(): string | null {
     ChatComponent,
     ChatRoomComponent,
     ChatChannelComponent,
-    ChatMessageComponent
+    ChatMessageComponent,
+    LandingPageComponent,
+    StartComponent,
+    MainPageComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
