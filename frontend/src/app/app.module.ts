@@ -36,6 +36,9 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { StartComponent } from './components/landing-page/start/start.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { SettingsComponent } from './components/main-page/settings/settings.component';
+import { RankingComponent } from './components/main-page/ranking/ranking.component';
+import { PlayComponent } from './components/main-page/play/play.component';
+import { FriendsComponent } from './components/main-page/friends/friends.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -58,7 +61,10 @@ export function tokenGetter(): string | null {
     LandingPageComponent,
     StartComponent,
     MainPageComponent,
-    SettingsComponent
+    SettingsComponent,
+    RankingComponent,
+    PlayComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,

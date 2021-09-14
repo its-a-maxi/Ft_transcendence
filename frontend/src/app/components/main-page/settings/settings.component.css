@@ -135,6 +135,7 @@ label
 	text-align: right;
 	font-family: futura;
 	font-size: 2.5vh;
+	letter-spacing: 0.2vh;
 	top: 25%;
 	margin: auto;
 	text-shadow: 2px 2px 15px rgba(19, 5, 11, .35);
