@@ -49,7 +49,7 @@ export class UsersService
 
 	async updateUser(user: UpdateDto, clientID: number)//: Promise<User>
 	{
-		user.avatar = `http://localhost:3000/auth/assets/${user.avatar}`
+		//user.avatar = `http://localhost:3000/auth/assets/${user.avatar}`
 		return await this.usersRepository.update(clientID, user)
 	}
 
@@ -57,4 +57,9 @@ export class UsersService
 	{
 		return this.usersRepository.update(clientID, { secret });
 	}
+
+	// async saveUserBlackList(blackList: string[], userId: number)
+	// {
+	// 	return this.usersRepository.insert()
+	// }
 }

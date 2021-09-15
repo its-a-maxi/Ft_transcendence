@@ -2,7 +2,7 @@ import { UserI } from "src/users/user-service/models/user.interface";
 
 export interface RoomI
 {
-    id: number;
+    id?: number;
     ownerId: number;
     name: string;
     password: string;

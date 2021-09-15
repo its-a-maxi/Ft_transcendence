@@ -14,7 +14,7 @@ export class MessageService
 
 	async create(message: MessageI): Promise<MessageI>
     {
-        return this.messageRepository.save(this.messageRepository.create(message));
+        return await this.messageRepository.save(this.messageRepository.create(message));
     }
 
     async findMessagesForRoom(room: RoomI, options: IPaginationOptions): Promise<Pagination<MessageI>>
@@ -26,7 +26,7 @@ export class MessageService
             .leftJoinAndSelect('message.user', 'user')
             .orderBy('message.created_at', 'DESC');
 
-        return paginate(query, options);
+        return await paginate(query, options);
 
     }
 }

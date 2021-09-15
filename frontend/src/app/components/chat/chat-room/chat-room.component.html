@@ -3,6 +3,7 @@
 		<mat-selection-list [multiple]="false" (selectionChange)="onSelectRoom($event)">
 			<mat-list-option *ngFor="let room of rooms" [value]="room">
 				Room: {{room.name}} | IdRoom: {{room.id}}
+				<mat-icon (click)="deleteRoom(room)">delete_forever</mat-icon>
 				<mat-divider></mat-divider>
 			</mat-list-option>
 		</mat-selection-list>
@@ -16,8 +17,14 @@
 <div>
 	<div class="container users">
 		<mat-selection-list [multiple]="false">
-			<mat-list-option *ngFor="let user of users" [value]="user">
-				User: {{user.nick.toUpperCase()}}
+			<mat-list-option *ngFor="let user of usersConnected"  [value]="user" >
+					User: {{user.nick.toUpperCase()}}
+				<div *ngIf="user.id != userId" class="option">
+					<mat-icon (click)="directMessage(user)">message</mat-icon>
+					<mat-icon (click)="blockUser(user)" >lock</mat-icon>
+					<mat-icon (click)="UnblockUser(user)" >lock_open</mat-icon>
+					<mat-icon (click)="UserBanned(user)" >snooze</mat-icon>
+				</div>
 				<mat-divider></mat-divider>
 			</mat-list-option>
 		</mat-selection-list>

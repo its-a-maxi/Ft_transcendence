@@ -3,6 +3,7 @@ import { JoinedRoomEntity } from "src/chat/models/joined-room/joined-room.entity
 import { MessageEntity } from "src/chat/models/messages/messages.entity";
 import { RoomEntity } from "src/chat/models/room/room.entity";
 import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn} from "typeorm";
+import { UserI } from "../user.interface";
 
 @Entity('users')
 export class UserEntity
@@ -25,6 +26,12 @@ export class UserEntity
     @Column({ nullable: true })
     secret?: string;
 
+    @Column("simple-array", {nullable: true})
+    blackList: string[];
+    
+    @Column({default: false})
+    isBanned?: boolean;
+
     @ManyToMany(() => RoomEntity, room => room.users)
     rooms: RoomEntity
 
@@ -36,4 +43,5 @@ export class UserEntity
 
     @OneToMany(() => MessageEntity, message => message.user)
     messages: MessageEntity[];
+
 }

@@ -1,8 +1,8 @@
 import { UserEntity } from "src/users/user-service/models/entities/users.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
-@Entity()
+@Entity('conn')
 export class ConnectedUserEntity
 {
     @PrimaryGeneratedColumn()
@@ -10,6 +10,9 @@ export class ConnectedUserEntity
 
     @Column()
     socketId: string;
+
+    @Column()
+    userId: number;
 
     @ManyToOne(() => UserEntity, user => user.connections)
     @JoinColumn()

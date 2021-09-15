@@ -17,12 +17,24 @@ import { MessageEntity } from './models/messages/messages.entity';
 import { MessageService } from './chat-service/message/message.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, RoomEntity, ConnectedUserEntity, JoinedRoomEntity, MessageEntity]),
+  imports: [TypeOrmModule.forFeature([UserEntity,
+            RoomEntity,
+            ConnectedUserEntity,
+            JoinedRoomEntity,
+            MessageEntity,
+            ]),
             JwtModule.register({
                     secret: enviroment.PASS_SECRET,
                     signOptions: { expiresIn: '1h'}
   })],
-  providers: [RoomService, ChatGateway, AuthService, UsersService, ConnectedUserService, JoinedRoomService, MessageService],
+  providers: [RoomService,
+              ChatGateway,
+              AuthService,
+              UsersService,
+              ConnectedUserService,
+              JoinedRoomService,
+              MessageService,
+              ],
   exports: [RoomService],
   controllers: [ChatController]
 })

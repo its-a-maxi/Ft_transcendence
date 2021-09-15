@@ -1,11 +1,11 @@
 import { UserEntity } from "src/users/user-service/models/entities/users.entity";
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { JoinedRoomEntity } from "../joined-room/joined-room.entity";
 import { MessageEntity } from "../messages/messages.entity";
 
 
 @Entity()
-export class RoomEntity
+export class RoomEntity 
 {
     @PrimaryGeneratedColumn()
     id: number;

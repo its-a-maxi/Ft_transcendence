@@ -13,17 +13,27 @@ export class ConnectedUserService
 
 	async create(connectedUser: ConnectedUserI): Promise<ConnectedUserI>
     {
-        return this.connectedUserRepository.save(connectedUser)
+        return await this.connectedUserRepository.save(this.connectedUserRepository.create(connectedUser))
     }
 
 	async deleteSocket(socketId: string)
     {
-        return this.connectedUserRepository.delete({socketId})
+        return await this.connectedUserRepository.delete({socketId})
     }
 
     async findByUser(user: UserI): Promise<ConnectedUserI[]>
     {
-        return this.connectedUserRepository.find({user})
+        return await this.connectedUserRepository.find({user})
+    }
+
+    async findAllUserConnected(): Promise<ConnectedUserI[]>
+    {
+       return await this.connectedUserRepository.find()
+    }
+
+    async findUserById(userId: number): Promise<ConnectedUserI>
+    {
+        return await this.connectedUserRepository.findOne({userId})
     }
 
     async deleteAll()

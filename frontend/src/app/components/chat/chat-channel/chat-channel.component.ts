@@ -7,6 +7,7 @@ import { ChatService } from 'src/app/services/chat-service/chat-service';
 import { MessageI, MessagePaginateI } from 'src/app/services/models/message.interface';
 import { RoomI } from 'src/app/services/models/room.interface';
 import { map, startWith, tap } from 'rxjs/operators';
+import { UserI } from 'src/app/services/models/user.interface';
 
 @Component({
 	selector: 'app-chat-channel',
@@ -70,7 +71,7 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 
 	sendMessage()
 	{
-		this.chatService.sendMessage({ text: this.chatMessage.value, room: this.chatRoom });
+		this.chatService.sendMessage({ text: this.chatMessage.value, room: this.chatRoom});
 		this.chatMessage.reset();
 	}
 

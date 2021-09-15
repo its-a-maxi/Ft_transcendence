@@ -13,4 +13,8 @@ export interface UserI
     authentication?: boolean;
 
     secret?: string;
+
+    blackList?: string[];
+    
+    isBanned?: boolean;
 }

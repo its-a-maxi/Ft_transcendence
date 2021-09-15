@@ -31,7 +31,7 @@ export class AuthController
         //res.cookie(`clientID-${client['id']}`, req.user, {httpOnly: true});
         if (!clientData)
         {
-            try
+           try
             {
                 const newUser = {
                     id: client['id'],
@@ -40,10 +40,14 @@ export class AuthController
                 }
                 const createdUser = await this.userService.customCreateUser(newUser)
                 if (createdUser)
+                {
                     return res.redirect(`http://localhost:4200/profile/${createdUser.id}`)
+                }
+                
             }
             catch
             {
+                console.log("fuera")
                 return res.redirect("http://localhost:4200/home")
             }
         }
@@ -117,7 +121,7 @@ export class AuthController
     @Put('updateUser')
     async updateUser(@Req() req: Request, @Body() user: UpdateDto)
     {
-        user.avatar = req.body.avatar
+        user.avatar = `http://localhost:3000/auth/assets/${req.body.avatar}`
         user.authentication = req.body.authentication
         //const clientID = await this.authService.clientID(req)
         const id = req.body.id

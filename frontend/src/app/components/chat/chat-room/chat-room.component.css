@@ -57,3 +57,48 @@ mat-card
     top: 10vh;
     border-radius: 10px;
 }
+
+mat-list-option + mat-list-option
+{
+    margin-top: 2em;
+}
+
+mat-icon
+{
+    margin-right: 40px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    transform: scale(1.2);
+}
+
+.option
+{
+    padding: 4em;
+    flex-direction: column;
+}
+
+.block
+{
+    position: relative;
+    left: 55px;
+}
+
+.unlock
+{
+    position: relative;
+    left: 117px;
+    top: -41px;
+}
+
+.time
+{
+    left: 11em;
+    top: -4em;
+}
+
+mat-divider
+{
+    margin-bottom: 7em;
+    margin-top: 10px;
+   
+}

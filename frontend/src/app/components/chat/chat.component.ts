@@ -3,6 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
+import { UserI } from 'src/app/services/models/user.interface';
 
 
 @Component({
@@ -26,9 +27,11 @@ export class ChatComponent implements OnInit, OnDestroy
 		name: new FormControl(null, [Validators.required]),
 		password: new FormControl(null, [Validators.required]),
 		option: new FormControl('public', [Validators.required]),
+		users: new FormControl(null)
 	});
 
 	userId!: number;
+	usersConnected!: UserI[]
 
 	constructor(private authService: AuthService,
 				private chatService: ChatService,
@@ -40,6 +43,11 @@ export class ChatComponent implements OnInit, OnDestroy
 	{
 		this.paramId = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 5)!
 		this.userId = parseInt(this.paramId)
+		this.chatService.findUsersConnected()
+		this.chatService.getConnectedUsers().subscribe(res => {
+			this.usersConnected = res
+			console.log(this.usersConnected)
+		})
 		//this.findUser()
 		//this.chatService.getMyRooms().then(res => res.data.map(obj => console.log(obj)))
 	}
@@ -75,7 +83,13 @@ export class ChatComponent implements OnInit, OnDestroy
 	{
 		if (this.form.valid)
 		{
-			this.form.patchValue({ownerId: this.userId})
+			let listUser: UserI[] = []
+			for (let user of this.usersConnected)
+			{
+				if (user.id !== this.userId)
+					listUser.push(user)
+			}
+			this.form.patchValue({ ownerId: this.userId, users: listUser})
 			this.chatService.createRoom(this.form.getRawValue());
 			//window.location.reload()
 			//this.router.navigate(['../dashboard'], { relativeTo: this.activatedRoute });
