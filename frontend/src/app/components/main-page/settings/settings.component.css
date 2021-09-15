@@ -12,6 +12,7 @@ div{
 	box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
 	border-radius: 35px;
 	border: 0.5vh solid #ede5f2ff;
+    transition-duration: 0.3s;
 }
 
 .settingsContainer
@@ -333,4 +334,23 @@ input::placeholder
   ::-webkit-scrollbar-thumb {
 	background: #ede5f2ff;
 	border-radius: 100px;
+  }
+
+  app-two-fa-popup
+  {
+	  display: none;
+  }
+
+  .overlayBack
+  {
+	  display: none;
+  
+	  position: fixed;
+	  width: 100vw;
+	  height: 100vh;
+	  right: 0;
+	  left: 0;
+	  top: 0;
+	  bottom: 0;
+	  margin: auto;
   }

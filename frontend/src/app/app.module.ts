@@ -39,6 +39,7 @@ import { SettingsComponent } from './components/main-page/settings/settings.comp
 import { RankingComponent } from './components/main-page/ranking/ranking.component';
 import { PlayComponent } from './components/main-page/play/play.component';
 import { FriendsComponent } from './components/main-page/friends/friends.component';
+import { TwoFaPopupComponent } from './components/main-page/settings/two-fa-popup/two-fa-popup.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -64,7 +65,8 @@ export function tokenGetter(): string | null {
     SettingsComponent,
     RankingComponent,
     PlayComponent,
-    FriendsComponent
+    FriendsComponent,
+    TwoFaPopupComponent
   ],
   imports: [
     BrowserModule,

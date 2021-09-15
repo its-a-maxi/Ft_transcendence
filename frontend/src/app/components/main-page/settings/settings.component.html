@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id='container'>
 	<div class="settingsContainer">
 		<form class="settingsForm" (ngSubmit)="uploadNewSettings()">
 			<div class="profilePictureContainer">
@@ -38,7 +38,7 @@
 				</div>
 				<div class="secondHalfContainer">
 					<div class="switchContainer">
-					  <input type="checkbox" id="twoFact" name="twoFact" class="checkBox" [(ngModel)]="authentication">
+					  <input type="checkbox" id="twoFact" name="twoFact" class="checkBox" [(ngModel)]="authentication" (click)='showOverlay()'>
 					</div>
 					<p class="warning">* It uses google authenticator</p>
 				</div>
@@ -49,3 +49,6 @@
 		</form>
 	</div>
 </div>
+
+<div class="overlayBack" id="overlayBack" (click)="closeOverlay(false)"></div>
+<app-two-fa-popup (closeOverlay)='closeOverlay(true)' id='popup'></app-two-fa-popup>

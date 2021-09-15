@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FindValueSubscriber } from 'rxjs/internal/operators/find';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { User } from 'src/app/services/models/user';
+import { TwoFaPopupComponent } from './two-fa-popup/two-fa-popup.component';
 
 interface HtmlInputEvent extends Event
 {
@@ -31,14 +31,20 @@ export class SettingsComponent implements OnInit {
 
   private check: boolean = false;
 
-  paramId: string = "";
+  paramId: string | null = sessionStorage.getItem('token');
+
+  @ViewChild(TwoFaPopupComponent) child?: TwoFaPopupComponent;
 
   constructor(public authService: AuthService, private router: Router, private activateRoute: ActivatedRoute) { }
 
   async ngOnInit() {
-		this.paramId = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 5)!
-		sessionStorage.setItem('token', this.paramId)
-    await this.findUser();
+    if (!this.paramId)
+    {
+      this.paramId = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 5)!
+      sessionStorage.setItem('token', this.paramId)
+      window.location.reload();
+    }
+    await this.findUser(this.paramId);
 
     this.oldNick = this.user!.nick;
     this.oldEmail = this.user!.email;
@@ -51,9 +57,9 @@ export class SettingsComponent implements OnInit {
   }
 
 
-	async findUser()
+	async findUser(id: string)
 	{	
-		await this.authService.getUserById(this.paramId)
+		await this.authService.getUserById(id)
 			.then(res => {
 				if (res.data === "ERROR!!")
 				{
@@ -117,11 +123,36 @@ export class SettingsComponent implements OnInit {
         this.user.email = this.email;
       this.user.authentication = this.authentication;
       await this.authService.updateUser(this.user);
-      if (this.user.authentication != this.oldAuthentication && this.user.authentication)
-        this.router.navigate(['/twofa']);
-      else
+      //if (this.user.authentication != this.oldAuthentication && this.user.authentication)
+      //  this.router.navigate(['/twofa']);
+      //else
         window.location.reload();
       return;
     }
+  }
+
+  showOverlay() : void
+  {
+    if (this.authentication == true)
+      return;
+    let container = document.getElementById("container");
+    let overlayBack = document.getElementById("overlayBack");
+    let popup = document.getElementById("popup");
+    container!.style.opacity = "50%";
+    overlayBack!.style.display = "block";
+    popup!.style.display = "block";
+  }
+
+  closeOverlay(check: boolean) : void
+  {
+    if (check == false)
+      this.authentication = false;
+      
+    let container = document.getElementById("container");
+    let overlayBack = document.getElementById("overlayBack");
+    let popup = document.getElementById("popup");
+    container!.style.opacity = "100%";
+    overlayBack!.style.display = "none";
+    popup!.style.display = "none";
   }
 }
