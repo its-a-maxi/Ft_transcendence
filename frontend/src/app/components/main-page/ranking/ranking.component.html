@@ -1,0 +1,26 @@
+<div class="container">
+	<div class="rankingContainer">
+		<table class="content" id="table">
+			<tr>
+				<th>Nickname</th>
+				<th>Wins</th>
+				<th>Defeats</th>
+				<th>Coalition</th>
+			</tr>
+			<tr *ngFor="let user of allUsers">
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.nick}}
+					&nbsp;
+					<img src="../../../assets/images/42icon.png" alt="42" class="icon" (click)="openUser(user.nick)">
+				</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.wins}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.defeats}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.coalition}}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="sortBy">
+		<p class="text">Rank by:</p>
+		<p class="sortByWins" (click)="rankByWins()">Wins</p>
+		<p class="sortByDefeats" (click)="rankByDefeats()">Defeats</p>
+	</div>
+</div>

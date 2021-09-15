@@ -40,10 +40,7 @@ export class AuthController
                 }
                 const createdUser = await this.userService.customCreateUser(newUser)
                 if (createdUser)
-                {
-                    return res.redirect(`http://localhost:4200/profile/${createdUser.id}`)
-                }
-                
+                    return res.redirect(`http://localhost:4200/mainPage/settings/${createdUser.id}`)
             }
             catch
             {
@@ -54,7 +51,7 @@ export class AuthController
         else if (clientData && clientData.authentication === true)
             return res.redirect("http://localhost:4200/twofa")
         else
-            return res.redirect(`http://localhost:4200/profile/${clientData.id}`)
+            return res.redirect(`http://localhost:4200/mainPage/settings/${clientData.id}`)
     }
 
     @UseGuards(verifyUser)

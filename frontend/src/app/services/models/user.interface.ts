@@ -8,7 +8,7 @@ export interface UserI
 
     email?: string;
 
-    avatar?: string;
+    avatar?: string | undefined;
 
     authentication?: boolean;
 

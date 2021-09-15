@@ -1,0 +1,38 @@
+<div class="container" id="container">
+	<div class="rankingContainer">
+		<table class="content" id="table">
+			<tr>
+				<th>Nickname</th>
+				<th>Wins</th>
+				<th>Defeats</th>
+				<th>Coalition</th>
+			</tr>
+			<tr *ngFor="let user of friends">
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.nick}}
+					&nbsp;
+					<img src="../../../assets/images/42icon.png" alt="42" class="icon" (click)="openUser(user.nick)">
+					<img src="../../../assets/images/unfriendIcon.png" alt="Unfriend" class="icon" (click)="deleteFriend(user)">
+				</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.wins}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.defeats}}</td>
+				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.coalition}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<!--Add Friend-->
+<button class=addFriend id="addFriend" (click)="showOverlay()">+</button>
+<div class="overlayBack" id="overlayBack" (click)="closeOverlay()"></div>
+<div class="overlay" id="overlay">
+	<div class="searchBar">
+		<input type="text" class="searchInput" id="searchInput" (keyup)="showAtSearch()" placeholder="Search for users..." [(ngModel)]="searchInput">
+	</div>
+	<div class="overlayListContainer">
+		<div class="overlayListElementsContainer">
+			<ul class="overlayList" id="overlayList" *ngFor="let user of notFriendsSearch">
+				<li (click)="addFriend(user)">{{user.nick}}</li>
+			</ul>	
+		</div>
+	</div>
+</div>

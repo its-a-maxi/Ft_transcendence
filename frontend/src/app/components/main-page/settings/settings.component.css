@@ -1,0 +1,356 @@
+div{
+    border: 0px solid #ede5f2ff;
+}
+
+.container
+{
+	position: relative;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(19, 5, 11, .50);
+	box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+	border-radius: 35px;
+	border: 0.5vh solid #ede5f2ff;
+    transition-duration: 0.3s;
+}
+
+.settingsContainer
+{
+	position: absolute;
+	width: 90%;
+	height: 90%;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	overflow: auto;
+}
+
+.settingsForm
+{
+	position: relative;
+	width: 90%;
+	right: 0;
+	left: 0;
+	margin: auto;
+}
+
+.profilePictureContainer
+{
+	position: relative;
+	width: 100%;
+	height: 20vh;
+	right: 0;
+	left: 0;
+	margin: auto;
+}
+
+
+.profilePictureFrame
+{
+	position: absolute;
+	height: 16vh;
+	width: 16vh;
+	bottom: 10%;
+	left: 0;
+	margin: auto;
+	border: 0.5vh solid #ede5f2ff;
+	border-radius: 100px;
+}
+
+.profilePicture
+{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 100px;
+}
+
+.profilePictureUpload
+{
+	opacity: 0%;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+	color: #ede5f2ff;
+	text-align: center;
+	font-family: futura;
+	font-size: 2vh;
+	background-color: rgba(19, 5, 11, .50);
+	border-radius: 100px;
+}
+
+.profilePictureInput
+{
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 100px;
+	position: absolute;
+}
+
+.profilePictureInput:hover
+{
+	cursor: pointer;
+}
+
+.lineContainer
+{
+	position: relative;
+	width: 100%;
+	height: 6vh;
+	right: 0;
+	left: 0;
+	margin: auto;
+}
+
+.firstHalfContainer
+{
+	position: absolute;
+	width: 50%;
+	height: 100%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+}
+
+.secondHalfContainer
+{
+	position: absolute;
+	width: 50%;
+	height: 100%;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+}
+
+label
+{   
+	position: absolute;
+	color: #ede5f2ff;
+	text-align: right;
+	font-family: futura;
+	font-size: 2.5vh;
+	letter-spacing: 0.2vh;
+	top: 25%;
+	margin: auto;
+	text-shadow: 2px 2px 15px rgba(19, 5, 11, .35);
+}
+
+.inputContainer
+{
+	position: absolute;
+	width: 90%;
+	height: 70%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	top: 0;
+	margin: auto;
+
+	background-color: #ede5f2ff;
+	border-radius: 50px;
+}
+
+.textInput
+{
+	background-color: transparent;
+	border: transparent;
+	width: 90%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	margin: auto;
+
+	color:#805849ff;
+	text-align: left;
+	font-family: futura;
+	font-size: 2vh;
+}
+
+input:focus
+{
+	outline: none;
+}
+
+input::placeholder
+{
+	color: rgba(19, 5, 11, .5);
+}
+
+.switchContainer
+{
+	position: absolute;
+	width: 6vh;
+	height: 6vh;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	top: 0;
+	margin: auto;
+	display: inline-block;
+}
+
+.checkBox
+{
+	appearance: none;
+	position: absolute;
+	width: 70%;
+	height: 70%;
+	left: 0;
+	bottom: 0;
+	top: 0;
+	margin: auto;
+
+	background-color: #ede5f2ff;
+	border-radius: 50px;
+}
+
+.checkBox:checked
+{
+	background-color: #805849ff;
+	border: 1vh solid #ede5f2ff;
+}
+
+.checkBox:hover
+{
+	cursor: pointer;
+}
+
+.warning
+{
+	position: absolute;
+	height: 100%;
+	top: 30%;
+	left: 6vh;
+	margin: auto;
+
+	color: #fbc900ff;
+	text-align: left;
+	font-family: futura;
+	font-size: 2vh;
+	text-shadow: 2px 2px 15px rgba(19, 5, 11, .35);
+}
+
+.submitContainer
+{
+	position: absolute;
+	height: 10vh;
+	width: 100%;
+}
+
+.submitButton
+{
+	position: absolute;
+	width: 30vh;
+	height: 70%;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin: auto;
+	
+	background-color: rgba(237, 229, 242, .25);
+	border: 0.5vh solid #ede5f2ff;
+	border-radius: 1000px;
+
+	color: #ede5f2ff;
+	text-transform: uppercase;
+	text-align: center;
+	padding-top: 0%;
+	font-family: futura;
+	font-size: 2.5vh;
+	text-shadow: 2px 2px 10px rgba(19, 5, 11, .35);
+	
+	transition-duration: 0.2s;
+}
+
+.submitButton:hover
+{
+    background-color: #fbc900ff;
+    border: 0px solid #ede5f2ff;
+	color: #805849ff;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1000px)
+{
+	.lineContainer
+	{
+		height: 12vh;
+	}
+
+	.firstHalfContainer
+	{
+		height: 50%;
+		width: 100%;
+		top: -50%;
+		right: 0;
+		left: 0;
+		margin: auto;
+	}
+
+	.secondHalfContainer
+	{
+		height: 50%;
+		width: 100%;
+		bottom: -50%;
+		right: 0;
+		left: 0;
+		margin: auto;
+	}
+
+	.inputContainer
+	{
+		width: 75%;
+	}
+
+	.profilePictureFrame
+	{
+		width: 13vh;
+		height: 13vh;
+	}
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 1vh;
+	height: 1vh;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: rgba(237, 229, 242, .25);
+	border-radius: 100px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: #ede5f2ff;
+	border-radius: 100px;
+  }
+
+  app-two-fa-popup
+  {
+	  display: none;
+  }
+
+  .overlayBack
+  {
+	  display: none;
+  
+	  position: fixed;
+	  width: 100vw;
+	  height: 100vh;
+	  right: 0;
+	  left: 0;
+	  top: 0;
+	  bottom: 0;
+	  margin: auto;
+  }

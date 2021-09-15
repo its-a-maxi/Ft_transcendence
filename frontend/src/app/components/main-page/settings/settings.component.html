@@ -1,0 +1,54 @@
+<div class="container" id='container'>
+	<div class="settingsContainer">
+		<form class="settingsForm" (ngSubmit)="uploadNewSettings()">
+			<div class="profilePictureContainer">
+				<div class="firstHalfContainer">
+					<label for="profilePicture">Change Profile Picture:</label>
+				</div>
+				<div class="secondHalfContainer">
+					<div class="profilePictureFrame">
+						<img src={{profilePicture}} id="profilePicture" alt="Profile Picture" class="profilePicture">
+						<input type="file" class="profilePictureInput" (change)="onImageSelected($event)" #imageInput>
+					</div>
+				</div>
+			</div>
+			<div class="lineContainer">
+				<div class="firstHalfContainer">
+					<label for="nickname">Change nickname:</label>
+				</div>
+				<div class="secondHalfContainer">
+					<div class="inputContainer">
+  						<input class="textInput" type="text" id="nickname" name="nickname" placeholder={{oldNick}} [(ngModel)]="nick">
+					</div>
+				</div>
+			</div>
+			<div class="lineContainer">
+				<div class="firstHalfContainer">
+					<label for="email">Change e-mail:</label>
+				</div>
+				<div class="secondHalfContainer">
+					<div class="inputContainer">
+  						<input class="textInput" type="text" id="email" name="email" placeholder={{oldEmail}} [(ngModel)]="email">
+					</div>
+				</div>
+			</div>
+			<div class="lineContainer">
+				<div class="firstHalfContainer">
+					<label for="twoFact">Two-factor Authentication:</label>
+				</div>
+				<div class="secondHalfContainer">
+					<div class="switchContainer">
+					  <input type="checkbox" id="twoFact" name="twoFact" class="checkBox" [(ngModel)]="authentication" (click)='showOverlay()'>
+					</div>
+					<p class="warning">* It uses google authenticator</p>
+				</div>
+			</div>
+			<div class=submitContainer>
+				<input class="submitButton" type="submit" value="Update" id="btn_update">
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="overlayBack" id="overlayBack" (click)="closeOverlay(false)"></div>
+<app-two-fa-popup (closeOverlay)='closeOverlay(true)' id='popup'></app-two-fa-popup>

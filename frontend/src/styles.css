@@ -1,6 +1,12 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 
+@font-face {
+    font-family: futura;
+    src: url("assets/fonts/futura/futur2.ttf");
+    font-family: atarianSystem;
+    src: url("assets/fonts/atarian/atarian.ttf");
+  }
 
 :root{
     --gold: #F4BD76;
