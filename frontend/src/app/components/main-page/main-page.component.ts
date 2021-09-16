@@ -1,7 +1,9 @@
 import { Component, OnInit, Query } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { ChatService } from 'src/app/services/chat-service/chat-service';
 import { User } from 'src/app/services/models/user';
+import { UserI } from 'src/app/services/models/user.interface';
 
 @Component({
   selector: 'app-main-page',
@@ -10,19 +12,23 @@ import { User } from 'src/app/services/models/user';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor(public authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService, private router: Router, private chatService: ChatService) { }
 
   private user?: User;
   nick: string | undefined;
   picture: string | ArrayBuffer | undefined;
   liveUsers: number = 0;
+	usersConnected!: UserI[]
 
   paramId: string | null = sessionStorage.getItem('token');
 
   async ngOnInit() {
     if (this.paramId)
       await this.findUser(this.paramId);
-    this.getConnectedUsers();
+		await this.chatService.findUsersConnected()
+		await this.chatService.getConnectedUsers().subscribe(res => {
+			this.liveUsers = res.length})
+
     this.nick = this.user?.nick;
     this.picture = this.user?.avatar;
   }
@@ -59,17 +65,6 @@ export class MainPageComponent implements OnInit {
     container!.style.opacity = "100%";
     pageBack!.style.display = "none";
     hiddenTabs!.style.left = "-100vw";
-  }
-
-  private async getConnectedUsers()
-  {
-    let users: Array<User> = [];
-    await this.authService.showAllUsers()
-      .then(response => users = response.data)
-    for(let i = 0; users[i]; i++)
-      //if (users[i].isConnected == true)
-        this.liveUsers++;
-    return;
   }
 
 }
