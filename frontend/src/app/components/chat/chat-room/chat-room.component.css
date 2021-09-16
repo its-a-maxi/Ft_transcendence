@@ -56,6 +56,8 @@ mat-card
     left: 50vh;
     top: 10vh;
     border-radius: 10px;
+    /* left: 32vh;
+    top: 3vh; */
 }
 
 mat-list-option + mat-list-option
