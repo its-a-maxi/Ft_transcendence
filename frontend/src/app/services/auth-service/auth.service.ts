@@ -41,11 +41,11 @@ export class AuthService
 		{
 			let option = confirm("DO YOU WANT EXIT?")
 			if (!option)
-				return null
+				return
 		}
 		return await axios.post('http://localhost:3000/auth/logout')
 						.then(() => sessionStorage.removeItem('token'))
-						.then(() => this.router.navigate(['/login']))
+						.then(() => this.router.navigate(['']))
 	}
 
 	statusLogin()

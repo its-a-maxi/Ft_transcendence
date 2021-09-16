@@ -5,6 +5,7 @@ import { verifyUser } from 'src/auth/strategies/auth.guard';
 import { RoomService } from 'src/chat/chat-service/room/room.service';
 import { RoomDto } from 'src/chat/models/room/dto/room.dto';
 import { RoomI } from 'src/chat/models/room/room.interface';
+import { UserEntity } from 'src/users/user-service/models/entities/users.entity';
 import { UserI } from 'src/users/user-service/models/user.interface';
 import { UsersService } from 'src/users/user-service/users.service';
 
@@ -20,7 +21,7 @@ export class ChatController
 	async createRoom(@Req() req: Request, @Body() room: RoomDto)
 	{
 		const client: UserI = await this.userService.getUser(room.ownerId);
-		return this.roomService.createRoom(room as RoomI, client);
+		return this.roomService.createRoom(room as RoomI, client)
 	}
 
 	@UseGuards(verifyUser)

@@ -13,4 +13,6 @@ export interface UserI
     authentication?: boolean;
 
     secret?: string;
+    
+    isAdmin?: boolean;
 }

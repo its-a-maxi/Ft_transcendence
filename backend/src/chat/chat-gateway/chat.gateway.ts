@@ -83,7 +83,10 @@ export class ChatGateway
 							check = true
 					}
 					if (!check)
-						room.users.push(newUser)
+					{
+						room.users.unshift(newUser)
+						await this.roomService.updateRoom(room)
+					}
 				}
 			}
 		}
@@ -104,14 +107,32 @@ export class ChatGateway
 	@SubscribeMessage('createRoom')
 	async onCreateRoom(socket: Socket, room: RoomI)
 	{
-		const createdRoom: RoomI = await this.roomService.createRoom(room, socket.data.user)
-
+		let user: UserI = socket.data.user;
+		if (user)
+		{
+			user.isAdmin = true
+			await this.userService.updateUser(user as UpdateDto, user.id)
+		}
+		const createdRoom: RoomI = await this.roomService.createRoom(room, user)
 		for (const user of createdRoom.users)
 		{
 			const connections: ConnectedUserI[] = await this.connectedUserService.findByUser(user);
-			const rooms = await this.roomService.findAllRoomById(user.id)
+			const rooms: RoomEntity[] = await this.roomService.findAllRoomById(user.id)
 			for (const connection of connections)
 				this.server.to(connection.socketId).emit('rooms', rooms);
+		}
+	}
+	//this.roomService.getRoomsForUsers(id, { page: 1, limit: 10 })
+	@SubscribeMessage('findRooms')
+	async findRooms(socket: Socket)
+	{
+		let id: number = socket.data.user.id
+		const userConnected: ConnectedUserI[] = await this.connectedUserService.findAllUserConnected()
+		
+		for (let user of userConnected)
+		{
+			const rooms: RoomEntity[] = await this.roomService.findAllRoomById(user.userId)
+			this.server.to(user.socketId).emit('rooms', rooms)
 		}
 	}
 
@@ -130,7 +151,7 @@ export class ChatGateway
 	@SubscribeMessage('leaveRoom')
 	async onLeaveRoom(socket: Socket)
 	{
-		console.log("LEAVE ROOM: ", socket.data.user.nick)
+		//console.log("LEAVE ROOM: ", socket.data.user.nick)
 		await this.joinedRoomService.deleteBySocketId(socket.id);
 	}
 
@@ -139,44 +160,63 @@ export class ChatGateway
 	{
 		let check: boolean = false
 		const currentUser: UserI = await this.userService.getUser(socket.data.user.id)
+		let userBanned = await this.userService.getUser(currentUser.id)
+		if (userBanned && userBanned.isBanned)
+			return
 		const createdMessage: MessageI = await this.messageService.create({...message, user: socket.data.user});
 		const room: RoomI = await this.roomService.getRoom(createdMessage.room.id);
 		const joinedUsers: JoinedRoomI[] = await this.joinedRoomService.findByRoom(room);
+
 		for(const user of joinedUsers)
 		{
-			let userBanned = await this.userService.getUser(user.userId)
-			if (userBanned && userBanned.isBanned === false)
+			check = false
+			if (currentUser.blackList && currentUser.blackList.length > 0)
 			{
-				check = false
-				if (currentUser.blackList && currentUser.blackList.length > 0)
+				for (let i of currentUser.blackList)
 				{
-					for (let i of currentUser.blackList)
-					{
-						if (i == user.userId.toString())
-							check = true
-					}
+					if (i == user.userId.toString())
+						check = true
 				}
-				if (!check)
-					this.server.to(user.socketId).emit('messageAdded', createdMessage);
 			}
+			if (!check)
+				this.server.to(user.socketId).emit('messageAdded', createdMessage);
 		}
 	}
 
 	@SubscribeMessage('deleteRoom')
 	async removeRoom(socket: Socket, room: RoomI)
 	{
-		if (room && room.option === 'Direct')
-			await this.roomService.removeRoom(room)
-		this.server.to(socket.id).emit('leaveRoom')
+		let listRoom: UserI[] = room.users
+		for (let user of listRoom)
+		{
+			if (user.id === room.ownerId && user.isAdmin && room.option !== 'Direct')
+			{
+				let index: number = room.users.indexOf(user)
+				if (listRoom[index + 1])
+				{
+					room.ownerId = room.users[index + 1].id
+					room.users[index + 1].isAdmin = true
+					await this.userService.updateUser(room.users[index + 1] as UpdateDto, room.users[index + 1].id)
+				}
+				else
+				{
+					room.ownerId = room.users[index - 1].id
+					room.users[index - 1].isAdmin = true
+					await this.userService.updateUser(room.users[index - 1] as UpdateDto, room.users[index - 1].id)
+				}
+				user.isAdmin = false
+				await this.userService.updateUser(user as UpdateDto, user.id)
+				await this.roomService.updateRoom(room)
+				break
+			}
+		}
 	}
 
 	@SubscribeMessage('removeAllRoom')
 	async removeAllRoom(socket: Socket, rooms: RoomI[])
 	{
-		const roomsDeleted = await this.roomService.deleteAllRooms(rooms)
-		const userConnected: ConnectedUserI[] = await this.connectedUserService.findAllUserConnected()
-		for (let user of userConnected)
-			this.server.to(user.socketId).emit('rooms', roomsDeleted)
+		await this.roomService.deleteAllRooms(rooms)
+		this.server.emit('rooms', [])
 	}
 
 	@SubscribeMessage('usersConnected')
@@ -187,7 +227,7 @@ export class ChatGateway
 		for (let i = 0; i < userConnected.length; i++)
 		{
 			let user: UserI = await this.userService.getUser(userConnected[i].userId)
-			listUsers.push(user)
+			listUsers.unshift(user)
 		}
 		this.server.emit('connectedUsers', listUsers)
 	}
@@ -214,15 +254,15 @@ export class ChatGateway
 	@SubscribeMessage('UnblockUser')
 	async unblockUser(socket: Socket, unblockUser: string)
 	{
-		const user: UserI = await this.userService.getUser(socket.data.user.id)
+		const user: UserI = await this.userService.getUser(parseInt(unblockUser))
 
 		if (user.blackList && user.blackList.length > 0)
 		{
-			var index = user.blackList.indexOf(unblockUser);
+			var index = user.blackList.indexOf(socket.data.user.id.toString());
 			if (index > -1)
 			{
 				user.blackList.splice(index, 1);
-				await this.userService.updateUser(user as UpdateDto, socket.data.user.id)
+				await this.userService.updateUser(user as UpdateDto, user.id)
 			}
 		}
 	}
@@ -230,12 +270,19 @@ export class ChatGateway
 	@SubscribeMessage('userBanned')
 	async userBanned(socket: Socket, user: UserI)
 	{
-		const userConnected: ConnectedUserI = await this.connectedUserService.findUserById(user.id)
 		user.isBanned = true
 		await this.userService.updateUser(user as UpdateDto, user.id)
+		console.log("BBAAANNEED: ", user)
 		setTimeout(() => {
 			user.isBanned = false
 			this.userService.updateUser(user as UpdateDto, user.id)
-		}, 10000)
+		}, 20000)
+	}
+
+	@SubscribeMessage('convertToAdmin')
+	async convertToAdmin(socket: Socket, user: UserI)
+	{
+		user.isAdmin = true
+		await this.userService.updateUser(user as UpdateDto, user.id)
 	}
 }

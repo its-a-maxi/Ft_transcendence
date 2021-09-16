@@ -47,13 +47,18 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 	ngOnInit(): void
 	{
 		this.userId = sessionStorage.getItem('token')
+		
 	}
 
 	ngOnChanges(changes: SimpleChanges)
 	{
 		this.chatService.leaveRoom(changes['chatRoom'].previousValue);
 		if (this.chatRoom)
+		{
+			console.log(this.chatRoom.id)
 			this.chatService.joinRoom(this.chatRoom);
+			
+		}
 	}
 
 	ngOnDestroy()

@@ -17,8 +17,9 @@
                     <div class="profContainer">
                         <div class="profileCircle">
                             <img src={{picture}} id="profilePicture" alt="Profile Picture" class="profilePicture">
-                            <a routerLink="">
-                                <img src="../../../assets/images/Logout.png" id="logout" alt="Logout" class="logout">
+                            <a>
+                                <img src="../../../assets/images/Logout.png" id="logout"
+                                alt="Logout" class="logout" (click)="this.authService.logOutUser(true)">
                             </a>
                         </div>
                     </div>

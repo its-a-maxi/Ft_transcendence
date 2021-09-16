@@ -72,15 +72,20 @@ export class RoomService
 		});
 	}
 
-	// async getRoomsForUsers(userId: number, options: IPaginationOptions): Promise<Pagination<RoomI>>
-	// {
-	// 	const query = this.roomRepository
-	// 		.createQueryBuilder('room')
-	// 		.leftJoin('room.users', 'users')
-	// 		.where('users.id = :userId', { userId })
-	// 		.leftJoinAndSelect('room.users', 'all_users')
-	// 		.orderBy('room.updated_at', 'DESC')
+	async updateRoom(room: RoomI)
+	{
+		return await this.roomRepository.save(room)
+	}
 
-	// 	return await paginate(query, options)
-	// }
+	async getRoomsForUsers(userId: number, options: IPaginationOptions): Promise<Pagination<RoomI>>
+	{
+		const query = this.roomRepository
+			.createQueryBuilder('room')
+			.leftJoin('room.users', 'users')
+			.where('users.id = :userId', { userId })
+			.leftJoinAndSelect('room.users', 'all_users')
+			.orderBy('room.updated_at', 'DESC')
+
+		return await paginate(query, options)
+	}
 }

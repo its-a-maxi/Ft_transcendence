@@ -13,7 +13,7 @@ export class StartComponent implements OnInit {
 
 	ngOnInit(): void
 	{
-		this.showUsers()
+		//this.showUsers()
 		
 	}
 

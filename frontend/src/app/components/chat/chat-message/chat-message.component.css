@@ -1,11 +1,12 @@
 p
 {
     font-size: medium;
-    background-color: lightblue;
+    /* background-color: lightblue; */
     padding: 5px;
     width: fit-content;
     border-radius: 5px;
     margin: 7px;
+    color: magenta;
 }
   
 .ownContainer
@@ -15,5 +16,6 @@ p
   
 .ownMessage
 {
-    background-color: lightgreen;
+    /* background-color: lightgreen; */
+    color: lawngreen;
 }

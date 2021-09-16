@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 	templateUrl: './chat-room.component.html',
 	styleUrls: ['./chat-room.component.css']
 })
-export class ChatRoomComponent implements OnInit
+export class ChatRoomComponent implements OnInit, AfterViewInit
 {
 	userId: any
 	rooms!: RoomI[]
@@ -28,6 +28,7 @@ export class ChatRoomComponent implements OnInit
 	ngOnInit(): void
 	{
 		this.userId = sessionStorage.getItem('token')
+		this.chatService.findMyRooms()
 		this.findRooms()
 		this.authService.showAllUsers().then((res) => this.users = res.data)
 		this.authService.getUserById(this.userId)
@@ -37,6 +38,12 @@ export class ChatRoomComponent implements OnInit
 			this.usersConnected = res
 			console.log(this.usersConnected)
 		})
+		
+	}
+
+	ngAfterViewInit()
+	{
+		this.findRooms()
 	}
 
 	findRooms()
@@ -50,6 +57,7 @@ export class ChatRoomComponent implements OnInit
 	deleteAllRooms()
 	{
 		this.chatService.deleteRooms(this.rooms)
+		window.location.reload()
 	}
 
 	onSelectRoom(event: MatSelectionListChange)
@@ -63,7 +71,6 @@ export class ChatRoomComponent implements OnInit
 		if (!option)
 			return
 		this.chatService.deleteRoom(room)
-		window.location.reload()
 		
 	}
 
@@ -71,7 +78,7 @@ export class ChatRoomComponent implements OnInit
 	{
 		const newRoom: RoomI = {
 			ownerId: parseInt(this.userId),
-			name: `DM from ${user.nick}`,
+			name: `${this.currentUser.nick} -> ${user.nick}`,
 			password: "",
 			option: "Direct",
 			users: [user]
@@ -95,5 +102,18 @@ export class ChatRoomComponent implements OnInit
 	{
 		console.log("BANNED!!")
 		this.chatService.userBanned(user)
+	}
+
+	convertToAdmin(user: UserI)
+	{
+		if (this.currentUser.isAdmin)
+		{
+			console.log("CONVERTED!!")
+			this.chatService.convertToAdmin(user)
+		}
+		else
+		{
+			console.log("YOU AREN'T ADMIN!!")
+		}
 	}
 }

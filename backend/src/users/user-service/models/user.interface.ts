@@ -17,4 +17,6 @@ export interface UserI
     blackList?: string[];
     
     isBanned?: boolean;
+
+    isAdmin?: boolean;
 }

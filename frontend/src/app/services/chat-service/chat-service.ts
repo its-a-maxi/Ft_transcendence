@@ -24,6 +24,11 @@ export class ChatService
 		})
 	}
 
+	findMyRooms()
+	{
+		this.socket.emit('findRooms')
+	}
+
 	getMyRooms(): Observable<RoomI[]>
 	{
 		//return axios.get<RoomI[]>('http://localhost:3000/chat/getAllRooms')
@@ -97,5 +102,10 @@ export class ChatService
 	userBanned(user: UserI)
 	{
 		return this.socket.emit('userBanned', user)
+	}
+
+	convertToAdmin(user: UserI)
+	{
+		this.socket.emit('convertToAdmin', user)
 	}
 }

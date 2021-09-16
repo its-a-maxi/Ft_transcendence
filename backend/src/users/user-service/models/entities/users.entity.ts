@@ -32,6 +32,9 @@ export class UserEntity
     @Column({default: false})
     isBanned?: boolean;
 
+    @Column({default: false})
+    isAdmin: boolean;
+
     @ManyToMany(() => RoomEntity, room => room.users)
     rooms: RoomEntity
 
