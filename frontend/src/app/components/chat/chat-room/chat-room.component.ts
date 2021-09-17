@@ -50,6 +50,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit
 	{
 		this.chatService.getMyRooms().subscribe(res => {
 			this.rooms = res
+			console.log('My rooms:')
 			console.log(this.rooms)
 		})
 	}

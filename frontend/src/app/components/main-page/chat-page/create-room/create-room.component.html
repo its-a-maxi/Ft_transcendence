@@ -1,0 +1,11 @@
+<div class=body id=body>
+    <form class="box" (ngSubmit)="createNewChannel()">
+		<p>Channel Name</p>
+		<input type="text" placeholder="Your channel name" name="name" [(ngModel)]="name">
+		<p>Private</p>
+		<input type="checkbox" name="checkBox" [(ngModel)]="check">
+		<p>Choose a password</p>
+		<input type="text" placeholder="Your password" name="password" [(ngModel)]="password">
+		<button type="submit" name="submit">submit</button>
+    </form>
+</div>

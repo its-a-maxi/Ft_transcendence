@@ -40,6 +40,8 @@ import { RankingComponent } from './components/main-page/ranking/ranking.compone
 import { PlayComponent } from './components/main-page/play/play.component';
 import { FriendsComponent } from './components/main-page/friends/friends.component';
 import { TwoFaPopupComponent } from './components/main-page/settings/two-fa-popup/two-fa-popup.component';
+import { ChatPageComponent } from './components/main-page/chat-page/chat-page.component';
+import { CreateRoomComponent } from './components/main-page/chat-page/create-room/create-room.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -66,7 +68,9 @@ export function tokenGetter(): string | null {
     RankingComponent,
     PlayComponent,
     FriendsComponent,
-    TwoFaPopupComponent
+    TwoFaPopupComponent,
+    ChatPageComponent,
+    CreateRoomComponent
   ],
   imports: [
     BrowserModule,

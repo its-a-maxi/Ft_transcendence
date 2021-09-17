@@ -1,0 +1,32 @@
+<div class="container" id="container">
+	<div class=friendsContainer>
+		<div class="currentChannel">
+			<h1 class="currentChannelText">Users</h1>
+		</div>
+		<div class="listContainer">
+			<ul class="list" *ngFor="let room of allUsers">
+				<li (click)="directMessage(room)">{{room.nick}}</li>
+			</ul>
+		</div>
+	</div>
+	<div class=channelsContainer>
+		<div class="currentChannel">
+			<h1 class="currentChannelText">Channels</h1>
+		</div>
+		<div class="listContainer">
+			<ul class="list" *ngFor="let room of channels">
+				<li (click)="changeCurrentRoom(room)">{{room.name}}
+					<img src="../../../../assets/images/privateIcon.png" alt="leave" [className]="room.option == 'private' ? 'icon' : 'noIcon'">
+					<img src="../../../../assets/images/OwnershipIcon.png" alt="leave" [className]="room.ownerId == mainUser.id ? 'icon' : 'noIcon'">
+				</li>
+			</ul>
+		</div>
+		<button class=add id="add">+ Channel</button>
+	</div>
+	<div class=chat>
+		<app-chat-channel [chatRoom]="currentRoom"></app-chat-channel>
+	</div>
+	<img src="../../../../assets/images/openRightIcon.png" alt="openRightIcon" class="openRight">
+	<img src="../../../../assets/images/openLeftIcon.png" alt="openLeftIcon" class="openLeft">
+</div>
+<app-create-room></app-create-room>

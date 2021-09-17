@@ -1,0 +1,66 @@
+.body
+{
+	position: absolute;
+	width: 46vh;
+	height: 80%;
+	right: 0;
+	left: 0;
+	top: 0%;
+	bottom: 0%;
+	margin: auto;
+
+	font-family: futura;
+	background-color: #ede5f2ff;
+	border-radius: 3.8vh;
+    transition-duration: 0.3s;
+}
+
+.inputCode
+{
+    position: absolute;
+    height: 5vh;
+    width: 70%;
+    top: 67%;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+
+.searchBar
+{
+    position: absolute;
+    width: 82%;
+    height: 10%;
+    left: 0;
+    margin: auto;
+
+    background-color: rgba(19, 5, 11, .2);
+    border-radius: 5vh;
+}
+
+    .searchInput
+    {
+        background-color: transparent;
+        border: transparent;
+        width: 80%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto;
+
+        letter-spacing: 0.2vh;
+        color: rgba(19, 5, 11, .8);
+        font-size: 2vh;
+    }
+
+    input:focus
+    {
+        outline: none;
+    }
+
+    input::placeholder
+    {
+        color: rgba(19, 5, 11, .5);
+    }
