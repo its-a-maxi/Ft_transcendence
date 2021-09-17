@@ -8,9 +8,11 @@
 		</span>
 	</div>
 	<mat-divider></mat-divider>
+	<p id="typing" style="color: whitesmoke;"><em>{{write}}</em></p>
 	<div style="position: absolute; bottom: 0; display: flex; flex-direction: row; align-items: center;">
 		<mat-form-field style="width: 350px;" class="chatRoom">
-			<input #chatInput matInput [formControl]="chatMessage" type="text">
+			<input #chatInput matInput [formControl]="chatMessage"
+					type="text" (keypress)="typingIndicator()">
 		</mat-form-field>
 		<button mat-button [disabled]="!chatMessage.valid" (click)="sendMessage()">
 			<span style="display: flex; flex-direction: row; align-items: center;">

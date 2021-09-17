@@ -28,7 +28,7 @@ export class AuthController
         res.cookie('clientID', req.user, {httpOnly: true});
         const client = await this.jwtService.verifyAsync(req.user);
         const clientData = await this.userService.getUser(client['id']);
-        //res.cookie(`clientID-${client['id']}`, req.user, {httpOnly: true});
+
         if (!clientData)
         {
            try
@@ -44,8 +44,7 @@ export class AuthController
             }
             catch
             {
-                console.log("fuera")
-                return res.redirect("http://localhost:4200/home")
+                return res.redirect("http://localhost:4200/landingPage/start")
             }
         }
         else if (clientData && clientData.authentication === true)
@@ -66,7 +65,6 @@ export class AuthController
     @Post('storeUser')
     async storeUser(@Req() req: Request, @Body() user: LoginDto)
     {
-        console.log(user)
         const clientID = await this.authService.clientID(req);
         return await this.userService.createUser(user, clientID)
     }
@@ -82,7 +80,10 @@ export class AuthController
     @Post('logout')
     async logOut(@Res({passthrough: true}) res: Response, @Req() req: Request)
     {
-        //const cookie: string = req.headers.cookie.substring(0, 14)
+        const clientID = await this.authService.clientID(req);
+        const user: UserI = await this.userService.getUser(clientID)
+        user.status = 'offline'
+        await this.userService.updateUser(user as UpdateDto, user.id)
         res.clearCookie('clientID')
         return {message: "User LogOut!"}
     }

@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
@@ -11,7 +12,7 @@ import { UserI } from 'src/app/services/models/user.interface';
 	templateUrl: './chat.component.html',
 	styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit, OnDestroy
+export class ChatComponent implements OnInit, OnDestroy, AfterViewInit
 {
 	nick: string = ""
 	userAvatar: string = ""
@@ -48,13 +49,17 @@ export class ChatComponent implements OnInit, OnDestroy
 			this.usersConnected = res
 			console.log(this.usersConnected)
 		})
-		//this.findUser()
-		//this.chatService.getMyRooms().then(res => res.data.map(obj => console.log(obj)))
+		
 	}
 
 	ngOnDestroy()
 	{
 		window.location.reload()
+	}
+
+	ngAfterViewInit()
+	{
+
 	}
 
 	findUser()

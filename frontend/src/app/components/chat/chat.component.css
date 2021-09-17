@@ -56,3 +56,8 @@ span, .mat-ripple, .mat-button-ripple
     display: flex;
     background-color: var(--gold);
 }
+
+.test_div
+{
+    color: lawngreen;
+}

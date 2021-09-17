@@ -10,6 +10,8 @@ export interface UserI
 
     avatar?: string;
 
+    status?: string;
+
     authentication?: boolean;
 
     secret?: string;

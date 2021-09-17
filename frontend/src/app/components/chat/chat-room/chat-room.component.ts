@@ -25,19 +25,18 @@ export class ChatRoomComponent implements OnInit, AfterViewInit
 	constructor(private chatService: ChatService,
 				private authService: AuthService) { }
 
-	ngOnInit(): void
+	async ngOnInit()
 	{
 		this.userId = sessionStorage.getItem('token')
 		this.chatService.findMyRooms()
 		this.findRooms()
-		this.authService.showAllUsers().then((res) => this.users = res.data)
-		this.authService.getUserById(this.userId)
+		await this.authService.showAllUsers()
+			.then((res) => this.users = res.data)
+		await this.authService.getUserById(this.userId)
 			.then(res =>this.currentUser = res.data)
 		this.chatService.findUsersConnected()
-		this.chatService.getConnectedUsers().subscribe(res => {
-			this.usersConnected = res
-			console.log(this.usersConnected)
-		})
+		this.chatService.getConnectedUsers()
+			.subscribe(res => this.usersConnected = res)
 		
 	}
 
@@ -48,10 +47,7 @@ export class ChatRoomComponent implements OnInit, AfterViewInit
 
 	findRooms()
 	{
-		this.chatService.getMyRooms().subscribe(res => {
-			this.rooms = res
-			console.log(this.rooms)
-		})
+		this.chatService.getMyRooms().subscribe(res => this.rooms = res)
 	}
 
 	deleteAllRooms()
