@@ -108,4 +108,15 @@ export class ChatService
 	{
 		this.socket.emit('convertToAdmin', user)
 	}
+
+	typing()
+	{
+		this.socket.emit('typing')
+		//this.socket.on('typing', () => console.log("IS TYPING"))
+	}
+
+	typingMessage(): Observable<string>
+	{
+		return this.socket.fromEvent('typing')
+	}
 }

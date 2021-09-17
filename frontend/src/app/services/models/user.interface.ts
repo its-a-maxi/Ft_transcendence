@@ -15,4 +15,6 @@ export interface UserI
     secret?: string;
     
     isAdmin?: boolean;
+
+    status?: string;
 }

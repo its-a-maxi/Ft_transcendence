@@ -51,6 +51,8 @@ export class ChatGateway
 			else
 			{
 				socket.data.user = user
+				user.status = 'online'
+				await this.userService.updateUser(user as UpdateDto, user.id)
 				this.addUserRoom(user as UserEntity)
 				const rooms = await this.roomService.findAllRoomById(user.id)
 				await this.connectedUserService.create({socketId: socket.id, userId: user.id, user})
@@ -94,6 +96,9 @@ export class ChatGateway
 
 	async handleDisconnect(socket: Socket)
 	{
+		const user: UserI = socket.data.user
+		user.status = 'offline'
+		await this.userService.updateUser(user as UpdateDto, user.id)
 		await this.connectedUserService.deleteSocket(socket.id)
 		socket.disconnect();
 	}
@@ -122,7 +127,7 @@ export class ChatGateway
 				this.server.to(connection.socketId).emit('rooms', rooms);
 		}
 	}
-	//this.roomService.getRoomsForUsers(id, { page: 1, limit: 10 })
+
 	@SubscribeMessage('findRooms')
 	async findRooms(socket: Socket)
 	{
@@ -284,5 +289,11 @@ export class ChatGateway
 	{
 		user.isAdmin = true
 		await this.userService.updateUser(user as UpdateDto, user.id)
+	}
+
+	@SubscribeMessage('typing')
+	async typingMessage(socket: Socket)
+	{
+		socket.broadcast.emit('typing', `${socket.data.user.nick} is typing...`)
 	}
 }

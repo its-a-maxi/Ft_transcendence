@@ -20,6 +20,9 @@ export class UserEntity
     @Column()
     avatar: string;
 
+    @Column({default: 'offline'})
+    status: string;
+
     @Column()
     authentication: boolean;
 

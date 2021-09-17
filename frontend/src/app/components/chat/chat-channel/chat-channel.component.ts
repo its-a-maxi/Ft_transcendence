@@ -22,6 +22,7 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 	@ViewChild('messages')
 	private messagesScroller!: ElementRef;
 	userId: any
+	write: string = ""
 
 	chatMessage: FormControl = new FormControl(null, [Validators.required])
 
@@ -55,9 +56,8 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 		this.chatService.leaveRoom(changes['chatRoom'].previousValue);
 		if (this.chatRoom)
 		{
-			console.log(this.chatRoom.id)
 			this.chatService.joinRoom(this.chatRoom);
-			
+			this.typingMessage()
 		}
 	}
 
@@ -87,5 +87,19 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 			setTimeout(() => { this.messagesScroller.nativeElement.scrollTop = this.messagesScroller.nativeElement.scrollHeight }, 1);
 		}
 		catch { }
+	}
+
+	typingIndicator()
+	{
+		console.log("Typing...")
+		this.chatService.typing()
+	}
+
+	typingMessage()
+	{
+		this.chatService.typingMessage().subscribe(res => {
+			this.write = res
+			setTimeout(() => this.write = "", 3000);
+		})
 	}
 }
