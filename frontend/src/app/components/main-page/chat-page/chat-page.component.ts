@@ -70,9 +70,9 @@ export class ChatPageComponent implements OnInit {
     }
   }
 
-  changeCurrentRoom(room: RoomI, ignoreType?: boolean)
+  changeCurrentRoom(room: RoomI)
   {
-    if (room.option == "private")
+    if (room.option == "private" && room.ownerId.toString() != this.paramId)
     {
       this.toChangeRoom = room;
       this.showOverlay("password");
