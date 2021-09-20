@@ -230,4 +230,23 @@ div{
 		background: #ede5f2ff;
 		border-radius: 100px;
 	  }
+
+
+app-create-room
+{
+	display: none;
+}
 	
+.overlayBack
+{
+	display: none;
+	  
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}

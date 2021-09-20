@@ -21,7 +21,7 @@
 				</li>
 			</ul>
 		</div>
-		<button class=add id="add">+ Channel</button>
+		<button class=add id="add" (click)="showOverlay()">+ Channel</button>
 	</div>
 	<div class=chat>
 		<app-chat-channel [chatRoom]="currentRoom"></app-chat-channel>
@@ -29,4 +29,5 @@
 	<img src="../../../../assets/images/openRightIcon.png" alt="openRightIcon" class="openRight">
 	<img src="../../../../assets/images/openLeftIcon.png" alt="openLeftIcon" class="openLeft">
 </div>
-<app-create-room></app-create-room>
+<div class="overlayBack" id="overlayBack" (click)="closeOverlay()"></div>
+<app-create-room id="popup" (closeOverlay)='closeOverlay()'></app-create-room>

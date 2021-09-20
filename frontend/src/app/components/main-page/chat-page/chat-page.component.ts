@@ -98,4 +98,24 @@ export class ChatPageComponent implements OnInit {
 		this.chatService.createRoom(newRoom);
 	}
 
+	showOverlay(): void
+	{
+		let container = document.getElementById("container");
+		let overlayBack = document.getElementById("overlayBack");
+		let popup = document.getElementById("popup");
+		container!.style.opacity = "50%";
+		overlayBack!.style.display = "block";
+		popup!.style.display = "block";
+	}
+
+	closeOverlay(): void
+	{
+		let container = document.getElementById("container");
+		let overlayBack = document.getElementById("overlayBack");
+		let popup = document.getElementById("popup");
+		container!.style.opacity = "100%";
+		overlayBack!.style.display = "none";
+		popup!.style.display = "none";
+	}
+
 }

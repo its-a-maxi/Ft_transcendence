@@ -1,11 +1,15 @@
 <div class=body id=body>
-    <form class="box" (ngSubmit)="createNewChannel()">
+    <form class="form" (ngSubmit)="createNewChannel()">
 		<p>Channel Name</p>
-		<input type="text" placeholder="Your channel name" name="name" [(ngModel)]="name">
-		<p>Private</p>
-		<input type="checkbox" name="checkBox" [(ngModel)]="check">
+		<div class="searchBar">
+			<input type="text" placeholder="Your channel name" name="name" [(ngModel)]="name" class="searchInput">
+		</div>
+		<div class='separator'></div>
 		<p>Choose a password</p>
-		<input type="text" placeholder="Your password" name="password" [(ngModel)]="password">
-		<button type="submit" name="submit">submit</button>
+		<div class="searchBar">
+			<input type="text" placeholder="Your password" name="password" [(ngModel)]="password" class="searchInput">
+		</div>
+		<h1>Leave empty for a public channel</h1>
+		<button type="submit" name="submit" class='btn'>Create</button>
     </form>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
@@ -22,13 +22,17 @@ export class CreateRoomComponent implements OnInit {
 
   private mainUser: UserI | undefined;
   private allUsers: Array<User> = [];
+	private rooms: Array<RoomI> = [];
 
-  paramId: string | null = sessionStorage.getItem('token');
+  private paramId: string | null = sessionStorage.getItem('token');
+
+  @Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
 
   async ngOnInit()
   {
     if (this.paramId)
       await this.findUser(this.paramId);
+    await this.findRooms();
     await this.authService.showAllUsers()
       .then(response => this.allUsers = response.data.filter(x => x.id != this.mainUser?.id));
   }
@@ -47,22 +51,69 @@ export class CreateRoomComponent implements OnInit {
 			})
 	}
 
+	private async findRooms()
+	{
+		this.chatService.findMyRooms();
+	  this.chatService.getMyRooms().subscribe(res => {
+      this.rooms = res;
+    })
+	}
+
   createNewChannel()
   {
+    if (!this.checkInputs())
+      return;
+
     let users: Array<UserI> = [];
 
     for (let i = 0; this.allUsers[i]; i++)
       users.push(this.allUsers[i]);
     let newRoom = {
-      name: '#' + this.name,
+      name: '#' + this.name.toLowerCase(),
       option: "public",
-      password: "",
+      password: this.password,
       users: users,
       ownerId: this.mainUser!.id
     }
+    if (this.password != "")
+      newRoom.option = "private";
     console.log(newRoom);
     this.chatService.createRoom(newRoom);
-    
+    this.closeOverlay.emit();
+  }
+
+  private checkInputs() : boolean
+  {
+		let check = /^[a-zA-Z0-9]+$/;
+
+    if (this.name == "")
+      alert("Please, provide a name");
+    else if (!this.name.match(check))
+    {
+      alert("Please, use valid characters for your channel name");
+      this.name = "";
+    }
+    else if (this.checkRepeatedChannels())
+    {
+      alert("Channel name already in use");
+      this.name = "";
+    }
+    else if (!this.password.match(check) && this.password != "")
+    {
+      alert("Please, use valid characters for your channel password");
+      this.password = "";
+    }
+    else
+      return (true);
+    return (false);
+  }
+
+  private checkRepeatedChannels() : boolean
+  {
+    for (let i = 0; this.rooms[i]; i++)
+      if (this.rooms[i].name == '#' + this.name.toLowerCase())
+        return (true);
+    return (false);
   }
 
 }
