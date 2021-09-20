@@ -1,0 +1,19 @@
+.body
+{
+	position: absolute;
+	width: 46vh;
+	height: 80%;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+
+	font-family: futura;
+    font-size: 2vh;
+    text-align: center;
+    color: rgba(19, 5, 11, .8);
+	background-color: #ede5f2ff;
+	border-radius: 3.8vh;
+    transition-duration: 0.3s;
+}

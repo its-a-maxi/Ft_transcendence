@@ -43,6 +43,8 @@ import { TwoFaPopupComponent } from './components/main-page/settings/two-fa-popu
 import { ChatPageComponent } from './components/main-page/chat-page/chat-page.component';
 import { CreateRoomComponent } from './components/main-page/chat-page/create-room/create-room.component';
 import { GetPasswordComponent } from './components/main-page/chat-page/get-password/get-password.component';
+import { UserListHiddenComponent } from './components/main-page/chat-page/user-list-hidden/user-list-hidden.component';
+import { ChannelListHiddenComponent } from './components/main-page/chat-page/channel-list-hidden/channel-list-hidden.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -72,7 +74,9 @@ export function tokenGetter(): string | null {
     TwoFaPopupComponent,
     ChatPageComponent,
     CreateRoomComponent,
-    GetPasswordComponent
+    GetPasswordComponent,
+    UserListHiddenComponent,
+    ChannelListHiddenComponent
   ],
   imports: [
     BrowserModule,

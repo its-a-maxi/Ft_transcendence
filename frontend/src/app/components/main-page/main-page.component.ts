@@ -76,7 +76,7 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 		let hiddenTabs = document.getElementById("hiddenTabs")
 		container!.style.opacity = "100%";
 		pageBack!.style.display = "none";
-		hiddenTabs!.style.left = "-100vw";
+		hiddenTabs!.style.left = "-200vw";
 	}
 
 }

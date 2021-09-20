@@ -98,6 +98,7 @@ export class ChatPageComponent implements OnInit {
       if (this.users[i].name == cmp1 || this.users[i].name == cmp2)
       {
         this.changeCurrentRoom(this.users[i]);
+        this.closeOverlay();
         return;
       }
     }
@@ -118,12 +119,16 @@ export class ChatPageComponent implements OnInit {
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
     let password = document.getElementById("password");
+    let hiddenUserList = document.getElementById("hiddenUserList");
+
 		container!.style.opacity = "50%";
 		overlayBack!.style.display = "block";
     if (type == "newChannel")
 		  popup!.style.display = "block";
     else if (type == "password")
       password!.style.display = "block";
+    else if (type == "hiddenUserList")
+      hiddenUserList!.style.display = "block";
 	}
 
 	closeOverlay(): void
@@ -132,10 +137,13 @@ export class ChatPageComponent implements OnInit {
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
     let password = document.getElementById("password");
+    let hiddenUserList = document.getElementById("hiddenUserList");
+    
 		container!.style.opacity = "100%";
 		overlayBack!.style.display = "none";
 		popup!.style.display = "none";
 		password!.style.display = "none";
+    hiddenUserList!.style.display = "none";
 	}
 
 }

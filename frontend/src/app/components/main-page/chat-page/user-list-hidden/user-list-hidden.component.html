@@ -1,0 +1,14 @@
+<div class=body id=body>
+	<div class=friendsContainer>
+		<div class="currentChannel">
+			<h1 class="currentChannelText">Users</h1>
+		</div>
+		<div class="listContainer">
+			<ul class="list" *ngFor="let room of list">
+				<li (click)="enter(room)">{{room.nick}}
+					<img src="../../../../assets/images/blockIcon.png" alt="leave" [className]="1 == 1 ? 'icon' : 'icon'">
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

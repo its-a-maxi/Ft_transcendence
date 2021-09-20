@@ -388,7 +388,7 @@ section
 	border-radius: 35px;
 
     top: 0%;
-    left: -100vh;
+    left: -200vw;
     transition-duration: 0.3s;
     color: rgba(19, 5, 11, .8);
 }

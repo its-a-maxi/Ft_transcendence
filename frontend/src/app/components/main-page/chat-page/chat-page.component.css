@@ -253,6 +253,11 @@ app-get-password
 {
 	display: none;
 }
+
+app-user-list-hidden
+{
+	display: none;
+}
 	
 .overlayBack
 {
