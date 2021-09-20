@@ -119,4 +119,9 @@ export class ChatService
 	{
 		return this.socket.fromEvent('typing')
 	}
+
+    verifyPassword(password: string, roomId: number)
+    {
+        return axios.post('http://localhost:3000/chat/verifyPassword', {password, roomId})
+    }
 }

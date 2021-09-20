@@ -33,5 +33,6 @@
 </div>
 <div class="overlayBack" id="overlayBack" (click)="closeOverlay()"></div>
 <app-create-room id="popup" (closeOverlay)='closeOverlay()'></app-create-room>
-<app-get-password id="password" (ifPassword)='ifPassword($event)'></app-get-password>
+<app-get-password id="password" (ifPassword)='ifPassword($event)' [room]="toChangeRoom"></app-get-password>
 <app-user-list-hidden id="hiddenUserList" [list]="allUsers" (directMessage)='directMessage($event)' (closeOverlay)='closeOverlay()'></app-user-list-hidden>
+

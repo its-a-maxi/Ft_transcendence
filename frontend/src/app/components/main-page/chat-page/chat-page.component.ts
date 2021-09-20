@@ -90,27 +90,26 @@ export class ChatPageComponent implements OnInit {
 
 	directMessage(user: UserI)
 	{
-    let cmp1, cmp2: string;
-    cmp1 = this.mainUser.id.toString() + '/' + user.id.toString();
-    cmp2 = user.id.toString() + '/' + this.mainUser.id.toString();
-    for (let i = 0; this.users[i]; i++)
-    {
-      if (this.users[i].name == cmp1 || this.users[i].name == cmp2)
-      {
-        this.changeCurrentRoom(this.users[i]);
-        this.closeOverlay();
-        return;
-      }
-    }
-    console.log('new room created');
-		const newRoom: RoomI = {
-			ownerId: parseInt(this.paramId!),
-			name: this.mainUser.id + '/' + user.id,
-			password: "",
-			option: "Direct",
-			users: [user]
-		}
-		this.chatService.createRoom(newRoom);
+        let cmp1, cmp2: string;
+        cmp1 = this.mainUser.id.toString() + '/' + user.id.toString();
+        cmp2 = user.id.toString() + '/' + this.mainUser.id.toString();
+        for (let i = 0; this.users[i]; i++)
+        {
+            if (this.users[i].name == cmp1 || this.users[i].name == cmp2)
+            {
+                this.changeCurrentRoom(this.users[i]);
+                return;
+        }
+        }
+        console.log('new room created');
+            const newRoom: RoomI = {
+                ownerId: parseInt(this.paramId!),
+                name: this.mainUser.id + '/' + user.id,
+                password: "",
+                option: "Direct",
+                users: [user]
+            }
+            this.chatService.createRoom(newRoom);
 	}
 
 	showOverlay(type: string): void
