@@ -35,8 +35,8 @@ const routes: Routes = [
   {path: "register", component: RegisterComponent},
   {path: "profile/:id", component: ProfileComponent},
   {path: "twofa", component: TwoFAComponent},
-  {path: "chat/:id", component: ChatComponent},
-  {path: "chatRooms/:id", component: ChatRoomComponent},
+  //{path: "chat/:id", component: ChatComponent},
+  //{path: "chatRooms/:id", component: ChatRoomComponent},
   {path: '', redirectTo: "landingPage/start", pathMatch: "full"},
   {path: '**', redirectTo: 'landingPage/start', pathMatch: 'full'}
 ];

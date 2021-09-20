@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { AuthService } from 'src/auth/auth-service/auth.service';
 import { verifyUser } from 'src/auth/strategies/auth.guard';
@@ -8,6 +8,7 @@ import { RoomI } from 'src/chat/models/room/room.interface';
 import { UserEntity } from 'src/users/user-service/models/entities/users.entity';
 import { UserI } from 'src/users/user-service/models/user.interface';
 import { UsersService } from 'src/users/user-service/users.service';
+import * as bcrypt from 'bcrypt'
 
 @Controller('chat')
 export class ChatController
@@ -37,4 +38,17 @@ export class ChatController
 	{
 		return this.roomService.deleteAllRooms(rooms)
 	}
+
+    @UseGuards(verifyUser)
+    @Post('verifyPassword')
+    async verifyPassword(@Res() res: Response, @Body() body: any) 
+    {
+        const room: RoomI = await this.roomService.getRoom(body.roomId)
+        let verifyPass = bcrypt.compareSync(body.password, room.password)
+        if (!verifyPass)
+        {
+            return res.status(400).send(false)
+        }
+        return res.send(true)
+    }
 }
