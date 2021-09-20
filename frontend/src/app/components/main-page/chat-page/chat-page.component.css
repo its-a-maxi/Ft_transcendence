@@ -89,6 +89,18 @@ div{
 		display: none;
 	}
 
+	.block
+	{
+		opacity: 50%;
+		padding-left: 0vh;
+		height: 2.2vh;
+		margin-top: -3%;
+	}
+	.block:hover
+	{
+		display: none;
+	}
+
 	.notConnected
 	{
 		opacity: 60%; 
@@ -233,6 +245,11 @@ div{
 
 
 app-create-room
+{
+	display: none;
+}
+
+app-get-password
 {
 	display: none;
 }

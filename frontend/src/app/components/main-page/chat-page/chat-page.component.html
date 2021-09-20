@@ -5,7 +5,9 @@
 		</div>
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of allUsers">
-				<li (click)="directMessage(room)">{{room.nick}}</li>
+				<li (click)="directMessage(room)">{{room.nick}}
+					<img src="../../../../assets/images/blockIcon.png" alt="leave" [className]="1 == 1 ? 'icon' : 'icon'">
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -21,7 +23,7 @@
 				</li>
 			</ul>
 		</div>
-		<button class=add id="add" (click)="showOverlay()">+ Channel</button>
+		<button class=add id="add" (click)="showOverlay('newChannel')">+ Channel</button>
 	</div>
 	<div class=chat>
 		<app-chat-channel [chatRoom]="currentRoom"></app-chat-channel>
@@ -31,3 +33,4 @@
 </div>
 <div class="overlayBack" id="overlayBack" (click)="closeOverlay()"></div>
 <app-create-room id="popup" (closeOverlay)='closeOverlay()'></app-create-room>
+<app-get-password id="password" (ifPassword)='ifPassword($event)'></app-get-password>

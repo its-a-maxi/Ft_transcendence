@@ -42,6 +42,7 @@ import { FriendsComponent } from './components/main-page/friends/friends.compone
 import { TwoFaPopupComponent } from './components/main-page/settings/two-fa-popup/two-fa-popup.component';
 import { ChatPageComponent } from './components/main-page/chat-page/chat-page.component';
 import { CreateRoomComponent } from './components/main-page/chat-page/create-room/create-room.component';
+import { GetPasswordComponent } from './components/main-page/chat-page/get-password/get-password.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -70,7 +71,8 @@ export function tokenGetter(): string | null {
     FriendsComponent,
     TwoFaPopupComponent,
     ChatPageComponent,
-    CreateRoomComponent
+    CreateRoomComponent,
+    GetPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -20,6 +20,7 @@ export class ChatPageComponent implements OnInit {
   allUsers: Array<UserI> = [];
 
   currentRoom!: RoomI;
+  toChangeRoom!: RoomI;
 	rooms: Array<RoomI> = [];
 	users: Array<RoomI> = [];
 	channels: Array<RoomI> = [];
@@ -69,9 +70,22 @@ export class ChatPageComponent implements OnInit {
     }
   }
 
-  changeCurrentRoom(room: RoomI)
+  changeCurrentRoom(room: RoomI, ignoreType?: boolean)
   {
-    this.currentRoom = room;
+    if (room.option == "private")
+    {
+      this.toChangeRoom = room;
+      this.showOverlay("password");
+    }
+    else
+      this.currentRoom = room;
+  }
+
+  ifPassword(check :boolean)
+  {
+    if (check)
+      this.currentRoom = this.toChangeRoom;
+    this.closeOverlay();
   }
 
 	directMessage(user: UserI)
@@ -98,14 +112,18 @@ export class ChatPageComponent implements OnInit {
 		this.chatService.createRoom(newRoom);
 	}
 
-	showOverlay(): void
+	showOverlay(type: string): void
 	{
 		let container = document.getElementById("container");
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
+    let password = document.getElementById("password");
 		container!.style.opacity = "50%";
 		overlayBack!.style.display = "block";
-		popup!.style.display = "block";
+    if (type == "newChannel")
+		  popup!.style.display = "block";
+    else if (type == "password")
+      password!.style.display = "block";
 	}
 
 	closeOverlay(): void
@@ -113,9 +131,11 @@ export class ChatPageComponent implements OnInit {
 		let container = document.getElementById("container");
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
+    let password = document.getElementById("password");
 		container!.style.opacity = "100%";
 		overlayBack!.style.display = "none";
 		popup!.style.display = "none";
+		password!.style.display = "none";
 	}
 
 }
