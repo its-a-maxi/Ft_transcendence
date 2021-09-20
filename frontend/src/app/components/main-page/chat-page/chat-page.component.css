@@ -258,6 +258,11 @@ app-user-list-hidden
 {
 	display: none;
 }
+
+app-channel-list-hidden
+{
+	display: none;
+}
 	
 .overlayBack
 {

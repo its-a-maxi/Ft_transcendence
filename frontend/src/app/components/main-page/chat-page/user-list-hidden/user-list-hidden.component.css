@@ -11,9 +11,82 @@
 
 	font-family: futura;
     font-size: 2vh;
-    text-align: center;
     color: rgba(19, 5, 11, .8);
 	background-color: #ede5f2ff;
 	border-radius: 3.8vh;
     transition-duration: 0.3s;
 }
+
+.currentChannelText
+{
+	font-family: futura;
+    font-size: 2.5vh;
+	text-align: center;
+	letter-spacing: 0.2vh;
+}
+
+.overlayListContainer
+{
+	position: absolute;
+	width: 70%;
+	height: 85%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 5%;
+	margin: auto;
+}
+
+.overlayListElementsContainer
+{
+	position: absolute;
+	width: 100%;
+	height: 80%;
+	left: 0;
+	right: 0;
+	bottom: 8%;
+	margin: auto;
+	overflow: auto;
+}
+
+	.overlayList
+	{
+		width: 100%;
+		position: relative;
+
+		border: 0.5vh solid rgba(19, 5, 11, 0);
+		border-radius: 100px;
+		transition-duration: 0.1s;
+		list-style: none;
+	}
+
+	.overlayList:hover
+	{
+		background-color: rgba(19, 5, 11, .2);
+		border: 0.5vh solid rgba(19, 5, 11, 0);
+		cursor: pointer;
+	}
+
+  
+
+  /* width */
+  ::-webkit-scrollbar {
+	width: 1vh;
+	height: 1vh;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: transparent;
+	border-radius: 100px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: rgba(19, 5, 11, .2);
+	border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-corner {
+	  background: transparent;
+	}

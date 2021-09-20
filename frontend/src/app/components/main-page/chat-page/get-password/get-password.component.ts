@@ -37,8 +37,7 @@ export class GetPasswordComponent implements OnInit
 			})
 			.catch(() => {
 				alert("Incorrect password")
-				this.password = ""
-				this.ifPassword.emit(false)
+				this.password = "";
 			})
 	}
 

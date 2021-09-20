@@ -1,1 +1,12 @@
-<p>channel-list-hidden works!</p>
+<div class=body id=body>
+	<div class=overlayListContainer>
+		<h1 class="currentChannelText">Channels</h1>
+		<div class="overlayListElementsContainer">
+			<ul class="overlayList" *ngFor="let room of list">
+				<li (click)="enter(room)">{{room.name}}
+				</li>
+			</ul>
+		</div>
+		<button name="submit" class='btn'>+ Channel</button>
+	</div>
+</div>

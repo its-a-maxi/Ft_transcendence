@@ -119,6 +119,7 @@ export class ChatPageComponent implements OnInit {
 		let popup = document.getElementById("popup");
     let password = document.getElementById("password");
     let hiddenUserList = document.getElementById("hiddenUserList");
+    let hiddenChannelList = document.getElementById("hiddenChannelList");
 
 		container!.style.opacity = "50%";
 		overlayBack!.style.display = "block";
@@ -128,6 +129,8 @@ export class ChatPageComponent implements OnInit {
       password!.style.display = "block";
     else if (type == "hiddenUserList")
       hiddenUserList!.style.display = "block";
+    else if (type == "hiddenChannelList")
+      hiddenChannelList!.style.display = "block";
 	}
 
 	closeOverlay(): void
@@ -137,12 +140,14 @@ export class ChatPageComponent implements OnInit {
 		let popup = document.getElementById("popup");
     let password = document.getElementById("password");
     let hiddenUserList = document.getElementById("hiddenUserList");
+    let hiddenChannelList = document.getElementById("hiddenChannelList");
     
 		container!.style.opacity = "100%";
 		overlayBack!.style.display = "none";
 		popup!.style.display = "none";
 		password!.style.display = "none";
     hiddenUserList!.style.display = "none";
+    hiddenChannelList!.style.display = "none";
 	}
 
 }
