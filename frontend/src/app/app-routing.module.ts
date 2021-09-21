@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChatRoomComponent } from './components/chat/chat-room/chat-room.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { GameComponent } from './components/game/game.component';
+import { WaitingRoomComponent } from './components/game/waiting-room/waiting-room/waiting-room.component';
 import { HomeComponent } from './components/home/home.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { StartComponent } from './components/landing-page/start/start.component';
@@ -24,7 +25,7 @@ const routes: Routes = [
     { path: 'start', component: StartComponent }
   ]},
   { path: 'mainPage', component: MainPageComponent, children: [
-    {path: 'play/:id', component: GameComponent},
+    {path: 'play/:id', component: WaitingRoomComponent},
     {path: 'chat/:id', component: ChatPageComponent},
     {path: 'oldChat/:id', component: ChatRoomComponent},
     {path: 'friends/:id', component: FriendsComponent},
