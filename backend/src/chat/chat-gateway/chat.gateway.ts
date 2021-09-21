@@ -52,7 +52,7 @@ export class ChatGateway
 			{
 				socket.data.user = user
 				user.status = 'online'
-				await this.userService.updateUser(user as UpdateDto, user.id)
+				await this.userService.updateStatus(user.status, user.id)
 				this.addUserRoom(user as UserEntity)
 				const rooms = await this.roomService.findAllRoomById(user.id)
 				await this.connectedUserService.create({socketId: socket.id, userId: user.id, user})
@@ -98,7 +98,7 @@ export class ChatGateway
 	{
 		const user: UserI = socket.data.user
 		user.status = 'offline'
-		await this.userService.updateUser(user as UpdateDto, user.id)
+		await this.userService.updateStatus(user.status, user.id)
 		await this.connectedUserService.deleteSocket(socket.id)
 		socket.disconnect();
 	}
