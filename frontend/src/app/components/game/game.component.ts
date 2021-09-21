@@ -25,6 +25,7 @@ export class GameComponent extends P5JSInvoker implements OnInit {
       this.pongGame = new GameLogic(this.height,this.width);
       this.controlState = { upPressed: false, downPressed: false };
       this.startP5JS(document.body);
+      this.p5.frameRate(2 * this.ticksPerSecond);
     }
   
     setup()
@@ -47,15 +48,15 @@ export class GameComponent extends P5JSInvoker implements OnInit {
         //setTimeout(() => location.reload(), 500);
         return;
       }
-      
+
       // Set to white for game objects
       this.p5.fill('white');
 
       //Print Scores
-      this.p5.rect(this.width / 2, 0, 3, this.height);
+      this.p5.rect(this.width / 2, 0, this.width / 512, this.height);
       this.p5.textSize(this.width / 15);
-      this.p5.text(this.pongGame.playerScore, 3 * this.width / 8, this.height / 10);
-      this.p5.text(this.pongGame.enemyScore, 38 * this.width / 64, this.height / 10);
+      this.p5.text(this.pongGame.playerScore, 3 * this.width / 12, this.height / 10);
+      this.p5.text(this.pongGame.enemyScore, 9 * this.width / 12, this.height / 10);
   
       let bounds: Boundaries;
   
