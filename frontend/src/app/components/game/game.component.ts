@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GameService } from 'src/app/services/game-service/game.service';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { Boundaries } from './classes/boundaries';
 import { ControlState } from './classes/control-state';
@@ -20,7 +21,7 @@ export class GameComponent extends P5JSInvoker implements OnInit {
     private ticksPerSecond: number = 60;
     private controlState !: ControlState; 
   
-    constructor() {
+    constructor(private gameService: GameService) {
       super();
       this.pongGame = new GameLogic(this.height,this.width);
       this.controlState = { upPressed: false, downPressed: false };
@@ -90,6 +91,12 @@ export class GameComponent extends P5JSInvoker implements OnInit {
       {
         this.controlState.downPressed = true;
       }
+
+	  let data = {
+			up: this.controlState.upPressed,
+			down: this.controlState.downPressed
+		}
+		this.gameService.keyReled(data)
     }
   
     keyReleased()
@@ -102,6 +109,12 @@ export class GameComponent extends P5JSInvoker implements OnInit {
       {
         this.controlState.downPressed = false;
       }
+
+	  let data = {
+		  up: this.controlState.upPressed,
+		  down: this.controlState.downPressed
+	  }
+	  this.gameService.keyReled(data)
     }
   
     ngOnInit(): void {

@@ -121,7 +121,6 @@ export class AuthController
     {
         user.avatar = `http://localhost:3000/auth/assets/${req.body.avatar}`
         user.authentication = req.body.authentication
-        //const clientID = await this.authService.clientID(req)
         const id = req.body.id
         return await this.userService.updateUser(user, id)
     }

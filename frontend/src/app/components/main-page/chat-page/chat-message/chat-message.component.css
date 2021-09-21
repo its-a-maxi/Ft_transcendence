@@ -1,12 +1,21 @@
 p
 {
+    font-family: 'Courier New', Courier, monospace;
     font-size: medium;
     /* background-color: lightblue; */
     padding: 5px;
     width: fit-content;
     border-radius: 5px;
     margin: 7px;
-    color: magenta;
+    color: rgba(237, 229, 242, .8);
+}
+
+em
+{
+    font-family: 'futura';
+    color: lightgreen;
+    font-size: small;
+    text-align: left;
 }
   
 .ownContainer
@@ -17,5 +26,6 @@ p
 .ownMessage
 {
     /* background-color: lightgreen; */
-    color: lawngreen;
+    color: lightskyblue;
+    text-align: right;
 }

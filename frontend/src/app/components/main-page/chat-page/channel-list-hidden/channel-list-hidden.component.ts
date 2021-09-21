@@ -12,6 +12,7 @@ export class ChannelListHiddenComponent implements OnInit {
 
   @Output('directMessage') directMessage: EventEmitter<any> = new EventEmitter();
   @Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
+  @Output('showOverlay') showOverlay: EventEmitter<any> = new EventEmitter();
   @Input() list: Array<RoomI> = [];
 
   ngOnInit(): void {
@@ -19,8 +20,14 @@ export class ChannelListHiddenComponent implements OnInit {
 
   enter(room: RoomI)
   {
-    this.directMessage.emit(room);
     this.closeOverlay.emit();
+    this.directMessage.emit(room);
+  }
+
+  create()
+  {
+    this.closeOverlay.emit();
+    this.showOverlay.emit('newChannel');
   }
 
 }

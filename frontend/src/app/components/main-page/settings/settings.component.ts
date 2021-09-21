@@ -50,7 +50,6 @@ export class SettingsComponent implements OnInit
 			window.location.reload();
 		}
 		await this.findUser(this.paramId);
-		console.log((await this.authService.showAllUsers()).data)
 		this.oldNick = this.user!.nick;
 		this.oldEmail = this.user!.email;
 		if (this.user?.authentication) {
@@ -107,6 +106,7 @@ export class SettingsComponent implements OnInit
 
 	async uploadNewSettings()
 	{
+        console.log(this.user)
 		if (this.nick.length > 0 && this.nick.length < 4)
 			alert("Please, check that your nickname has at least 4 characters")
 		else if (this.email.length > 0 && !this.validateEmail(this.email))
@@ -126,9 +126,6 @@ export class SettingsComponent implements OnInit
 				this.user.email = this.email;
 			this.user.authentication = this.authentication;
 			await this.authService.updateUser(this.user);
-			//if (this.user.authentication != this.oldAuthentication && this.user.authentication)
-			//  this.router.navigate(['/twofa']);
-			//else
 			window.location.reload();
 			return;
 		}

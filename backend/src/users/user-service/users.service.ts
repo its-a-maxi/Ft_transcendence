@@ -58,8 +58,8 @@ export class UsersService
 		return this.usersRepository.update(clientID, { secret });
 	}
 
-	// async saveUserBlackList(blackList: string[], userId: number)
-	// {
-	// 	return this.usersRepository.insert()
-	// }
+	async updateStatus(status: string, userId: number)
+    {
+        return this.usersRepository.update(userId, { status })
+    }
 }
