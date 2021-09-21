@@ -14,20 +14,26 @@ export class GameLogic {
                 private width: number)
     {
         // Construct game objects
-        this.ball = new Ball(15, 15, 2,
+        var plusOrMinus = Math.round(Math.random()) * 2 - 1.0;
+        let velModInit = (512 * 60)  / (this.width * 30);
+        let velX = Math.random() * velModInit;
+        this.ball = new Ball(2 * width / 256, 2 * width / 256,
             { x: height / 2, y: width / 2 },
-            { x: 1, y: 1 });
-        this.playerPaddle = new Paddle(100, 20, 1.5,
-            { x: 50, y: height / 2 });
-        this.enemyPaddle = new Paddle(100, 20, .8,
-            { x: width - 50, y: height / 2 });
+            { x: velX,
+              y: plusOrMinus * Math.sqrt(Math.pow(velModInit,2)-Math.pow(velX,2))});
+        this.playerPaddle = new Paddle( 7 * height / 64, 2 * width / 256,
+            { x: width / 12, y: height / 2 },
+            3 * (512 * 60) / (this.width * 30));
+        this.enemyPaddle = new Paddle(7 * height / 64, 2 * width / 256,
+            { x: 11 * width / 12, y: height / 2 },
+            3 * (512 * 60) / (this.width * 30));
     }
 
     tick(controlState: ControlState)
     {
         this.ball.move();
         // Set acceleration, move player paddle based on input
-        let accelRatio = 0.2;
+        let accelRatio = 5;
         let paddleBounds = this.playerPaddle.getCollisionBoundaries();
         if (controlState.upPressed && paddleBounds.top > 0) {
             this.playerPaddle.accelerateUp(accelRatio);
@@ -45,7 +51,7 @@ export class GameLogic {
     }
 
     private moveEnemyPaddle() {
-        if (this.ball.getPosition().y < this.enemyPaddle.getPosition().y)
+        if (this.ball.getPosition().y - this.enemyPaddle.getPosition().y < 0)
             this.enemyPaddle.accelerateUp(1)
         else 
             this.enemyPaddle.accelerateDown(1)
@@ -59,13 +65,16 @@ export class GameLogic {
         {
             this.ball.reverseY();
         }
+
+        let velBounce = 2 * (512 * 60) / (this.width * 30);
+
         let paddleBounds = this.playerPaddle.getCollisionBoundaries();
 
         // Player paddle hit
         if (paddleBounds.top <= 0 || paddleBounds.bottom >= this.height)
-            this.playerPaddle.decelerate(1);
-        if (ballBounds.left - paddleBounds.right >= 0 &&
-            ballBounds.left - paddleBounds.right <= 3 &&
+            this.playerPaddle.decelerate(3);
+        if (ballBounds.left >= paddleBounds.right &&
+            ballBounds.left - paddleBounds.right <= 2 * this.ball.getWidth() &&
             ballBounds.bottom >= paddleBounds.top &&
             ballBounds.top <= paddleBounds.bottom) {
             this.ball.reverseX();
@@ -73,18 +82,26 @@ export class GameLogic {
             // Set vertical speed ratio by taking ratio of 
             // dist(centerOfBall, centerOfPaddle) to dist(topOfPaddle, centerOfPaddle)
             // Negate because pixels go up as we go down :)
-            var vsr = - (this.ball.getPosition().y - this.playerPaddle.getPosition().y)
-                / (paddleBounds.top - this.playerPaddle.getPosition().y);
+            let vsr = Math.abs((ballBounds.bottom - this.ball.getHeight()/2 - paddleBounds.bottom + this.enemyPaddle.getHeight()/2)
+                / (this.enemyPaddle.getHeight()/2));
 
             // Max vsr is 1
-            vsr = Math.min(vsr, 1);
-            this.ball.setVerticalSpeedRatio(vsr);
+            //vsr = Math.min(vsr, 1);
+            console.log('vsr: ' + vsr);
+            let sign = (this.ball.getSpeedCoord().x >= 0) ? 1 : -1;
+            let velY = 0.5 * vsr * velBounce;
+            this.ball.setSpeedCoord({x: sign * Math.sqrt(Math.pow(velBounce,2)-Math.pow(velY,2)),
+                                     y: velY});
+           // console.log('Player Bounce Speed: (' + this.ball.getSpeedCoord().x
+           // + ', ' + this.ball.getSpeedCoord().y + ')');
         }
 
         // Enemy paddle hit
         paddleBounds = this.enemyPaddle.getCollisionBoundaries();
-        if (ballBounds.right - paddleBounds.left >= 0 &&
-            ballBounds.right - paddleBounds.left <= 3 &&
+        if (paddleBounds.top <= 0 || paddleBounds.bottom >= this.height)
+            this.enemyPaddle.decelerate(3);
+        if (ballBounds.right <= paddleBounds.left &&
+            - ballBounds.right + paddleBounds.left <= 2 * this.ball.getWidth() &&
             ballBounds.bottom >= paddleBounds.top &&
             ballBounds.top <= paddleBounds.bottom) {
             this.ball.reverseX();
@@ -92,12 +109,18 @@ export class GameLogic {
             // Set vertical speed ratio by taking ratio of 
             // dist(centerOfBall, centerOfPaddle) to dist(topOfPaddle, centerOfPaddle)
             // Negate because pixels go up as we go down :)
-            var vsr = - (this.ball.getPosition().y - this.enemyPaddle.getPosition().y)
-                / (paddleBounds.top - this.enemyPaddle.getPosition().y);
+            let vsr = Math.abs((ballBounds.bottom - this.ball.getHeight()/2 - paddleBounds.bottom + this.enemyPaddle.getHeight()/2)
+                / (this.enemyPaddle.getHeight()/2));
 
             // Max vsr is 1
-            vsr = Math.min(vsr, 1);
-            this.ball.setVerticalSpeedRatio(vsr);
+            //vsr = Math.min(vsr, 1);
+            console.log('vsr: ' + vsr);
+            let sign = (this.ball.getSpeedCoord().x >= 0) ? 1 : -1;
+            let velY = 0.5 * vsr * velBounce;
+            this.ball.setSpeedCoord({x: sign * Math.sqrt(Math.pow(velBounce,2)-Math.pow(velY,2)),
+                                     y: velY});
+            //console.log('Enemy Bounce Speed: (' + this.ball.getSpeedCoord().x
+            //+ ', ' + this.ball.getSpeedCoord().y + ')');
         }
     }
 
@@ -118,8 +141,11 @@ export class GameLogic {
     newMatch(): void {
         this.ball.setPosition({ x: this.height / 2,
                                 y: this.width / 2 });
-        this.ball.setSpeedRatio({x: Math.floor(Math.random() * (3) - 1) * 0.1,
-                                y: Math.floor(Math.random() * (3) - 1) * 0.1});
+        let plusOrMinus = Math.round(Math.random()) * 2 - 1.0;
+        let velModInit = 1.0;
+        let velX = Math.random() * velModInit;
+        this.ball.setSpeedCoord({x: velX,
+                                 y: plusOrMinus * Math.sqrt(Math.pow(velModInit,2)-Math.pow(velX,2))});
     }
 
 }

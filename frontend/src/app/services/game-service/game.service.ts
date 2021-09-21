@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CustomSocket } from '../chat-service/custom-socket/custom-socket';
+import { UserI } from '../models/user.interface';
 
 @Injectable({
 	providedIn: 'root'
@@ -23,5 +24,15 @@ export class GameService
 	keyReled(data: any)
 	{
 		this.socket.emit('keyboard', data)
+	}
+
+	getListUsers(): Observable<any>
+	{
+		return this.socket.fromEvent<any>('listUsers')
+	}
+
+	leaveRoom()
+	{
+		this.socket.emit('leaveRoom')
 	}
 }

@@ -1,48 +1,35 @@
 import { MoveableObject } from "./moveable-object";
 import { Position } from "./position";
-import { SpeedRatio } from "./speed-ratio";
+import { SpeedCoord } from "./speed-coord";
 
 export class Ball extends MoveableObject {
 
     constructor(height: number,
                 width: number,
-                maxSpeed: number,
                 position: Position,
-                private speedRatio: SpeedRatio)
+                speedCoord: SpeedCoord)
     {
-        super(height, width, maxSpeed, position);
+        super(height, width, position, speedCoord);
     }
 
     /**
     * Reverses the ball in the x direction
     */
     reverseX(): void {
-        this.speedRatio.x = -this.speedRatio.x;
+        this.getSpeedCoord().x = -this.getSpeedCoord().x;
     }
 
     /**
      * Reverses the ball in the y direction
      */
     reverseY(): void {
-        this.speedRatio.y = -this.speedRatio.y;
-    }
-
-    /**
-     * Sets new vertical speed ratio of max speed
-     * para cambiar el ángulo de la pelota
-     */
-    setVerticalSpeedRatio(verticalSpeedRatio: number): void {
-        this.speedRatio.y = verticalSpeedRatio;
+        this.getSpeedCoord().y = -this.getSpeedCoord().y;
     }
 
     /**
      * Moves object using existing speed ratio
      */
     move() {
-        super.move(this.speedRatio);
-    }
-
-    setSpeedRatio(speedRatio: SpeedRatio): void{
-        this.speedRatio = speedRatio;
+        super.move();
     }
 }

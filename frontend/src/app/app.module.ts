@@ -45,6 +45,8 @@ import { CreateRoomComponent } from './components/main-page/chat-page/create-roo
 import { GetPasswordComponent } from './components/main-page/chat-page/get-password/get-password.component';
 import { UserListHiddenComponent } from './components/main-page/chat-page/user-list-hidden/user-list-hidden.component';
 import { ChannelListHiddenComponent } from './components/main-page/chat-page/channel-list-hidden/channel-list-hidden.component';
+import { WaitingRoomComponent } from './components/game/waiting-room/waiting-room/waiting-room.component';
+
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -76,7 +78,8 @@ export function tokenGetter(): string | null {
     CreateRoomComponent,
     GetPasswordComponent,
     UserListHiddenComponent,
-    ChannelListHiddenComponent
+    ChannelListHiddenComponent,
+    WaitingRoomComponent,
   ],
   imports: [
     BrowserModule,

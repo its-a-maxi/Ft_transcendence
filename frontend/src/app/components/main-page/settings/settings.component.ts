@@ -106,7 +106,6 @@ export class SettingsComponent implements OnInit
 
 	async uploadNewSettings()
 	{
-        console.log(this.user)
 		if (this.nick.length > 0 && this.nick.length < 4)
 			alert("Please, check that your nickname has at least 4 characters")
 		else if (this.email.length > 0 && !this.validateEmail(this.email))
