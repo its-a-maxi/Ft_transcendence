@@ -90,3 +90,18 @@
   ::-webkit-scrollbar-corner {
 	  background: transparent;
 	}
+
+
+
+	::ng-deep .hoverMenuHidden
+	{
+		background-color: rgba(19, 5, 11, .6);
+		
+	}
+	
+	::ng-deep .hoverBtnHidden
+	{
+		color: #ede5f2ff;
+		font-family: 'futura';
+		font-size: 1.8vh;
+	}

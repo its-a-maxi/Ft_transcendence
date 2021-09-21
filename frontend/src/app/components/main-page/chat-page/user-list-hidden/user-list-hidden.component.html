@@ -3,8 +3,13 @@
 		<h1 class="currentChannelText">Users</h1>
 		<div class="overlayListElementsContainer">
 			<ul class="overlayList" *ngFor="let room of list">
-				<li (click)="enter(room)">{{room.nick}}
-				</li>
+				<li [matMenuTriggerFor]="menu" >{{room.nick}}</li>
+				<mat-menu #menu="matMenu" class=hoverMenuHidden>
+				  <button mat-menu-item (click)="enter(room)" class=hoverBtnHidden>Open chat</button>
+				  <button mat-menu-item class=hoverBtnHidden>PONG match</button>
+				  <button mat-menu-item class=hoverBtnHidden>Check profile</button>
+				  <button mat-menu-item class=hoverBtnHidden>Block user</button>
+				</mat-menu>
 			</ul>
 		</div>
 	</div>

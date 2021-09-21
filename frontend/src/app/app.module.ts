@@ -29,6 +29,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatMenuModule} from '@angular/material/menu';
 import { NgxPaginationModule } from 'ngx-pagination'
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
@@ -97,7 +98,8 @@ export function tokenGetter(): string | null {
     MatRadioModule,
     NgxPaginationModule,
     FlexLayoutModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

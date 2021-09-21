@@ -277,3 +277,16 @@ app-channel-list-hidden
 	bottom: 0;
 	margin: auto;
 }
+
+::ng-deep .hoverMenu
+{
+	background-color: #ede5f2ff;
+	
+}
+
+::ng-deep .hoverBtn
+{
+	color: rgba(19, 5, 11, .8);
+	font-family: 'futura';
+	font-size: 1.8vh;
+}

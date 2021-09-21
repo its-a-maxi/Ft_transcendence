@@ -8,6 +8,7 @@ import { MessageI, MessagePaginateI } from 'src/app/services/models/message.inte
 import { RoomI } from 'src/app/services/models/room.interface';
 import { map, startWith, tap } from 'rxjs/operators';
 import { UserI } from 'src/app/services/models/user.interface';
+import { Session } from 'inspector';
 
 @Component({
 	selector: 'app-chat-channel',
@@ -103,5 +104,16 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 			this.write = res
 			setTimeout(() => this.write = "", 3000);
 		})
+	}
+
+	deleteChannel()
+	{
+		let rooms: RoomI[] = [];
+		rooms.push(this.chatRoom);
+		let option = confirm("Are you sure you want to delete this Channel?");
+		if (!option)
+			return;
+		this.chatService.deleteRooms(rooms);
+		window.location.reload();
 	}
 }

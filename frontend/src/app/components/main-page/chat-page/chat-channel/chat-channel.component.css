@@ -8,6 +8,7 @@
     right: 0;
     left: 0;
     margin: auto;
+    transition: 0.2s;
 }
 
 .currentChannelText
@@ -116,10 +117,39 @@
         cursor: pointer;
     }
 
-mat-form-field
-{
-    margin-left: 20px;
-}
+    .isTyping
+    {
+        position: absolute;
+        color: rgba(237, 229, 242, .4);
+
+        font-family: 'futura';
+        width: 100%;
+        top: -35%;
+        font-size: 1.5vh;
+        letter-spacing: 0.2vh;
+        margin: auto;
+        text-align: center;
+
+    }
+
+    .iconBox
+    {
+        height: 100%;
+    }
+
+    .settingsIcon
+    {
+        opacity: 60%;
+        position: absolute;
+        height: 35%;
+        left: 3.5vh;
+        top: 1.3vh;
+    }
+    .settingsIcon:hover
+    {
+        opacity: 100%;
+        cursor: pointer;
+    }
 
 	/* width */
 	::-webkit-scrollbar {

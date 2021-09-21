@@ -5,9 +5,13 @@
 		</div>
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of allUsers">
-				<li (click)="directMessage(room)">{{room.nick}}
-					<img src="../../../../assets/images/blockIcon.png" alt="leave" [className]="1 == 1 ? 'icon' : 'icon'">
-				</li>
+				<li [matMenuTriggerFor]="menu" >{{room.nick}}</li>
+				<mat-menu #menu="matMenu" class=hoverMenu>
+				  <button mat-menu-item (click)="directMessage(room)" class=hoverBtn>Open chat</button>
+				  <button mat-menu-item class=hoverBtn>PONG match</button>
+				  <button mat-menu-item class=hoverBtn>Check profile</button>
+				  <button mat-menu-item class=hoverBtn>Block user</button>
+				</mat-menu>
 			</ul>
 		</div>
 	</div>
