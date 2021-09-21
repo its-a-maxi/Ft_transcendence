@@ -41,4 +41,8 @@ export class Ball extends MoveableObject {
     move() {
         super.move(this.speedRatio);
     }
+
+    setSpeedRatio(speedRatio: SpeedRatio): void{
+        this.speedRatio = speedRatio;
+    }
 }

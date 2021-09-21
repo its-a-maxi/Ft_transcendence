@@ -7,6 +7,8 @@ export class GameLogic {
     ball !: Ball;
     playerPaddle !: Paddle;
     enemyPaddle !: Paddle;
+    playerScore: number = 0;
+    enemyScore: number = 0;
 
     constructor(private height: number,
                 private width: number)
@@ -59,16 +61,6 @@ export class GameLogic {
         }
         let paddleBounds = this.playerPaddle.getCollisionBoundaries();
 
-    
-        console.log("LOGIC: Player bounds are (top, bottom, left, right): "
-        + paddleBounds.top + " ," + paddleBounds.bottom + ", "
-        + paddleBounds.left + " ," + paddleBounds.right + ")");
-    
-    /*
-    console.log("Ball bounds are (" + ballBounds.top +
-        " ," + ballBounds.bottom + ");(" + ballBounds.left +
-        ", " + ballBounds.right + ")");
-    */
         // Player paddle hit
         if (paddleBounds.top <= 0 || paddleBounds.bottom >= this.height)
             this.playerPaddle.decelerate(1);
@@ -76,7 +68,6 @@ export class GameLogic {
             ballBounds.left - paddleBounds.right <= 3 &&
             ballBounds.bottom >= paddleBounds.top &&
             ballBounds.top <= paddleBounds.bottom) {
-            console.log("BOUNCE OFF PLAYER!");
             this.ball.reverseX();
 
             // Set vertical speed ratio by taking ratio of 
@@ -96,7 +87,6 @@ export class GameLogic {
             ballBounds.right - paddleBounds.left <= 3 &&
             ballBounds.bottom >= paddleBounds.top &&
             ballBounds.top <= paddleBounds.bottom) {
-            console.log("BOUNCE OFF ENEMY!");
             this.ball.reverseX();
 
             // Set vertical speed ratio by taking ratio of 
@@ -113,9 +103,23 @@ export class GameLogic {
 
     gameOver(): boolean {
         var collisionBoundaries = this.ball.getCollisionBoundaries();
-        if (this.ball.getCollisionBoundaries().left <= 0 ||
-            this.ball.getCollisionBoundaries().right >= this.width) return true;
+        if (this.ball.getCollisionBoundaries().left <= 0)
+        {
+            this.enemyScore++;
+            return true;
+        }
+        else if (this.ball.getCollisionBoundaries().right >= this.width)
+        { 
+            this.playerScore++;
+            return true;
+        } 
         else return false;
+    }
+    newMatch(): void {
+        this.ball.setPosition({ x: this.height / 2,
+                                y: this.width / 2 });
+        this.ball.setSpeedRatio({x: Math.floor(Math.random() * (3) - 1) * 0.1,
+                                y: Math.floor(Math.random() * (3) - 1) * 0.1});
     }
 
 }

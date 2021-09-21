@@ -27,4 +27,5 @@ export abstract class MoveableObject {
     getWidth(): number { return this.width;}
     getHeight(): number { return this.height;}
     getPosition(): Position { return this.position;}
+    setPosition(position: Position): void {this.position = position;}
 }
