@@ -14,8 +14,8 @@ import { TwoFAComponent } from './components/two-fa/two-fa.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatRoomComponent } from './components/chat/chat-room/chat-room.component';
-import { ChatChannelComponent } from './components/chat/chat-channel/chat-channel.component';
-import { ChatMessageComponent } from './components/chat/chat-message/chat-message.component';
+import { ChatChannelComponent } from './components/main-page/chat-page/chat-channel/chat-channel.component';
+import { ChatMessageComponent } from './components/main-page/chat-page/chat-message/chat-message.component';
 
 import { MatListModule } from "@angular/material/list";
 import { MatPaginatorModule } from '@angular/material/paginator';

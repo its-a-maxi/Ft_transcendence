@@ -1,0 +1,7 @@
+<span style="display: flex;" [ngClass]="{ownContainer: message.user!.id == userId}">
+    <p>
+        <em [ngClass]="{ownMessage: message.user!.id == userId}">{{message.user!.nick!.toUpperCase()}}</em>
+        <br>
+        {{message.text}}
+    </p>
+</span>

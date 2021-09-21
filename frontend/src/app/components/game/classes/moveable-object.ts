@@ -1,31 +1,35 @@
 import { Position } from './position';
-import { SpeedRatio } from './speed-ratio';
+import { SpeedCoord } from './speed-coord';
 import { Boundaries } from './boundaries';
 
 export abstract class MoveableObject {
     constructor(private height: number,
                 private width: number,
-                private MaxSpeed: number,
-                private position: Position){
+                private position: Position,
+                private speedCoord: SpeedCoord){
 
     }
 
-    move(speedRatio: SpeedRatio): void {
-        this.position.x += this.MaxSpeed * speedRatio.x;
-        this.position.y += this.MaxSpeed * speedRatio.y;
+    move(): void {
+        this.position.x += this.speedCoord.x;
+        this.position.y += this.speedCoord.y;
     }
 
     getCollisionBoundaries(): Boundaries {
         return {
-            top: this.position.y - this.height / 2,
-            bottom: this.position.y + this.height / 2,
-            right: this.position.x + this.width / 2,
-            left: this.position.x - this.width / 2
+            top: this.position.y,
+            bottom: this.position.y + this.height,
+            right: this.position.x + this.width,
+            left: this.position.x
         }
     }
 
     getWidth(): number { return this.width;}
     getHeight(): number { return this.height;}
     getPosition(): Position { return this.position;}
-    setPosition(position: Position): void {this.position = position;}
+    setPosition(position: Position): void { this.position = position; }
+    getSpeedCoord(): SpeedCoord { return this.speedCoord; }
+    setSpeedCoord(speedCoord: SpeedCoord): void{
+        this.speedCoord = speedCoord;
+    }
 }

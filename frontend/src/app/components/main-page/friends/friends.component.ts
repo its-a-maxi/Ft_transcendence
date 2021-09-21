@@ -31,21 +31,6 @@ export class FriendsComponent implements OnInit {
     this.sortConnected();
     await this.authService.showAllUsers()
       .then(response => this.allUsers = response.data.filter(x => x.id != this.mainUser?.id));
-    
-    let lapin: User = new User;
-    lapin.nick = 'Lapin';
-    let mr: User = new User;
-    mr.nick = 'Mr. Robbinson';
-    mr.isConnected = true;
-    let ma: User = new User;
-    ma.nick = 'fjimenez';
-    let la: User = new User;
-    la.nick = 'aleon-ca';
-    this.allUsers.push(lapin);
-    this.allUsers.push(mr);
-    this.allUsers.push(ma);
-    this.allUsers.push(la);
-    
   }
 
 	async findUser(id: string)

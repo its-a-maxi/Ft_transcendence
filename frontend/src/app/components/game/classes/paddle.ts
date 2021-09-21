@@ -1,18 +1,15 @@
 import { MoveableObject } from "./moveable-object";
 import { Position } from "./position";
-import { SpeedRatio } from "./speed-ratio";
+import { SpeedCoord } from "./speed-coord";
 
 export class Paddle extends MoveableObject {
 
-    private speedRatio !: SpeedRatio;
-
     constructor(height: number,
                 width: number,
-                maxSpeed: number,
-                position: Position)
+                position: Position,
+                private maxSpeed: number)
     {
-        super(height, width, maxSpeed, position);
-        this.speedRatio = {x: 0, y: 0};
+        super(height, width, position, {x:0, y: 0});
     }
 
     /**
@@ -20,8 +17,8 @@ export class Paddle extends MoveableObject {
      * @param ratioChange - the percentage of the max speed that the paddle should accelerate to
      */
     accelerateDown(ratioChange: number) {
-        if (ratioChange < 0 || ratioChange > 1) return;
-        this.speedRatio.y = Math.min(1, this.speedRatio.y + ratioChange);
+        if (ratioChange < 0) return;
+        this.getSpeedCoord().y = Math.min(this.maxSpeed, this.getSpeedCoord().y + ratioChange);
         this.move();
     }
 
@@ -30,8 +27,8 @@ export class Paddle extends MoveableObject {
      * @param ratioChange - the percentage of the max speed that the paddle should accelerate to
      */
     accelerateUp(ratioChange: number) {
-        if (ratioChange < 0 || ratioChange > 1) return;
-        this.speedRatio.y = Math.max(-1, this.speedRatio.y - ratioChange);
+        if (ratioChange < 0) return;
+        this.getSpeedCoord().y = Math.max(-1 * this.maxSpeed, this.getSpeedCoord().y - ratioChange);
         this.move();
     }
 
@@ -40,16 +37,16 @@ export class Paddle extends MoveableObject {
      * @param ratioChange - the percentage of the max speed that the paddle should decelerate
      */
     decelerate(ratioChange: number) {
-        if (this.speedRatio.y < 0) {
-            this.speedRatio.y = Math.min(this.speedRatio.y + ratioChange, 0);
+        if (this.getSpeedCoord().y < 0) {
+            this.getSpeedCoord().y = Math.min(this.getSpeedCoord().y + ratioChange, 0);
         }
-        else if (this.speedRatio.y > 0) {
-            this.speedRatio.y = Math.max(this.speedRatio.y - ratioChange, 0);
+        else if (this.getSpeedCoord().y > 0) {
+            this.getSpeedCoord().y = Math.max(this.getSpeedCoord().y - ratioChange, 0);
         }
         this.move();
     }
 
     move(): void {
-        super.move(this.speedRatio);
+        super.move();
     }
 }
