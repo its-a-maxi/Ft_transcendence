@@ -24,6 +24,7 @@ const routes: Routes = [
     { path: 'start', component: StartComponent }
   ]},
   { path: 'mainPage', component: MainPageComponent, children: [
+    {path: "game/:id", component: GameComponent},
     {path: 'play/:id', component: ChatPageComponent},
     {path: 'chat/:id', component: ChatRoomComponent},
     {path: 'friends/:id', component: FriendsComponent},
