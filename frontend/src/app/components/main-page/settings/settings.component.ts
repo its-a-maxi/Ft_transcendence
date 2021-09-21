@@ -50,7 +50,6 @@ export class SettingsComponent implements OnInit
 			window.location.reload();
 		}
 		await this.findUser(this.paramId);
-		console.log((await this.authService.showAllUsers()).data)
 		this.oldNick = this.user!.nick;
 		this.oldEmail = this.user!.email;
 		if (this.user?.authentication) {
@@ -126,9 +125,6 @@ export class SettingsComponent implements OnInit
 				this.user.email = this.email;
 			this.user.authentication = this.authentication;
 			await this.authService.updateUser(this.user);
-			//if (this.user.authentication != this.oldAuthentication && this.user.authentication)
-			//  this.router.navigate(['/twofa']);
-			//else
 			window.location.reload();
 			return;
 		}
