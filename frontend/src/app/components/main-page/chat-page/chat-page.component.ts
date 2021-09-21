@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { userInfo } from 'os';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
 import { RoomI } from 'src/app/services/models/room.interface';
@@ -148,6 +149,20 @@ export class ChatPageComponent implements OnInit {
 		password!.style.display = "none";
     hiddenUserList!.style.display = "none";
     hiddenChannelList!.style.display = "none";
+	}
+
+	blockUser(user: UserI)
+	{
+    if (user.isBlocked == true)
+    {
+      this.chatService.unLockUser(user.id.toString())
+      user.isBlocked = false;
+    }
+    else
+    {
+		  this.chatService.blockUser(user.id.toString())
+      user.isBlocked = true;
+    }
 	}
 
 }

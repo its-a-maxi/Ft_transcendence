@@ -10,7 +10,7 @@
 				  <button mat-menu-item (click)="directMessage(room)" class=hoverBtn>Open chat</button>
 				  <button mat-menu-item class=hoverBtn>PONG match</button>
 				  <button mat-menu-item class=hoverBtn>Check profile</button>
-				  <button mat-menu-item class=hoverBtn>Block user</button>
+				  <button mat-menu-item (click)="blockUser(room)" class=hoverBtn>{{room.isBlocked == true ? 'Unblock user' : 'Block user'}}</button>
 				</mat-menu>
 			</ul>
 		</div>

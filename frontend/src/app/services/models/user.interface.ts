@@ -17,4 +17,6 @@ export interface UserI
     isAdmin?: boolean;
 
     status?: string;
+
+    isBlocked?: boolean;
 }
