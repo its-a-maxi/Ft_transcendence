@@ -39,7 +39,7 @@ div{
 		width: 100%;
 		text-align: center;
 		font-family: futura;
-		font-size: 3vh;
+		font-size: 2.5vh;
 		color: #ede5f2ff;
 		top: 12%;
 		margin: auto;
@@ -167,10 +167,10 @@ div{
 .openRight
 {
 	display: none;
-	opacity: 50%;
+	opacity: 20%;
 	position: absolute;
-	height: 6vh;
-	right: 1vh;
+	height: 4vh;
+	right: 4%;
 	top: 0;
 	bottom: 0;
 	margin: auto;
@@ -178,17 +178,17 @@ div{
 
 	.openRight:hover
 	{
-		opacity: 100%;
+		opacity: 50%;
 		cursor: pointer;
 	}
 
 .openLeft
 {
 	display: none;
-	opacity: 50%;
+	opacity: 20%;
 	position: absolute;
-	height: 6vh;
-	left: 1vh;
+	height: 4vh;
+	left: 4%;
 	top: 0;
 	bottom: 0;
 	margin: auto;
@@ -196,7 +196,7 @@ div{
 
 	.openLeft:hover
 	{
-		opacity: 100%;
+		opacity: 50%;
 		cursor: pointer;
 	}
 

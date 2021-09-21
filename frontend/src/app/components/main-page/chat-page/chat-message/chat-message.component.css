@@ -1,31 +1,45 @@
-p
-{
-    font-family: 'Courier New', Courier, monospace;
-    font-size: medium;
-    /* background-color: lightblue; */
-    padding: 5px;
-    width: fit-content;
-    border-radius: 5px;
-    margin: 7px;
-    color: rgba(237, 229, 242, .8);
+div{
+    border: 0px solid #ede5f2ff;
 }
 
-em
+.body
+{
+    margin-right: auto;
+    margin-left: 0;
+    width: max-content;
+    max-width: 70%;
+}
+
+.myBody
+{
+    margin-right: 0;
+    margin-left: auto;
+    width: max-content;
+    max-width: 70%;
+    text-align: right;
+}
+
+.title
 {
     font-family: 'futura';
+    font-style: normal;
     color: lightgreen;
-    font-size: small;
-    text-align: left;
+    font-size: medium;
 }
-  
-.ownContainer
+
+.myTitle
 {
-    justify-content: flex-end;
-}
-  
-.ownMessage
-{
-    /* background-color: lightgreen; */
+    font-family: 'futura';
+    font-style: normal;
     color: lightskyblue;
-    text-align: right;
+    font-size: medium;
+}
+
+p
+{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+    width: fit-content;
+    text-align: left;
+    color: rgba(237, 229, 242, .8);
 }

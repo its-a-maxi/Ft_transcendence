@@ -1,42 +1,140 @@
-.message
+
+.currentChannel
 {
-    height: 400px; 
-    overflow-y: scroll;
-    scrollbar-color: lightgrey darkgrey;
-    scrollbar-width: thin;
+    position: absolute;
+    height: 8vh;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
 }
 
-.title
+.currentChannelText
 {
+    position: absolute;
+    width: 100%;
     text-align: center;
-    color: white;
-    font-size: 26px;
-    margin-top: 20px;
+    font-family: futura;
+    font-size: 2.5vh;
+    color: #ede5f2ff;
+    top: 12%;
+    margin: auto;
+    letter-spacing: 0.2vh;
 }
+
+.messageBox
+{
+    position: absolute;
+    height: 80%; 
+    width: 98%;
+    right: 0;
+    left: 0;
+    top: 8%;
+    margin: auto;
+    overflow: auto;
+}
+
+.message
+{
+    position: absolute;
+    width: 90%;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+
+.form
+{
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+
+.searchBar
+{
+    position: relative;
+    width: 90%;
+    height: 5.5vh;
+    left: 0;
+    right: 0;
+    top: 0.25vh;
+    margin: auto;
+
+    background-color: rgba(237, 229, 242, .8);
+    color: rgba(19, 5, 11, 1);
+    border-radius: 5vh;
+}
+
+    .searchInput
+    {
+        position: absolute;
+        background-color: transparent;
+        border: transparent;
+        width: 85%;
+        height: 100%;
+        left: 5%;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+
+        letter-spacing: 0.2vh;
+        color:#805849ff;
+        text-align: left;
+        font-family: futura;
+        font-size: 2vh;
+    }
+
+    input:focus
+    {
+        outline: none;
+    }
+
+    input::placeholder
+    {
+        color: rgba(19, 5, 11, .5);
+    }
+
+    .btn
+    {
+        position: absolute;
+        height: 100%;
+        right: 2.5%;
+        bottom: 10%;
+        margin: auto;
+
+        color: rgba(19, 5, 11, .5);
+        font-size: 3.5vh;
+    }
+    .btn:hover
+    {
+        color: #805849ff;
+        cursor: pointer;
+    }
 
 mat-form-field
 {
     margin-left: 20px;
 }
 
-::-webkit-scrollbar-track
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: lightgray;
-}
-  
-::-webkit-scrollbar
-{
-    width: 12px;
-    background-color: lightgray;
-}
-  
-::-webkit-scrollbar-thumb
-{
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: lightgray;
-}
+	/* width */
+	::-webkit-scrollbar {
+		width: 1vh;
+		height: 1vh;
+	  }
+	  
+	  /* Track */
+	  ::-webkit-scrollbar-track {
+		background: rgba(237, 229, 242, .25);
+		border-radius: 100px;
+	  }
+	  
+	  /* Handle */
+	  ::-webkit-scrollbar-thumb {
+		background: #ede5f2ff;
+		border-radius: 100px;
+	  }

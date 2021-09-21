@@ -1,15 +1,22 @@
 <div *ngIf="chatRoom; else no_chatroom_selected" >
-	<div class="title">
-		{{chatRoom.name.toUpperCase()}}
+	<div class="currentChannel">
+		<h1 class="currentChannelText">{{chatRoom.name}}</h1>
 	</div>
-	<div #messages class="message">
-		<span *ngFor="let message of (messagesPaginate$ | async)?.items">
-		  <app-chat-message [message]="message" [userId]="userId"></app-chat-message>
-		</span>
+	<div #messages class="messageBox">
+		<div class="message">
+			<span *ngFor="let message of (messagesPaginate$ | async)?.items">
+			<app-chat-message [message]="message" [userId]="userId"></app-chat-message>
+			</span>
+		</div>
 	</div>
-	<mat-divider></mat-divider>
+    <form class="form" (ngSubmit)="sendMessage()">
+		<div class="searchBar">
+			<input type="text" placeholder="Say something!" name="message" [(ngModel)]="message" class="searchInput" (keypress)="typingIndicator()">
+			<button type="submit" class="btn">></button>
+		</div>
+    </form>
 	<p id="typing" style="color: whitesmoke;"><em>{{write}}</em></p>
-	<div style="position: absolute; bottom: 0; display: flex; flex-direction: row; align-items: center;">
+	<!--<div style="position: absolute; bottom: 0; display: flex; flex-direction: row; align-items: center;">
 		<mat-form-field style="width: 350px;" class="chatRoom">
 			<input #chatInput matInput [formControl]="chatMessage"
 					type="text" (keypress)="typingIndicator()">
@@ -20,9 +27,11 @@
 				<p style="margin-left:10px;">Send</p>
 			</span>
 		</button>
-	</div>
+	</div>-->
 </div>
 
 <ng-template #no_chatroom_selected>
-	<div class="title">No Chatroom Selected</div>
+	<div class="currentChannel">
+		<h1 class="currentChannelText">Select a chatRoom!</h1>
+	</div>
 </ng-template>

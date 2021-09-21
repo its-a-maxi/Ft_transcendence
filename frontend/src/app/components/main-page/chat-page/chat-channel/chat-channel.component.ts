@@ -24,7 +24,8 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 	userId: any
 	write: string = ""
 
-	chatMessage: FormControl = new FormControl(null, [Validators.required])
+	message: string = "";
+	//chatMessage: FormControl = new FormControl(null, [Validators.required])
 
 	messagesPaginate$: Observable<MessagePaginateI> = combineLatest([this.chatService.getMessages(),
 		this.chatService.getAddedMessage().pipe(startWith(null))])
@@ -76,8 +77,9 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 
 	sendMessage()
 	{
-		this.chatService.sendMessage({ text: this.chatMessage.value, room: this.chatRoom});
-		this.chatMessage.reset();
+		this.chatService.sendMessage({ text: this.message, room: this.chatRoom});
+		this.message = "";
+		//this.chatMessage.reset();
 	}
 
 	private scrollToBottom(): void
