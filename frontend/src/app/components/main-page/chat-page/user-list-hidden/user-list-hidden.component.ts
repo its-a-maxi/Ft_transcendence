@@ -11,6 +11,7 @@ export class UserListHiddenComponent implements OnInit {
   constructor() { }
 
   @Output('directMessage') directMessage: EventEmitter<any> = new EventEmitter();
+  @Output('blockUser') blockUser: EventEmitter<any> = new EventEmitter();
   @Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
   @Input() list: Array<UserI> = [];
 
@@ -20,6 +21,12 @@ export class UserListHiddenComponent implements OnInit {
   enter(user: UserI)
   {
     this.directMessage.emit(user);
+    this.closeOverlay.emit();
+  }
+
+  block(user: UserI)
+  {
+    this.blockUser.emit(user);
     this.closeOverlay.emit();
   }
 

@@ -98,6 +98,17 @@
     text-shadow: 2px 2px 10px rgba(19, 5, 11, .35);
 }
   
+.icon
+{
+	opacity: 50%;
+	padding-left: 0.5vh;
+	height: 2.2vh;
+	margin-top: -1%;
+}
+.noIcon
+{
+	display: none;
+}
 
   /* width */
   ::-webkit-scrollbar {
