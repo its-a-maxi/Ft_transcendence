@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { User } from 'src/app/services/models/user';
+import { UserI } from 'src/app/services/models/user.interface';
 
 @Component({
   selector: 'app-ranking',
@@ -12,7 +13,7 @@ export class RankingComponent implements OnInit {
 
   constructor(public authService: AuthService, private router: Router) { }
 
-  allUsers: User[] | undefined;
+  allUsers: UserI[] | undefined;
 
   async ngOnInit()
   {
@@ -33,7 +34,7 @@ export class RankingComponent implements OnInit {
     {
       let j = i - 1;
       let temp = this.allUsers[i];
-      while (j >= 0 && this.allUsers[j].wins < temp.wins)
+      while (j >= 0 && this.allUsers[j].wins! < temp.wins!)
       {
         this.allUsers[j + 1] = this.allUsers[j];
         j--;
@@ -48,7 +49,7 @@ export class RankingComponent implements OnInit {
     {
       let j = i - 1;
       let temp = this.allUsers[i];
-      while (j >= 0 && this.allUsers[j].defeats < temp.defeats)
+      while (j >= 0 && this.allUsers[j].defeats! < temp.defeats!)
       {
         this.allUsers[j + 1] = this.allUsers[j];
         j--;

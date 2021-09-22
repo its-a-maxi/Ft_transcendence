@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { User } from 'src/app/services/models/user';
+import { UserI } from 'src/app/services/models/user.interface';
 
 @Component({
   selector: 'app-friends',
@@ -12,11 +13,11 @@ export class FriendsComponent implements OnInit {
 
   constructor(public authService: AuthService, private router: Router) { }
 
-  mainUser: User | undefined;
-  friends: Array<User> = [];
-  notFriendsSearch: Array<User> = [];
-  private notFriends: Array<User> = [];
-  private allUsers: Array<User> = [];
+  mainUser: UserI | undefined;
+  friends: Array<UserI> = [];
+  notFriendsSearch: Array<UserI> = [];
+  private notFriends: Array<UserI> = [];
+  private allUsers: Array<UserI> = [];
 
   searchInput: string = "";
 
@@ -47,16 +48,16 @@ export class FriendsComponent implements OnInit {
 			})
 	}
 
-  async addFriend(newFriend: User)
+  async addFriend(newFriend: UserI)
   {
     this.friends.push(newFriend);
     this.sortConnected();
     this.closeOverlay();
   }
 
-  async deleteFriend(exFriend: User)
+  async deleteFriend(exFriend: UserI)
   {
-    let rst: Array<User> = []
+    let rst: Array<UserI> = []
     for(let i = 0; this.friends[i]; i++)
       if (this.friends[i] != exFriend)
         rst.push(this.friends[i]);
@@ -119,7 +120,7 @@ export class FriendsComponent implements OnInit {
     {
       let j = i - 1;
       let temp = this.friends[i];
-      while (j >= 0 && temp.isConnected == true)
+      while (j >= 0 && temp.status == "online")
       {
         this.friends[j + 1] = this.friends[j];
         j--;
