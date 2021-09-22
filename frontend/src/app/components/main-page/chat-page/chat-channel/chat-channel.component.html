@@ -7,7 +7,12 @@
 			<mat-menu #menu="matMenu" class=hoverMenu>
 			  <button mat-menu-item class=hoverBtn>Add admin</button>
 			  <button mat-menu-item class=hoverBtn>Ban user</button>
-			  <button mat-menu-item class=hoverBtn>Edit channel</button>
+			  <button mat-menu-item class=hoverBtn [matMenuTriggerFor]="menuhidden">Edit channel</button>
+			</mat-menu>
+			<mat-menu #menuhidden="matMenu" class=hoverMenu>
+			  <button mat-menu-item class=hoverBtn (click)="changeChannelOption()">{{chatRoom.option == "private" ? 'Make channel public' : 'Make channel private'}}</button>
+			  <button *ngIf='chatRoom.option == "private"' mat-menu-item class=hoverBtn>Change password</button>
+			  <button mat-menu-item class=hoverBtnDelete (click)="deleteChannel()">Delete channel</button>
 			</mat-menu>
 		</div>
 	</div>

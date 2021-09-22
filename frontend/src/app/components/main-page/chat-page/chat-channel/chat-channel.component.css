@@ -168,3 +168,11 @@
 		background: #ede5f2ff;
 		border-radius: 100px;
 	  }
+
+
+      ::ng-deep .hoverBtnDelete
+      {
+          color: rgba(255, 30, 30, .8);
+          font-family: 'futura';
+          font-size: 1.8vh;
+      }

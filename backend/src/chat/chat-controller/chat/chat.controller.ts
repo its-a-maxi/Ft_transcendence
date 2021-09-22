@@ -39,6 +39,13 @@ export class ChatController
 		return this.roomService.deleteAllRooms(rooms)
 	}
 
+	@UseGuards(verifyUser)
+	@Post('updateRoom')
+	async updateRoom(@Req() req: Request, @Body() room: RoomI)
+	{
+		return this.roomService.updateRoom(room)
+	}
+
     @UseGuards(verifyUser)
     @Post('verifyPassword')
     async verifyPassword(@Res() res: Response, @Body() body: any) 

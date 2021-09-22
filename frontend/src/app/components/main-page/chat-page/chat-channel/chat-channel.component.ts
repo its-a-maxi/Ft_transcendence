@@ -59,7 +59,7 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 		if (this.chatRoom)
 		{
 			this.chatService.joinRoom(this.chatRoom);
-			this.typingMessage()
+			this.typingMessage();
 		}
 	}
 
@@ -115,5 +115,20 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 			return;
 		this.chatService.deleteRooms(rooms);
 		window.location.reload();
+	}
+
+	changeChannelOption()
+	{
+		if (this.chatRoom.option == "private")
+		{
+			this.chatRoom.password = "";
+			this.chatRoom.option = "public";
+		}
+		else
+		{
+			this.chatRoom.password = "a"//openInput();
+			this.chatRoom.option = "private";
+		}
+		//this.chatService.updateRoom(this.chatRoom);
 	}
 }
