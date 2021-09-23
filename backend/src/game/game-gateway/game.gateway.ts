@@ -3,6 +3,11 @@ import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGa
 import { Server, Socket } from 'socket.io';
 import { UserI } from 'src/users/user-service/models/user.interface';
 import { UsersService } from 'src/users/user-service/users.service';
+import { GameEntity } from '../models/game.entity';
+import { GameI } from '../models/game.interface';
+import { GameService } from '../service/game/game.service';
+
+let listUsers: number[] = []
 
 @WebSocketGateway({
 	cors: {
@@ -16,7 +21,14 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect
 	@WebSocketServer()
 	server: Server;
 
-	constructor(private userService: UsersService) {}
+    cont: number = 0
+
+    listRooms: GameI[] = []
+
+	//listUsers: UserI[] = []
+
+	constructor(private userService: UsersService,
+                private gameService: GameService) {}
 
 	async handleConnection(socket: Socket)
 	{
@@ -29,6 +41,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect
 			else
 			{
 				socket.data.user = user
+				console.log("ENTRADA", listUsers)
+				this.addUsers(socket, user)
 			}
 			
 		}
@@ -41,6 +55,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect
 
 	async handleDisconnect(socket: Socket)
 	{
+		console.log("DISCONNECT")
+		this.removeUser(socket)
 		socket.disconnect();
 	}
 
@@ -50,20 +66,82 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect
 		socket.disconnect()
 	}
 
-	// @SubscribeMessage('game')
-	// handleMessage(client: any, payload: any): string {
-	// 	return 'Hello world!';
-	// }
-
-	@SubscribeMessage('gameTest')
-	handdleTest(socket: Socket, mess: string)
+	private addUsers(socket: Socket, user: UserI)
 	{
-		this.server.emit('game', mess)
+		let index = listUsers.indexOf(user.id)
+		if (index === -1)
+		{
+			listUsers.push(user.id)
+            this.cont++
+		}
+	}
+
+	private removeUser(socket: Socket)
+	{
+		let index = listUsers.indexOf(socket.data.user.id)
+		if (index > -1)
+		{
+			listUsers.splice(index, 1)
+            this.cont--
+		}
+	}
+
+	@SubscribeMessage('leaveUser')
+	async onLeaveRoom(socket: Socket, roomId: number)
+	{
+		this.removeUser(socket)
+        let listAux: GameI[] = this.listRooms
+        
+        for (let room of listAux)
+        {
+            if (room && room.id === roomId)
+            {
+                let index = this.listRooms.indexOf(room)
+                if (index > -1)
+                    this.listRooms.splice(index, 1)
+                await this.gameService.delete(room.id)
+            }
+        }
+		this.disconnect(socket)
+	}
+
+	@SubscribeMessage('joinUser')
+  	async onJoinRoom(socket: Socket)
+	{
+		this.addUsers(socket, socket.data.user)
+  	}
+
+	@SubscribeMessage('destroyUsers')
+	async destroyUsers(socket: Socket)
+	{
+		let list: number[] = listUsers
+		for (let user of list)
+		{
+			listUsers.pop()
+		}
+	}
+
+	@SubscribeMessage('findUsers')
+	async handdleTest(socket: Socket)
+	{
+        if (listUsers[1])
+        { 
+            const newGame: GameEntity = await this.gameService.create({playerOne: listUsers[0], playerTwo: listUsers[1]})
+            console.log(newGame.id)
+            listUsers.splice(0, 2)
+            this.listRooms.push(newGame)
+
+        }
+        if (this.listRooms)
+        {
+            socket.emit('listUsers', this.listRooms[0])
+        }
+        
 	}
 
 	@SubscribeMessage('keyboard')
 	handdleKeyboard(socket: Socket, data: any)
 	{
-		console.log("ESTO ES DATA: ", data)
+		//console.log("ESTO ES DATA: ", data)
 	}
 }

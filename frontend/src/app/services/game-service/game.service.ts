@@ -11,14 +11,14 @@ export class GameService
 
 	constructor(private socket: CustomSocket) { }
 
-	test(): Observable<string>
+	test(): Promise<any>
 	{
-		return this.socket.fromEvent('game')
+		return this.socket.fromOneTimeEvent<any>('listUsers')
 	}
 
 	test2()
 	{
-		this.socket.emit('gameTest', "Hola desde Game")
+		this.socket.connect()
 	}
 
 	keyReled(data: any)
@@ -31,8 +31,24 @@ export class GameService
 		return this.socket.fromEvent<any>('listUsers')
 	}
 
-	leaveRoom()
+	leaveRoom(roomId: number)
 	{
-		this.socket.emit('leaveRoom')
+		this.socket.emit('leaveUser', roomId)
+	}
+
+	joinRoom()
+	{
+		this.socket.emit('joinUser')
+	}
+
+	destroyUsers()
+	{
+		this.socket.emit('destroyUsers')
+	}
+
+	findUsers()
+	{
+		console.log("FIND")
+		this.socket.emit('findUsers')
 	}
 }

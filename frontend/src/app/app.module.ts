@@ -17,6 +17,7 @@ import { ChatRoomComponent } from './components/chat/chat-room/chat-room.compone
 import { ChatChannelComponent } from './components/main-page/chat-page/chat-channel/chat-channel.component';
 import { ChatMessageComponent } from './components/main-page/chat-page/chat-message/chat-message.component';
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from "@angular/material/list";
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
@@ -99,6 +100,7 @@ export function tokenGetter(): string | null {
     NgxPaginationModule,
     FlexLayoutModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     MatMenuModule
   ],
   providers: [],
