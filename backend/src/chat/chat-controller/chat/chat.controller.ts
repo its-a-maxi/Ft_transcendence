@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { AuthService } from 'src/auth/auth-service/auth.service';
 import { verifyUser } from 'src/auth/strategies/auth.guard';
@@ -39,13 +39,6 @@ export class ChatController
 		return this.roomService.deleteAllRooms(rooms)
 	}
 
-	@UseGuards(verifyUser)
-	@Post('updateRoom')
-	async updateRoom(@Req() req: Request, @Body() room: RoomI)
-	{
-		return this.roomService.updateRoom(room)
-	}
-
     @UseGuards(verifyUser)
     @Post('verifyPassword')
     async verifyPassword(@Res() res: Response, @Body() body: any) 
@@ -58,4 +51,25 @@ export class ChatController
         }
         return res.send(true)
     }
+
+	@UseGuards(verifyUser)
+	@Put('updatePassword')
+	async updatePassword(@Req() req: Request, @Body() params: any)
+	{
+		this.roomService.updatePassword(params.password, params.room.id);
+	}
+
+	@UseGuards(verifyUser)
+	@Put('updateOption')
+	async updateOption(@Req() req: Request, @Body() params: any)
+	{
+		this.roomService.updateOption(params.option, params.room.id);
+	}
+
+	@UseGuards(verifyUser)
+	@Put('updateAdmins')
+	async updateAdmins(@Req() req: Request, @Body() params: any)
+	{
+		this.roomService.updateAdmins(params.admins, params.room.id);
+	}
 }

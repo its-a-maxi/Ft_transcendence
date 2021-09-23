@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Input,
-		OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input,
+		OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { combineLatest, Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
@@ -17,6 +17,11 @@ import { Session } from 'inspector';
 })
 export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit
 {
+
+	
+	@Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
+	@Output('showOverlay') showOverlay: EventEmitter<any> = new EventEmitter();
+	@Output('refreshChat') refreshChat: EventEmitter<any> = new EventEmitter();
 
 	@Input()
 	chatRoom!: RoomI;
@@ -121,14 +126,57 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 	{
 		if (this.chatRoom.option == "private")
 		{
-			this.chatRoom.password = "";
-			this.chatRoom.option = "public";
+			this.chatService.updateOption('public', this.chatRoom);
+
 		}
 		else
 		{
-			this.chatRoom.password = "a"//openInput();
-			this.chatRoom.option = "private";
+			this.showOverlay.emit("changePassword");
+			this.chatService.updateOption('private', this.chatRoom);
 		}
-		//this.chatService.updateRoom(this.chatRoom);
+		this.refreshChat.emit();
+		//this.chatService.updatePassword("random", this.chatRoom);
+	}
+
+	changeChannelPassword(password: string)
+	{
+		this.chatService.updatePassword(password, this.chatRoom);
+		alert('Your new password is: ' + password);
+		this.closeOverlay.emit();
+		this.refreshChat.emit();
+	}
+
+	checkIfAdmin(user: UserI): boolean
+	{
+		if (this.chatRoom.admins)
+			for (let i = 0; this.chatRoom.admins[i]; i++)
+				if (this.chatRoom.admins[i] == user)
+					return (true);
+		return (false);
+	}
+
+	updateAdmin(user: UserI)
+	{
+		if (!this.checkIfAdmin(user))
+		{
+			this.chatRoom.admins?.push(user);
+			this.chatService.updateAdmins(this.chatRoom.admins!, this.chatRoom);
+		}
+		else
+		{
+			let temp: UserI[] = [];
+			if (this.chatRoom.admins)
+				for (let i = 0; this.chatRoom.admins[i]; i++)
+					if (this.chatRoom.admins[i] != user)
+						temp.push(this.chatRoom.admins[i])
+			this.chatRoom.admins = temp;
+			this.chatService.updateAdmins(this.chatRoom.admins!, this.chatRoom);
+		}
+
+	}
+
+	BanUser(user: UserI)
+	{
+		this.chatService.userBanned(user)
 	}
 }

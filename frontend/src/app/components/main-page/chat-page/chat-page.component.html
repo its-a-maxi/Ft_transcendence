@@ -32,20 +32,38 @@
 		<button class=add id="add" (click)="showOverlay('newChannel')">+ Channel</button>
 	</div>
 	<div class=chat>
-		<app-chat-channel [chatRoom]="currentRoom"></app-chat-channel>
+		<app-chat-channel [chatRoom]="currentRoom"
+			(closeOverlay)='closeOverlay()'
+			(showOverlay)='showOverlay($event)'
+			(refreshChat)='refreshChat()'>
+		</app-chat-channel>
 	</div>
 	<img src="../../../../assets/images/openRightIcon.png" (click)="showOverlay('hiddenChannelList')" alt="openRightIcon" class="openRight">
 	<img src="../../../../assets/images/openLeftIcon.png" (click)="showOverlay('hiddenUserList')" alt="openLeftIcon" class="openLeft">
 </div>
+
+
 <div class="overlayBack" id="overlayBack" (click)="closeOverlay()"></div>
+
 <app-create-room id="popup" (closeOverlay)='closeOverlay()'></app-create-room>
-<app-get-password id="password" (ifPassword)='ifPassword($event)' [room]="toChangeRoom"></app-get-password>
+
+<app-get-password id="password" [title]="'Private channel'"
+	(function)='checkPassword($event)'>
+</app-get-password>
+
 <app-user-list-hidden id="hiddenUserList" [list]="allUsers"
 	(directMessage)='directMessage($event)'
 	(blockUser)='blockUser($event)'
-	(closeOverlay)='closeOverlay()'></app-user-list-hidden>
+	(closeOverlay)='closeOverlay()'>
+</app-user-list-hidden>
+
 <app-channel-list-hidden id="hiddenChannelList" [list]="channels"
 	(directMessage)='changeCurrentRoom($event)'
 	(closeOverlay)='closeOverlay()'
-	(showOverlay)='showOverlay($event)'></app-channel-list-hidden>
+	(showOverlay)='showOverlay($event)'>
+</app-channel-list-hidden>
+
+<app-get-password id="changePassword" [title]="'New channel password'"
+	(function)='changeChannelPassword($event)'>
+</app-get-password>
 
