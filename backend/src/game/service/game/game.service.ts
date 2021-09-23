@@ -19,4 +19,12 @@ export class GameService
     {
         await this.gameRepository.delete(roomId)
     }
+
+    async deleteAll()
+    {
+        await this.gameRepository
+          .createQueryBuilder()
+          .delete()
+          .execute();
+    }
 }

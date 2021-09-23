@@ -4,6 +4,7 @@ import { OnGatewayConnection, OnGatewayDisconnect,
 import { Server, Socket } from "socket.io";
 import { UpdateDto } from 'src/auth/dto';
 import { UserEntity } from 'src/users/user-service/models/entities/users.entity';
+import { Status } from 'src/users/user-service/models/status.enum';
 import { UserI } from 'src/users/user-service/models/user.interface';
 import { UsersService } from 'src/users/user-service/users.service';
 import { ConnectedUserService } from '../chat-service/connected-user/connected-user.service';
@@ -17,7 +18,9 @@ import { RoomEntity } from '../models/room/room.entity';
 import { RoomI } from '../models/room/room.interface';
 
 
-@WebSocketGateway({ cors: { origin: ['https://hoppscotch.io',
+@WebSocketGateway({
+    path: "/chat",
+    cors: { origin: ['https://hoppscotch.io',
 				'http://localhost:3000', 'http://localhost:4200'] } })
 export class ChatGateway
 		implements OnGatewayConnection, OnGatewayDisconnect, OnModuleInit
@@ -41,7 +44,7 @@ export class ChatGateway
 	}
 
 	async handleConnection(socket: Socket)
-	{
+	{console.log("SOCKET: ", socket.handshake.query.gate)
 		try
 		{
 			const token: any = socket.handshake.query.token
@@ -51,8 +54,7 @@ export class ChatGateway
 			else
 			{
 				socket.data.user = user
-				user.status = 'online'
-				await this.userService.updateStatus(user.status, user.id)
+				await this.userService.updateStatus(Status.online, user.id)
 				this.addUserRoom(user as UserEntity)
 				const rooms = await this.roomService.findAllRoomById(user.id)
 				await this.connectedUserService.create({socketId: socket.id, userId: user.id, user})
@@ -97,8 +99,7 @@ export class ChatGateway
 	async handleDisconnect(socket: Socket)
 	{
 		const user: UserI = socket.data.user
-		user.status = 'offline'
-		await this.userService.updateStatus(user.status, user.id)
+		await this.userService.updateStatus(Status.offline, user.id)
 		await this.connectedUserService.deleteSocket(socket.id)
 		socket.disconnect();
 	}

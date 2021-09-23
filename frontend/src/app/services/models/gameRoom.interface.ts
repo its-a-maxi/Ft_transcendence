@@ -1,4 +1,3 @@
-
 export interface GameI
 {
     id?: number;

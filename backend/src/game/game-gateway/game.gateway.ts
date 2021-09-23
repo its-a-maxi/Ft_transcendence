@@ -1,21 +1,25 @@
+import { OnModuleInit } from '@nestjs/common';
 import { UnauthorizedException } from '@nestjs/common/exceptions';
 import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { Status } from 'src/users/user-service/models/status.enum';
 import { UserI } from 'src/users/user-service/models/user.interface';
 import { UsersService } from 'src/users/user-service/users.service';
 import { GameEntity } from '../models/game.entity';
 import { GameI } from '../models/game.interface';
+import { UserSocketI } from '../models/user-socket.interface';
 import { GameService } from '../service/game/game.service';
 
-let listUsers: number[] = []
+//let listUsers: number[] = []
 
 @WebSocketGateway({
+    path: "/game",
 	cors: {
 		origin: ['https://hoppscotch.io',
 			'http://localhost:3000', 'http://localhost:4200']
 	}
 })
-export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect
+export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, OnModuleInit
 {
 
 	@WebSocketServer()
@@ -25,38 +29,44 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect
 
     listRooms: GameI[] = []
 
-	//listUsers: UserI[] = []
+    listUsers: UserSocketI[] = []
 
 	constructor(private userService: UsersService,
                 private gameService: GameService) {}
 
+    async onModuleInit()
+    {
+        this.listRooms = []
+        this.listUsers = []
+        await this.gameService.deleteAll()
+    }
+
 	async handleConnection(socket: Socket)
-	{
-		try
-		{
-			const token: any = socket.handshake.query.token
-			const user: UserI = await this.userService.getUser(token)
-			if (!user)
-				return this.disconnect(socket)
-			else
-			{
-				socket.data.user = user
-				console.log("ENTRADA", listUsers)
-				this.addUsers(socket, user)
-			}
-			
-		}
-		catch
-		{
-			return this.disconnect(socket)
-		}
-		
+	{console.log("SOCKET: ", socket.handshake.query.gate)
+        try
+        {
+            const token: any = socket.handshake.query.token
+            const user: UserI = await this.userService.getUser(token)
+            if (!user)
+                return this.disconnect(socket)
+            else
+            {
+                socket.data.user = user
+                console.log("ENTRADA", this.listUsers)
+                this.addUsers({userId: user.id, socketId: socket.id})
+            }
+            
+        }
+        catch
+        {
+            return this.disconnect(socket)
+        }
 	}
 
 	async handleDisconnect(socket: Socket)
 	{
 		console.log("DISCONNECT")
-		this.removeUser(socket)
+		this.removeUser({userId: socket.data.user.id, socketId: socket.id})
 		socket.disconnect();
 	}
 
@@ -66,78 +76,105 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect
 		socket.disconnect()
 	}
 
-	private addUsers(socket: Socket, user: UserI)
+	private addUsers(userSocket: UserSocketI)
 	{
-		let index = listUsers.indexOf(user.id)
-		if (index === -1)
-		{
-			listUsers.push(user.id)
-            this.cont++
-		}
+        let check: boolean = false
+
+        for (let user of this.listUsers)
+        {
+            if (user.userId === userSocket.userId)
+                check = true
+        }
+        if (!check)
+            this.listUsers.push(userSocket)
 	}
 
-	private removeUser(socket: Socket)
+	private removeUser(userSocket: UserSocketI)
 	{
-		let index = listUsers.indexOf(socket.data.user.id)
+		let index = this.listUsers.indexOf(userSocket)
+
 		if (index > -1)
-		{
-			listUsers.splice(index, 1)
-            this.cont--
-		}
+			this.listUsers.splice(index, 1)
 	}
 
 	@SubscribeMessage('leaveUser')
 	async onLeaveRoom(socket: Socket, roomId: number)
 	{
-		this.removeUser(socket)
+        let userId: number = socket.data.user.id
+		this.removeUser({userId, socketId: socket.id})
         let listAux: GameI[] = this.listRooms
-        
         for (let room of listAux)
         {
             if (room && room.id === roomId)
             {
-                let index = this.listRooms.indexOf(room)
+                let index: number = this.listRooms.indexOf(room)
                 if (index > -1)
                     this.listRooms.splice(index, 1)
                 await this.gameService.delete(room.id)
+                this.server.to(room.socketList[1]).emit('listUsers', null)
+                this.server.to(room.socketList[0]).emit('listUsers', null)
+                break ;
             }
         }
+        await this.userService.updateStatus(Status.online, userId)
 		this.disconnect(socket)
 	}
 
 	@SubscribeMessage('joinUser')
   	async onJoinRoom(socket: Socket)
 	{
-		this.addUsers(socket, socket.data.user)
+		this.addUsers({userId: socket.data.user.id, socketId: socket.id})
   	}
 
-	@SubscribeMessage('destroyUsers')
-	async destroyUsers(socket: Socket)
-	{
-		let list: number[] = listUsers
-		for (let user of list)
-		{
-			listUsers.pop()
-		}
-	}
+	// @SubscribeMessage('destroyUsers')
+	// async destroyUsers(socket: Socket)
+	// {
+	// 	let list: number[] = listUsers
+	// 	for (let user of list)
+	// 	{
+	// 		listUsers.pop()
+	// 	}
+	// }
 
 	@SubscribeMessage('findUsers')
 	async handdleTest(socket: Socket)
 	{
-        if (listUsers[1])
-        { 
-            const newGame: GameEntity = await this.gameService.create({playerOne: listUsers[0], playerTwo: listUsers[1]})
-            console.log(newGame.id)
-            listUsers.splice(0, 2)
-            this.listRooms.push(newGame)
-
-        }
-        if (this.listRooms)
+        let auxUsers: UserSocketI[] = this.listUsers
+        for (let i = 0; i < this.listUsers.length; i++)
         {
-            socket.emit('listUsers', this.listRooms[0])
+            if (i != 0 && this.listUsers[i].userId !== this.listUsers[i - 1].userId)
+            {
+                const newGame: GameI = await this.gameService
+                    .create({
+                        playerOne: this.listUsers[i - 1].userId,
+                        playerTwo: this.listUsers[i].userId,
+                        socketList: [this.listUsers[i - 1].socketId, this.listUsers[i].socketId]
+                    })
+                this.listUsers.splice(i - 1, 2)
+                this.listRooms.push(newGame)
+                break ;
+            }
         }
         
+        for (let room of this.listRooms)
+        {
+            if (socket.id === room.socketList[0] || socket.id === room.socketList[1])
+            {
+                if (room.socketList.length === 2)
+                {
+                    this.server.to(room.socketList[0]).emit('listUsers', room)
+                    this.server.to(room.socketList[1]).emit('listUsers', room)
+                }
+            }
+        }
 	}
+
+    @SubscribeMessage('gameStatus')
+    async gameStatus(socket: Socket)
+    {
+        let userId: number = socket.data.user.id
+        await this.userService.updateStatus(Status.inGame, userId)
+    }
 
 	@SubscribeMessage('keyboard')
 	handdleKeyboard(socket: Socket, data: any)

@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameService } from 'src/app/services/game-service/game.service';
+import { GameI } from 'src/app/services/models/gameRoom.interface';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { Boundaries } from './classes/boundaries';
 import { ControlState } from './classes/control-state';
@@ -14,7 +15,7 @@ import { P5JSInvoker } from './classes/p5-jsinvoker';
 })
 export class GameComponent extends P5JSInvoker implements OnInit, OnDestroy
 {
-    @Input() roomId!:number
+    @Input() gameRoom!: GameI
 
 	public width: number = 800;
 	public height: number = 600;
@@ -113,6 +114,7 @@ export class GameComponent extends P5JSInvoker implements OnInit, OnDestroy
 
 	ngOnInit(): void
     {
+        this.gameService.changeStatus()
 		// Game model ticks 60 times per second. Doing this keeps same game speed
 		// on higher FPS environments.
 		setInterval(() => this.pongGame.tick(this.controlState),
@@ -121,7 +123,8 @@ export class GameComponent extends P5JSInvoker implements OnInit, OnDestroy
 
 	ngOnDestroy()
 	{
-        this.gameService.leaveRoom(this.roomId)
+       
+        this.gameService.leaveRoom(this.gameRoom.id!)
 		this.p5.remove()
        
 	}

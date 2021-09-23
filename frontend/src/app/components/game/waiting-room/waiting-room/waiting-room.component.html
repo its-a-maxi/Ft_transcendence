@@ -8,7 +8,11 @@
     <h1 class="match">MatchMaking...</h1>
     <div class="spinner"></div>
 </div>
+<!-- <div  *ngIf="roomGame">
+    <app-game [gameRoom]="roomGame!"></app-game>
+</div> -->
 <ng-template #room>
-    <app-game [roomId]="roomId!"></app-game>
+    <p class="users">{{roomGame.playerOne}}</p>
+    <app-game [gameRoom]="roomGame!"></app-game>
 </ng-template>
 <!-- <button (click)="destroyUsers()">DESTROY</button> -->

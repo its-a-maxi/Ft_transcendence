@@ -12,4 +12,7 @@ export class GameEntity
 
     @Column()
     playerTwo: number;
+
+    @Column("simple-array", {nullable: true})
+    socketList: string[];
 }
