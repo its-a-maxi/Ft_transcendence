@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Input,
-		OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input,
+		OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { combineLatest, Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
@@ -17,6 +17,10 @@ import { Session } from 'inspector';
 })
 export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit
 {
+
+	
+	@Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
+	@Output('showOverlay') showOverlay: EventEmitter<any> = new EventEmitter();
 
 	@Input()
 	chatRoom!: RoomI;
@@ -126,9 +130,18 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 		}
 		else
 		{
-			this.chatRoom.password = "a"//openInput();
+			this.showOverlay.emit("changePassword");
 			this.chatRoom.option = "private";
 		}
+		//this.chatService.updatePassword(this.chatRoom);
+	}
+
+	changeChannelPassword(password: string)
+	{
+		this.chatRoom.password = password;
+		alert('Your new password is: ' + password);
+		console.log(this.chatRoom);
+		this.closeOverlay.emit();
 		//this.chatService.updateRoom(this.chatRoom);
 	}
 }

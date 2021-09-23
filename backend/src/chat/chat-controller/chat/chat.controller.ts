@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { AuthService } from 'src/auth/auth-service/auth.service';
 import { verifyUser } from 'src/auth/strategies/auth.guard';
@@ -37,13 +37,6 @@ export class ChatController
 	async deleteRooms(@Req() req: Request, @Body() rooms: RoomI[])
 	{
 		return this.roomService.deleteAllRooms(rooms)
-	}
-
-	@UseGuards(verifyUser)
-	@Post('updateRoom')
-	async updateRoom(@Req() req: Request, @Body() room: RoomI)
-	{
-		return this.roomService.updateRoom(room)
 	}
 
     @UseGuards(verifyUser)

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInfo } from 'os';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
 import { RoomI } from 'src/app/services/models/room.interface';
 import { UserI } from 'src/app/services/models/user.interface';
+import { ChatChannelComponent } from './chat-channel/chat-channel.component';
 
 @Component({
   selector: 'app-chat-page',
@@ -14,6 +15,8 @@ import { UserI } from 'src/app/services/models/user.interface';
 export class ChatPageComponent implements OnInit {
 
   constructor(private chatService: ChatService, private authService: AuthService, private router: Router) { }
+
+  @ViewChild(ChatChannelComponent) private child?:ChatChannelComponent;
 
   mainUser!: UserI;
   paramId: string | null = sessionStorage.getItem('token');
@@ -82,10 +85,21 @@ export class ChatPageComponent implements OnInit {
       this.currentRoom = room;
   }
 
-  ifPassword(check :boolean)
+  async checkPassword(password :string)
   {
-    if (check)
-      this.currentRoom = this.toChangeRoom;
+		if (password === "")
+		{
+		  alert("Incorrect password");
+		  return;
+		}
+		await this.chatService.verifyPassword(password, this.toChangeRoom.id!)
+			.then(() => {
+        this.currentRoom = this.toChangeRoom;
+			})
+			.catch(() => {
+				alert("Incorrect password")
+        return;
+			})
     this.closeOverlay();
   }
 
@@ -119,6 +133,7 @@ export class ChatPageComponent implements OnInit {
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
     let password = document.getElementById("password");
+    let changePassword = document.getElementById("changePassword");
     let hiddenUserList = document.getElementById("hiddenUserList");
     let hiddenChannelList = document.getElementById("hiddenChannelList");
 
@@ -128,6 +143,8 @@ export class ChatPageComponent implements OnInit {
 		  popup!.style.display = "block";
     else if (type == "password")
       password!.style.display = "block";
+      else if (type == "changePassword")
+        changePassword!.style.display = "block";
     else if (type == "hiddenUserList")
       hiddenUserList!.style.display = "block";
     else if (type == "hiddenChannelList")
@@ -140,6 +157,7 @@ export class ChatPageComponent implements OnInit {
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
     let password = document.getElementById("password");
+    let changePassword = document.getElementById("changePassword");
     let hiddenUserList = document.getElementById("hiddenUserList");
     let hiddenChannelList = document.getElementById("hiddenChannelList");
     
@@ -147,6 +165,7 @@ export class ChatPageComponent implements OnInit {
 		overlayBack!.style.display = "none";
 		popup!.style.display = "none";
 		password!.style.display = "none";
+		changePassword!.style.display = "none";
     hiddenUserList!.style.display = "none";
     hiddenChannelList!.style.display = "none";
 	}
@@ -164,5 +183,10 @@ export class ChatPageComponent implements OnInit {
       user.isBlocked = true;
     }
 	}
+
+  changeChannelPassword(password: string)
+  {
+    this.child!.changeChannelPassword(password);
+  }
 
 }

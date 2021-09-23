@@ -10,14 +10,14 @@ import { RoomI } from 'src/app/services/models/room.interface';
 })
 export class GetPasswordComponent implements OnInit
 {
-	@Input() room!: RoomI
-
 	constructor(private chatService: ChatService,
 				private router: Router) { }
 
 
 	password: string = "";
-	@Output('ifPassword') ifPassword: EventEmitter<any> = new EventEmitter();
+
+	@Input() title: string = "";
+	@Output('function') function: EventEmitter<any> = new EventEmitter();
 
 	ngOnInit(): void {
 		
@@ -25,20 +25,8 @@ export class GetPasswordComponent implements OnInit
 
 	async changeChannel()
 	{
-		if (this.password === "")
-		{
-		  alert("Incorrect password");
-		  this.password == "";
-		  return;
-		}
-		await this.chatService.verifyPassword(this.password, this.room.id!)
-			.then(() => {
-				this.ifPassword.emit(true)
-			})
-			.catch(() => {
-				alert("Incorrect password")
-				this.password = "";
-			})
+		this.function.emit(this.password);
+		this.password = "";
 	}
 
 }

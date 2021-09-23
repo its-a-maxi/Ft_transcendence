@@ -88,4 +88,15 @@ export class RoomService
 
 		return await paginate(query, options)
 	}
+
+	async updatePassword(oldPassword: string, roomId: number): Promise<any>
+	{
+		let password = await bcrypt.hash(oldPassword, 12);
+		return this.roomRepository.update(roomId, { password });
+	}
+
+	async updateStatus(option: string, roomId: number): Promise<any>
+	{
+		return this.roomRepository.update(roomId, { option });
+	}
 }
