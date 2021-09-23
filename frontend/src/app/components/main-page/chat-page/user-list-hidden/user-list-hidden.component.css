@@ -67,7 +67,17 @@
 		cursor: pointer;
 	}
 
-  
+	.icon
+	{
+		opacity: 50%;
+		padding-left: 0.5vh;
+		height: 2.2vh;
+		margin-top: -1%;
+	}
+	.noIcon
+	{
+		display: none;
+	}
 
   /* width */
   ::-webkit-scrollbar {
@@ -89,4 +99,19 @@
 
   ::-webkit-scrollbar-corner {
 	  background: transparent;
+	}
+
+
+
+	::ng-deep .hoverMenuHidden
+	{
+		background-color: rgba(19, 5, 11, .6);
+		
+	}
+	
+	::ng-deep .hoverBtnHidden
+	{
+		color: #ede5f2ff;
+		font-family: 'futura';
+		font-size: 1.8vh;
 	}

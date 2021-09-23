@@ -10,10 +10,17 @@ import { UserI } from 'src/app/services/models/user.interface';
 })
 export class ChatMessageComponent
 {
+  	constructor() { }
 
 	@Input() message!: MessageI;
 	@Input() userId: any
 
-  	constructor() { }
+	title: string = "";
+
+	ngOnInit(): void {
+		this.title = this.message.user!.nick.toUpperCase();
+		if (this.message.user?.id == this.userId)
+			this.title = "YOU";
+	}
 
 }

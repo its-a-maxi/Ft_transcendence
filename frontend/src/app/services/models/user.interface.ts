@@ -17,4 +17,16 @@ export interface UserI
     isAdmin?: boolean;
 
     status?: string;
+
+    isBlocked?: boolean;
+
+    friends?: Array<UserI>;
+
+    wins?: number;
+
+    defeats?: number;
+
+    coalition?: string;
+
+    user42?: string;
 }

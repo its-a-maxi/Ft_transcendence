@@ -36,10 +36,10 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 		this.picture = this.user?.avatar;
 	}
 
-	ngAfterViewInit()
+	async ngAfterViewInit()
 	{
-		this.chatService.findUsersConnected()
-		this.chatService.getConnectedUsers().subscribe(res => {
+		await this.chatService.findUsersConnected()
+		await this.chatService.getConnectedUsers().subscribe(res => {
 			this.liveUsers = res.length
 		})
 	}
@@ -78,5 +78,4 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 		pageBack!.style.display = "none";
 		hiddenTabs!.style.left = "-200vw";
 	}
-
 }

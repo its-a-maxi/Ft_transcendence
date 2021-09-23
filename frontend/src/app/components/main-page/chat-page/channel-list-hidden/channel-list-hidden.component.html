@@ -4,6 +4,8 @@
 		<div class="overlayListElementsContainer">
 			<ul class="overlayList" *ngFor="let room of list">
 				<li (click)="enter(room)">{{room.name}}
+					<img src="/assets/images/privateIconDark.png" alt="private" [className]="room.option == 'private' ? 'icon' : 'noIcon'">
+					<img src="/assets/images/OwnershipIconDark.png" alt="owner" [className]="room.ownerId == userId ? 'icon' : 'noIcon'">
 				</li>
 			</ul>
 		</div>

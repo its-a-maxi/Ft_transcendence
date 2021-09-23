@@ -8,6 +8,7 @@ import { MessageI, MessagePaginateI } from 'src/app/services/models/message.inte
 import { RoomI } from 'src/app/services/models/room.interface';
 import { map, startWith, tap } from 'rxjs/operators';
 import { UserI } from 'src/app/services/models/user.interface';
+import { Session } from 'inspector';
 
 @Component({
 	selector: 'app-chat-channel',
@@ -24,7 +25,8 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 	userId: any
 	write: string = ""
 
-	chatMessage: FormControl = new FormControl(null, [Validators.required])
+	message: string = "";
+	//chatMessage: FormControl = new FormControl(null, [Validators.required])
 
 	messagesPaginate$: Observable<MessagePaginateI> = combineLatest([this.chatService.getMessages(),
 		this.chatService.getAddedMessage().pipe(startWith(null))])
@@ -57,7 +59,7 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 		if (this.chatRoom)
 		{
 			this.chatService.joinRoom(this.chatRoom);
-			this.typingMessage()
+			this.typingMessage();
 		}
 	}
 
@@ -76,8 +78,9 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 
 	sendMessage()
 	{
-		this.chatService.sendMessage({ text: this.chatMessage.value, room: this.chatRoom});
-		this.chatMessage.reset();
+		this.chatService.sendMessage({ text: this.message, room: this.chatRoom});
+		this.message = "";
+		//this.chatMessage.reset();
 	}
 
 	private scrollToBottom(): void
@@ -101,5 +104,31 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 			this.write = res
 			setTimeout(() => this.write = "", 3000);
 		})
+	}
+
+	deleteChannel()
+	{
+		let rooms: RoomI[] = [];
+		rooms.push(this.chatRoom);
+		let option = confirm("Are you sure you want to delete this Channel?");
+		if (!option)
+			return;
+		this.chatService.deleteRooms(rooms);
+		window.location.reload();
+	}
+
+	changeChannelOption()
+	{
+		if (this.chatRoom.option == "private")
+		{
+			this.chatRoom.password = "";
+			this.chatRoom.option = "public";
+		}
+		else
+		{
+			this.chatRoom.password = "a"//openInput();
+			this.chatRoom.option = "private";
+		}
+		//this.chatService.updateRoom(this.chatRoom);
 	}
 }

@@ -8,14 +8,14 @@
 				<th>Coalition</th>
 			</tr>
 			<tr *ngFor="let user of friends">
-				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.nick}}
+				<td [className]="user.status == 'offline' ? 'notConnected' : ''">{{user.nick}}
 					&nbsp;
 					<img src="../../../assets/images/42icon.png" alt="42" class="icon" (click)="openUser(user.nick)">
 					<img src="../../../assets/images/unfriendIcon.png" alt="Unfriend" class="icon" (click)="deleteFriend(user)">
 				</td>
-				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.wins}}</td>
-				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.defeats}}</td>
-				<td [className]="user.isConnected ? '' : 'notConnected'">{{user.coalition}}</td>
+				<td [className]="user.status == 'offline' ? 'notConnected' : ''">{{user.wins}}</td>
+				<td [className]="user.status == 'offline' ? 'notConnected' : ''">{{user.defeats}}</td>
+				<td [className]="user.status == 'offline' ? 'notConnected' : ''">{{user.coalition}}</td>
 			</tr>
 		</table>
 	</div>

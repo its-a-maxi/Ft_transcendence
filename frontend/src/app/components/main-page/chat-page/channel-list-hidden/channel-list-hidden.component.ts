@@ -15,7 +15,11 @@ export class ChannelListHiddenComponent implements OnInit {
   @Output('showOverlay') showOverlay: EventEmitter<any> = new EventEmitter();
   @Input() list: Array<RoomI> = [];
 
+  private paramId: string | null = sessionStorage.getItem('token');
+  userId: number = 0;
+
   ngOnInit(): void {
+    this.userId = parseInt(this.paramId!, 10);
   }
 
   enter(room: RoomI)

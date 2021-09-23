@@ -5,9 +5,15 @@
 		</div>
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of allUsers">
-				<li (click)="directMessage(room)">{{room.nick}}
-					<img src="../../../../assets/images/blockIcon.png" alt="leave" [className]="1 == 1 ? 'icon' : 'icon'">
+				<li [matMenuTriggerFor]="menu" >{{room.nick}}
+					<img src="../../../../assets/images/blockIcon.png" alt="block" [className]="room.isBlocked == true ? 'icon' : 'noIcon'">
 				</li>
+				<mat-menu #menu="matMenu" class=hoverMenu>
+				  <button mat-menu-item (click)="directMessage(room)" class=hoverBtn>Open chat</button>
+				  <button mat-menu-item class=hoverBtn>PONG match</button>
+				  <button mat-menu-item class=hoverBtn>Check profile</button>
+				  <button mat-menu-item (click)="blockUser(room)" class=hoverBtn>{{room.isBlocked == true ? 'Unblock user' : 'Block user'}}</button>
+				</mat-menu>
 			</ul>
 		</div>
 	</div>
@@ -18,8 +24,8 @@
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of channels">
 				<li (click)="changeCurrentRoom(room)">{{room.name}}
-					<img src="../../../../assets/images/privateIcon.png" alt="leave" [className]="room.option == 'private' ? 'icon' : 'noIcon'">
-					<img src="../../../../assets/images/OwnershipIcon.png" alt="leave" [className]="room.ownerId == mainUser.id ? 'icon' : 'noIcon'">
+					<img src="../../../../assets/images/privateIcon.png" alt="private" [className]="room.option == 'private' ? 'icon' : 'noIcon'">
+					<img src="../../../../assets/images/OwnershipIcon.png" alt="owner" [className]="room.ownerId == mainUser.id ? 'icon' : 'noIcon'">
 				</li>
 			</ul>
 		</div>
@@ -34,9 +40,12 @@
 <div class="overlayBack" id="overlayBack" (click)="closeOverlay()"></div>
 <app-create-room id="popup" (closeOverlay)='closeOverlay()'></app-create-room>
 <app-get-password id="password" (ifPassword)='ifPassword($event)' [room]="toChangeRoom"></app-get-password>
-<app-user-list-hidden id="hiddenUserList" [list]="allUsers" (directMessage)='directMessage($event)' (closeOverlay)='closeOverlay()'></app-user-list-hidden>
+<app-user-list-hidden id="hiddenUserList" [list]="allUsers"
+	(directMessage)='directMessage($event)'
+	(blockUser)='blockUser($event)'
+	(closeOverlay)='closeOverlay()'></app-user-list-hidden>
 <app-channel-list-hidden id="hiddenChannelList" [list]="channels"
-(directMessage)='changeCurrentRoom($event)'
-(closeOverlay)='closeOverlay()'
-(showOverlay)='showOverlay($event)'></app-channel-list-hidden>
+	(directMessage)='changeCurrentRoom($event)'
+	(closeOverlay)='closeOverlay()'
+	(showOverlay)='showOverlay($event)'></app-channel-list-hidden>
 
