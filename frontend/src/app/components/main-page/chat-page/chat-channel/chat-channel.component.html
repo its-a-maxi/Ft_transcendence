@@ -3,12 +3,7 @@
 		<h1 class="currentChannelText">{{chatRoom.name}}</h1>
 		<div *ngIf='userId == chatRoom.ownerId' class="iconBox">
 			<img src="/assets/images/settingsIcon.png" class="settingsIcon"
-			title="Channel settings" [matMenuTriggerFor]="menu">
-			<mat-menu #menu="matMenu" class=hoverMenu>
-			  <button mat-menu-item class=hoverBtn>Add admin</button>
-			  <button mat-menu-item class=hoverBtn>Ban user</button>
-			  <button mat-menu-item class=hoverBtn [matMenuTriggerFor]="menuhidden">Edit channel</button>
-			</mat-menu>
+			title="Channel settings" [matMenuTriggerFor]="menuhidden">
 			<mat-menu #menuhidden="matMenu" class=hoverMenu>
 			  <button mat-menu-item class=hoverBtn (click)="changeChannelOption()">{{chatRoom.option == "private" ? 'Make channel public' : 'Make channel private'}}</button>
 			  <button *ngIf='chatRoom.option == "private"' mat-menu-item class=hoverBtn (click)="showOverlay.emit('changePassword')">Change password</button>
@@ -19,7 +14,11 @@
 	<div #messages class="messageBox">
 		<div class="message">
 			<span *ngFor="let message of (messagesPaginate$ | async)?.items">
-			<app-chat-message [message]="message" [userId]="userId"></app-chat-message>
+			<app-chat-message [message]="message" [userId]="userId" [matMenuTriggerFor]="menuUser"></app-chat-message>
+			<mat-menu #menuUser="matMenu" class=hoverMenu>
+			  <button mat-menu-item class=hoverBtn (click)="changeChannelOption()">{{checkIfAdmin(message.user!) ? 'Demote user' : 'Promote to admin'}}</button>
+			  <button mat-menu-item class=hoverBtnDelete (click)="BanUser(message.user!)">Ban user</button>
+			</mat-menu>
 			</span>
 		</div>
 	</div>

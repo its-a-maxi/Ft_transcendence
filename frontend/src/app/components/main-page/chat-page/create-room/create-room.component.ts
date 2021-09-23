@@ -60,7 +60,9 @@ export class CreateRoomComponent implements OnInit {
 			return;
 
 		let users: Array<UserI> = [];
+		let admins: Array<UserI> = [];
 
+		admins.push(this.mainUser!);
 		for (let i = 0; this.allUsers[i]; i++)
 			users.push(this.allUsers[i]);
 		let newRoom = {
@@ -68,7 +70,8 @@ export class CreateRoomComponent implements OnInit {
 			option: "public",
 			password: this.password,
 			users: users,
-			ownerId: this.mainUser!.id
+			ownerId: this.mainUser!.id,
+			admins: admins
 		}
 		if (this.password != "")
 			newRoom.option = "private";

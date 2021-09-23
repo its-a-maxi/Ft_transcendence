@@ -134,4 +134,9 @@ export class ChatService
     {
         return axios.put('http://localhost:3000/chat/updateOption', {option, room})
     }
+
+    updateAdmins(admins: UserI[], room: RoomI)
+    {
+        return axios.put('http://localhost:3000/chat/updateAdmins', {admins, room})
+    }
 }

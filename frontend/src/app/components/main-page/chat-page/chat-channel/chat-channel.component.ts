@@ -145,4 +145,38 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 		this.closeOverlay.emit();
 		this.refreshChat.emit();
 	}
+
+	checkIfAdmin(user: UserI): boolean
+	{
+		if (this.chatRoom.admins)
+			for (let i = 0; this.chatRoom.admins[i]; i++)
+				if (this.chatRoom.admins[i] == user)
+					return (true);
+		return (false);
+	}
+
+	updateAdmin(user: UserI)
+	{
+		if (!this.checkIfAdmin(user))
+		{
+			this.chatRoom.admins?.push(user);
+			this.chatService.updateAdmins(this.chatRoom.admins!, this.chatRoom);
+		}
+		else
+		{
+			let temp: UserI[] = [];
+			if (this.chatRoom.admins)
+				for (let i = 0; this.chatRoom.admins[i]; i++)
+					if (this.chatRoom.admins[i] != user)
+						temp.push(this.chatRoom.admins[i])
+			this.chatRoom.admins = temp;
+			this.chatService.updateAdmins(this.chatRoom.admins!, this.chatRoom);
+		}
+
+	}
+
+	BanUser(user: UserI)
+	{
+		this.chatService.userBanned(user)
+	}
 }

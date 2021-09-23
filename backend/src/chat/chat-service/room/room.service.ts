@@ -99,4 +99,9 @@ export class RoomService
 	{
 		return this.roomRepository.update(roomId, { option });
 	}
+
+	async updateAdmins(admins: UserI[], roomId: number): Promise<any>
+	{
+		return this.roomRepository.update(roomId, { admins });
+	}
 }

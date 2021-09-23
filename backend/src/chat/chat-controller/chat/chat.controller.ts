@@ -65,4 +65,11 @@ export class ChatController
 	{
 		this.roomService.updateOption(params.option, params.room.id);
 	}
+
+	@UseGuards(verifyUser)
+	@Put('updateAdmins')
+	async updateAdmins(@Req() req: Request, @Body() params: any)
+	{
+		this.roomService.updateAdmins(params.admins, params.room.id);
+	}
 }

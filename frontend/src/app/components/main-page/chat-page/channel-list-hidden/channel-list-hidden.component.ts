@@ -24,6 +24,7 @@ export class ChannelListHiddenComponent implements OnInit {
 
   enter(room: RoomI)
   {
+    console.log(room);
     this.closeOverlay.emit();
     this.directMessage.emit(room);
   }
