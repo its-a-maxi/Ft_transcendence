@@ -124,4 +124,14 @@ export class ChatService
     {
         return axios.post('http://localhost:3000/chat/verifyPassword', {password, roomId})
     }
+
+    updatePassword(password: string, room: RoomI)
+    {
+        return axios.put('http://localhost:3000/chat/updatePassword', {password, room})
+    }
+
+    updateOption(option: string, room: RoomI)
+    {
+        return axios.put('http://localhost:3000/chat/updateOption', {option, room})
+    }
 }

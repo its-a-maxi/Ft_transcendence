@@ -95,7 +95,7 @@ export class RoomService
 		return this.roomRepository.update(roomId, { password });
 	}
 
-	async updateStatus(option: string, roomId: number): Promise<any>
+	async updateOption(option: string, roomId: number): Promise<any>
 	{
 		return this.roomRepository.update(roomId, { option });
 	}

@@ -21,6 +21,7 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 	
 	@Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
 	@Output('showOverlay') showOverlay: EventEmitter<any> = new EventEmitter();
+	@Output('refreshChat') refreshChat: EventEmitter<any> = new EventEmitter();
 
 	@Input()
 	chatRoom!: RoomI;
@@ -125,23 +126,23 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 	{
 		if (this.chatRoom.option == "private")
 		{
-			this.chatRoom.password = "";
-			this.chatRoom.option = "public";
+			this.chatService.updateOption('public', this.chatRoom);
+
 		}
 		else
 		{
 			this.showOverlay.emit("changePassword");
-			this.chatRoom.option = "private";
+			this.chatService.updateOption('private', this.chatRoom);
 		}
-		//this.chatService.updatePassword(this.chatRoom);
+		this.refreshChat.emit();
+		//this.chatService.updatePassword("random", this.chatRoom);
 	}
 
 	changeChannelPassword(password: string)
 	{
-		this.chatRoom.password = password;
+		this.chatService.updatePassword(password, this.chatRoom);
 		alert('Your new password is: ' + password);
-		console.log(this.chatRoom);
 		this.closeOverlay.emit();
-		//this.chatService.updateRoom(this.chatRoom);
+		this.refreshChat.emit();
 	}
 }

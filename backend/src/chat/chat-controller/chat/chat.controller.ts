@@ -51,4 +51,18 @@ export class ChatController
         }
         return res.send(true)
     }
+
+	@UseGuards(verifyUser)
+	@Put('updatePassword')
+	async updatePassword(@Req() req: Request, @Body() params: any)
+	{
+		this.roomService.updatePassword(params.password, params.room.id);
+	}
+
+	@UseGuards(verifyUser)
+	@Put('updateOption')
+	async updateOption(@Req() req: Request, @Body() params: any)
+	{
+		this.roomService.updateOption(params.option, params.room.id);
+	}
 }

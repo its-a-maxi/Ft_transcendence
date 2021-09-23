@@ -189,4 +189,8 @@ export class ChatPageComponent implements OnInit {
     this.child!.changeChannelPassword(password);
   }
 
+  refreshChat()
+  {
+    this.ngOnInit();
+  }
 }
