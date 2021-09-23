@@ -33,7 +33,7 @@ const routes: Routes = [
     {path: 'settings/:id', component: SettingsComponent},
   ]},
   {path: "mainPage/:id", component: NavigationComponent},
-  {path: "game", component: GameComponent},
+  {path: "game/:id", component: GameComponent},
   {path: "register", component: RegisterComponent},
   {path: "profile/:id", component: ProfileComponent},
   {path: "twofa", component: TwoFAComponent},

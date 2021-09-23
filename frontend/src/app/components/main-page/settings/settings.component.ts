@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
+import { GameService } from 'src/app/services/game-service/game.service';
 import { User } from 'src/app/services/models/user';
 import { TwoFaPopupComponent } from './two-fa-popup/two-fa-popup.component';
 
@@ -15,7 +16,7 @@ interface HtmlInputEvent extends Event {
 	styleUrls: ['./settings.component.css']
 })
 
-export class SettingsComponent implements OnInit
+export class SettingsComponent implements OnInit, OnDestroy
 {
 
 	private user?: User;
@@ -39,7 +40,7 @@ export class SettingsComponent implements OnInit
 	constructor(public authService: AuthService,
 				private router: Router,
 				private activateRoute: ActivatedRoute,
-				private chatService: ChatService) { }
+				) { }
 
 	async ngOnInit()
 	{
@@ -59,6 +60,10 @@ export class SettingsComponent implements OnInit
 		this.profilePicture = this.user?.avatar;
 	}
 
+    ngOnDestroy()
+    {
+       //this.gameService.findUsers()
+    }
 
 	async findUser(id: string)
 	{
