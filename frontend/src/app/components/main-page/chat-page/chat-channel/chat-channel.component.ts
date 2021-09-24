@@ -140,7 +140,7 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 
 	changeChannelPassword(password: string)
 	{
-		this.chatService.updatePassword(password, this.chatRoom);
+		this.chatService.updatePassword(password, this.chatRoom).catch(e => console.log(e))
 		alert('Your new password is: ' + password);
 		this.closeOverlay.emit();
 		this.refreshChat.emit();

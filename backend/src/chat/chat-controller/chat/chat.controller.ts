@@ -10,7 +10,7 @@ import { UserI } from 'src/users/user-service/models/user.interface';
 import { UsersService } from 'src/users/user-service/users.service';
 import * as bcrypt from 'bcrypt'
 
-@Controller('chat')
+@Controller('chatRoom')
 export class ChatController
 {
 	constructor(private authService: AuthService,
@@ -54,22 +54,49 @@ export class ChatController
 
 	@UseGuards(verifyUser)
 	@Put('updatePassword')
-	async updatePassword(@Req() req: Request, @Body() params: any)
+	async updatePassword(@Req() req: Request, @Res() res: Response, @Body() params: any)
 	{
-		this.roomService.updatePassword(params.password, params.room.id);
+        try
+        {
+            await this.roomService.updatePassword(params.password, params.room.id);
+        	return res.status(200).send("OK")
+        }
+		catch
+		{
+            return res.status(400)
+        }
+		
 	}
 
 	@UseGuards(verifyUser)
 	@Put('updateOption')
-	async updateOption(@Req() req: Request, @Body() params: any)
+	async updateOption(@Req() req: Request,  @Res() res: Response, @Body() params: any)
 	{
-		this.roomService.updateOption(params.option, params.room.id);
+		try
+		{
+			await this.roomService.updateOption(params.option, params.room.id);
+			return res.status(200).send("OK")	
+		}
+		catch
+		{
+			return res.status(400)
+		}
 	}
 
 	@UseGuards(verifyUser)
 	@Put('updateAdmins')
-	async updateAdmins(@Req() req: Request, @Body() params: any)
+	async updateAdmins(@Req() req: Request, @Res() res: Response, @Body() params: any)
 	{
-		this.roomService.updateAdmins(params.admins, params.room.id);
+		try
+		{
+			await this.roomService.updateAdmins(params.admins, params.room.id);
+			return res.status(200).send("OK")	
+		}
+		catch
+		{
+			return res.status(400)
+		}
+		
 	}
+
 }

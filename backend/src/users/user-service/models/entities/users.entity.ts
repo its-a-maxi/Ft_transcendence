@@ -64,6 +64,6 @@ export class UserEntity
 
     @ManyToMany(() => UserEntity)
     @JoinTable()
-    friends: Array<UserEntity>;
+    friends: UserEntity[];
 
 }
