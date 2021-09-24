@@ -263,6 +263,11 @@ app-channel-list-hidden
 {
 	display: none;
 }
+
+app-profile-popup
+{
+	display: none;
+}
 	
 .overlayBack
 {

@@ -127,45 +127,57 @@ export class ChatPageComponent implements OnInit {
             this.chatService.createRoom(newRoom);
 	}
 
+	showProfile(user: UserI)
+	{
+		this.userPopup = user;
+		this.showOverlay("profilePopup");
+	}
+
 	showOverlay(type: string): void {
 		let container = document.getElementById("container");
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
-    let password = document.getElementById("password");
-    let changePassword = document.getElementById("changePassword");
-    let hiddenUserList = document.getElementById("hiddenUserList");
-    let hiddenChannelList = document.getElementById("hiddenChannelList");
+		let password = document.getElementById("password");
+		let changePassword = document.getElementById("changePassword");
+		let hiddenUserList = document.getElementById("hiddenUserList");
+		let hiddenChannelList = document.getElementById("hiddenChannelList");
+		let profilePopup = document.getElementById("profilePopup");
 
 		container!.style.opacity = "50%";
 		overlayBack!.style.display = "block";
-    if (type == "newChannel")
-		  popup!.style.display = "block";
-    else if (type == "password")
-      password!.style.display = "block";
-      else if (type == "changePassword")
-        changePassword!.style.display = "block";
-    else if (type == "hiddenUserList")
-      hiddenUserList!.style.display = "block";
-    else if (type == "hiddenChannelList")
-      hiddenChannelList!.style.display = "block";
+    	if (type == "newChannel")
+			popup!.style.display = "block";
+    	else if (type == "password")
+    		password!.style.display = "block";
+    	else if (type == "changePassword")
+    		changePassword!.style.display = "block";
+    	else if (type == "hiddenUserList")
+    		hiddenUserList!.style.display = "block";
+    	else if (type == "hiddenChannelList")
+    	hiddenChannelList!.style.display = "block";
+		else if (type == "profilePopup")
+			profilePopup!.style.display = "block";
 	}
 
-	closeOverlay(): void {
+	closeOverlay(): void
+	{
 		let container = document.getElementById("container");
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
-    let password = document.getElementById("password");
-    let changePassword = document.getElementById("changePassword");
-    let hiddenUserList = document.getElementById("hiddenUserList");
-    let hiddenChannelList = document.getElementById("hiddenChannelList");
+		let password = document.getElementById("password");
+		let changePassword = document.getElementById("changePassword");
+		let hiddenUserList = document.getElementById("hiddenUserList");
+		let hiddenChannelList = document.getElementById("hiddenChannelList");
+		let profilePopup = document.getElementById("profilePopup");
     
 		container!.style.opacity = "100%";
 		overlayBack!.style.display = "none";
 		popup!.style.display = "none";
 		password!.style.display = "none";
 		changePassword!.style.display = "none";
-    hiddenUserList!.style.display = "none";
-    hiddenChannelList!.style.display = "none";
+		hiddenUserList!.style.display = "none";
+		hiddenChannelList!.style.display = "none";
+		profilePopup!.style.display = "none";
 	}
 
 	blockUser(user: UserI) {

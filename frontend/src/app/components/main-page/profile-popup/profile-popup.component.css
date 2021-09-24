@@ -44,6 +44,7 @@ div{
 	border-radius: 100vh;
 	right: 0;
 	left: 0;
+	top: 5%;
 	margin: auto;
     border: 0.5vh solid rgba(19, 5, 11, .3);
 }
@@ -53,7 +54,7 @@ div{
 	position: absolute;
 	height: 10%;
 	width: 100%;
-	top: 32%;
+	top: 37%;
 	right: 0;
 	left: 0;
 	margin: auto;
@@ -75,7 +76,7 @@ div{
 	position: absolute;
 	height: 6%;
 	width: 100%;
-	top: 42%;
+	top: 47%;
 	right: 0;
 	left: 0;
 	margin: auto;
@@ -104,7 +105,7 @@ div{
 	position: absolute;
 	height: 10%;
 	width: 100%;
-	top: 50%;
+	top: 55%;
 	right: 0;
 	left: 0;
 	margin: auto;
@@ -138,14 +139,14 @@ div{
 	position: absolute;
 	height: 10%;
 	width: 90%;
-	top: 60%;
+	top: 65%;
 	right: 0;
 	left: 0;
 	margin: auto;
 	background-color: #59c977;
 	border-radius: 100vh;
 	font-size: 3vh;
-	color: linen;
+	color: #ede5f2ff;
 }
 
 .defeatsBar
@@ -163,7 +164,7 @@ div{
 	position: absolute;
 	height: 12%;
 	width: 60%;
-	bottom: 0%;
+	bottom: 5%;
 	right: 0;
 	left: 0;
 	margin: auto;

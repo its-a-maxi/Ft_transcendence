@@ -11,15 +11,18 @@ export class ProfilePopupComponent implements OnInit {
   constructor() { }
 
   @Input() userPopup!: UserI;
+  status: string = "Offline";
 
   ngOnInit(): void {
     this.winsDefeats();
+    this.updateStatusColor();
   }
 
-  winsDefeats()
+  winsDefeats(): void
   {
     let defeatsPercent: number;
-		let defeatsBar = document.getElementById("defeats");
+		let front = document.getElementById("front");
+		let back = document.getElementById("back");
 
     if (this.userPopup.defeats! <= 0 && this.userPopup.wins! <= 0)
       defeatsPercent = 50;
@@ -29,8 +32,44 @@ export class ProfilePopupComponent implements OnInit {
       defeatsPercent = 100;
     else
       defeatsPercent = this.userPopup.defeats! * 100 / (this.userPopup.wins! + this.userPopup.defeats!);
-		defeatsBar!.style.width = defeatsPercent + "%";
+    if (defeatsPercent > 50)
+    {
+		  front!.style.width = (100 - defeatsPercent) + "%";
+		  front!.style.right = "";
+      front!.style.left = "0%";
+      front!.style.borderRadius = "100vh 0% 0% 100vh";
+      front!.style.backgroundColor = "#59c977";
+      back!.style.backgroundColor = "#e08080";
+    }
+    else
+		  front!.style.width = defeatsPercent + "%";
     console.log(defeatsPercent);
+  }
+
+  openUser(): void
+  {
+    window.open("https://profile.intra.42.fr/users/" + this.userPopup.user42);
+  }
+
+  updateStatusColor(): void
+  {
+		let avatar = document.getElementById("avatarPopup");
+		let status = document.getElementById("status");
+
+    if (this.userPopup.status == 'online')
+    {
+      this.status = "Online";
+      status!.style.color = "rgba(89, 201, 119, .8)";
+      status!.style.border = "0.5vh solid rgba(89, 201, 119, .8)";
+      avatar!.style.border = "0.5vh solid rgba(89, 201, 119, .8)";
+    }
+    else if (this.userPopup.status == 'inGame')
+    {
+      this.status = "In a game";
+      status!.style.color = "rgba(126, 179, 217, .8)";
+      status!.style.border = "0.5vh solid rgba(126, 179, 217, .8)";
+      avatar!.style.border = "0.5vh solid rgba(126, 179, 217, .8)";
+    }
   }
 
 

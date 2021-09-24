@@ -13,6 +13,7 @@ export class UserListHiddenComponent implements OnInit {
   @Output('directMessage') directMessage: EventEmitter<any> = new EventEmitter();
   @Output('blockUser') blockUser: EventEmitter<any> = new EventEmitter();
   @Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
+  @Output('showOverlay') showProfile: EventEmitter<any> = new EventEmitter();
   @Input() list: Array<UserI> = [];
 
   ngOnInit(): void {
@@ -28,6 +29,12 @@ export class UserListHiddenComponent implements OnInit {
   {
     this.blockUser.emit(user);
     this.closeOverlay.emit();
+  }
+
+  profile(user: UserI)
+  {
+    this.closeOverlay.emit();
+    this.showProfile.emit(user);
   }
 
 }
