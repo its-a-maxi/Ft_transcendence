@@ -162,9 +162,25 @@ export class AuthController
 
     @UseGuards(verifyUser)
     @Put('updateFriends')
-    async updateFriends(@Req() req: Request, @Body() params: any)
+    async updateFriends(@Req() req: Request,  @Res() res: Response, @Body() params: UserI[])
     {
-        const id = req.body.id
-        return await this.userService.updateFriends(params, id)
+        try
+        {
+            const id = req.body.id
+            const user: UserI = await this.userService.getUser(id)
+            if (!user.friends)
+                user.friends = []
+            for (let friend of params)
+                user.friends.push(friend)
+            await this.userService.updateFriends(user)
+            return res.status(200).send("OK")
+            
+        }
+        catch
+        {
+            return res.status(400)
+        }
+        
+        
     }
 }

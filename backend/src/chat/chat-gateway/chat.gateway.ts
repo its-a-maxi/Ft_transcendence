@@ -59,7 +59,7 @@ export class ChatGateway
 				this.addUserRoom(user as UserEntity)
 				this.addAdminRoom(user as UserEntity)
 				const rooms = await this.roomService.findAllRoomById(user.id)
-				console.log(rooms);
+				//console.log(rooms);
 				await this.connectedUserService.create({socketId: socket.id, userId: user.id, user})
 				return this.server.to(socket.id).emit('rooms', rooms)
 			}
@@ -112,17 +112,19 @@ export class ChatGateway
 			{
 				if (room.option !== 'Direct')
 				{
-					check = false
-					for (let user of room.admins)
-					{
-						if (user.id === newUser.id)
-							check = true
-					}
-					if (!check)
-					{
-						room.admins.unshift(newUser)
-						await this.roomService.updateRoom(room)
-					}
+                    if (!room.admins)
+                        room.admins = []
+                    check = false
+                    for (let user of room.admins)
+                    {
+                        if (user.id === newUser.id)
+                            check = true
+                    }
+                    if (!check)
+                    {
+                        room.admins.unshift(newUser)
+                        await this.roomService.updateRoom(room)
+                    }
 				}
 			}
 		}
