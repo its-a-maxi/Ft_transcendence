@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { NavigationComponent } from '../../components/navigation/navigation.component';
+import { RoomI } from '../models/room.interface';
 import { User } from "../models/user";
 import { UserI } from '../models/user.interface';
 
@@ -85,4 +86,10 @@ export class AuthService
 		const url: string = `http://localhost:3000/auth/getUserById/${id}`
 		return axios.get(url)
 	}
+
+    updatePassword(password: string, room: RoomI)
+    {
+        console.log("UPDATEEEEEE")
+        return axios.put<RoomI>('http://localhost:3000/auth/updatePassword', {room})
+    }
 }

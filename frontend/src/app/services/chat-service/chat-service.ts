@@ -122,21 +122,21 @@ export class ChatService
 
     verifyPassword(password: string, roomId: number)
     {
-        return axios.post('http://localhost:3000/chat/verifyPassword', {password, roomId})
+        return axios.post('http://localhost:3000/chatRoom/verifyPassword', {password, roomId})
     }
 
     updatePassword(password: string, room: RoomI)
     {
-        return axios.put('http://localhost:3000/chat/updatePassword', {password, room})
+        return axios.put('http://localhost:3000/chatRoom/updatePassword', {password, room})
     }
 
     updateOption(option: string, room: RoomI)
     {
-        return axios.put('http://localhost:3000/chat/updateOption', {option, room})
+        return axios.put('http://localhost:3000/chatRoom/updateOption', {option, room})
     }
 
     updateAdmins(admins: UserI[], room: RoomI)
     {
-        return axios.put('http://localhost:3000/chat/updateAdmins', {admins, room})
+        return axios.put('http://localhost:3000/chatRoom/updateAdmins', {admins, room})
     }
 }

@@ -21,7 +21,8 @@ import { RoomI } from '../models/room/room.interface';
 @WebSocketGateway({
     path: "/chat",
     cors: { origin: ['https://hoppscotch.io',
-				'http://localhost:3000', 'http://localhost:4200'] } })
+				'http://localhost:3000', 'http://localhost:4200'],
+            credentials: true} })
 export class ChatGateway
 		implements OnGatewayConnection, OnGatewayDisconnect, OnModuleInit
 {
