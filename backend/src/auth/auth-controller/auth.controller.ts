@@ -161,12 +161,10 @@ export class AuthController
     }
 
     @UseGuards(verifyUser)
-	@Put('updatePassword')
-	async updatePassword(@Req() req: Request, @Res() res: Response)
-	{
-        console.log("ESTO ES PARARMID: ",req)
-        return res.status(200).send("TODO OK")
-		//return await this.roomService.updatePassword(params.password, params.room.id);
-       //const room = await this.roomService.getRoom()
-	}
+    @Put('updateFriends')
+    async updateFriends(@Req() req: Request, @Body() params: any)
+    {
+        const id = req.body.id
+        return await this.userService.updateFriends(params, id)
+    }
 }

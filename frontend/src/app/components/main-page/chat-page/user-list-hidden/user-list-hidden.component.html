@@ -4,7 +4,7 @@
 		<div class="overlayListElementsContainer">
 			<ul class="overlayList" *ngFor="let room of list">
 				<li [matMenuTriggerFor]="menu" >{{room.nick}}
-					<img src="/assets/images/blockIconDark.png" alt="block" [className]="room.isBlocked == true ? 'icon' : 'noIcon'">
+					<img src="/assets/images/blockIconDark.png" alt="block" title="Blocked" [className]="room.isBlocked == true ? 'icon' : 'noIcon'">
 				</li>
 				<mat-menu #menu="matMenu" class=hoverMenuHidden>
 				  <button mat-menu-item (click)="enter(room)" class=hoverBtnHidden>Open chat</button>

@@ -76,6 +76,11 @@ export class AuthService
 		return await axios.put<User>('http://localhost:3000/auth/updateUser', user)
 	}
 
+	async updateFriends(friends: Array<UserI>)
+	{
+		return await axios.put('http://localhost:3000/auth/updateFriends', friends)
+	}
+
 	async enableTwofactor()
 	{
 		//return await axios.put<User>('http://localhost:3000/auth/updateUser', user)
@@ -86,10 +91,4 @@ export class AuthService
 		const url: string = `http://localhost:3000/auth/getUserById/${id}`
 		return axios.get(url)
 	}
-
-    updatePassword(password: string, room: RoomI)
-    {
-        console.log("UPDATEEEEEE")
-        return axios.put<RoomI>('http://localhost:3000/auth/updatePassword', {room})
-    }
 }

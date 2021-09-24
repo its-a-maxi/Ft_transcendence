@@ -28,10 +28,16 @@ export class FriendsComponent implements OnInit {
     if (this.paramId)
       await this.findUser(this.paramId);
     if (this.mainUser && this.mainUser.friends)
-      this.friends = this.mainUser.friends;
+    {
+      if (this.mainUser.friends == undefined)
+        this.friends = [];
+      else
+        this.friends = this.mainUser.friends;
+    }
     this.sortConnected();
     await this.authService.showAllUsers()
       .then(response => this.allUsers = response.data.filter(x => x.id != this.mainUser?.id));
+    console.log(this.friends);
   }
 
 	async findUser(id: string)
@@ -51,6 +57,7 @@ export class FriendsComponent implements OnInit {
   async addFriend(newFriend: UserI)
   {
     this.friends.push(newFriend);
+    this.authService.updateFriends(this.friends);
     this.sortConnected();
     this.closeOverlay();
   }
