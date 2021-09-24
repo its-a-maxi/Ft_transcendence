@@ -48,6 +48,7 @@ import { GetPasswordComponent } from './components/main-page/chat-page/get-passw
 import { UserListHiddenComponent } from './components/main-page/chat-page/user-list-hidden/user-list-hidden.component';
 import { ChannelListHiddenComponent } from './components/main-page/chat-page/channel-list-hidden/channel-list-hidden.component';
 import { WaitingRoomComponent } from './components/game/waiting-room/waiting-room/waiting-room.component';
+import { ProfilePopupComponent } from './components/main-page/profile-popup/profile-popup.component';
 
 
 export function tokenGetter(): string | null {
@@ -82,6 +83,7 @@ export function tokenGetter(): string | null {
     UserListHiddenComponent,
     ChannelListHiddenComponent,
     WaitingRoomComponent,
+    ProfilePopupComponent,
   ],
   imports: [
     BrowserModule,

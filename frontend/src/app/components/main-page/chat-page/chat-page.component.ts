@@ -16,10 +16,11 @@ export class ChatPageComponent implements OnInit {
 
 	constructor(private chatService: ChatService, private authService: AuthService, private router: Router) { }
 
-  @ViewChild(ChatChannelComponent) private child?:ChatChannelComponent;
+	@ViewChild(ChatChannelComponent) private child?:ChatChannelComponent;
 
-  mainUser!: UserI;
-  paramId: string | null = sessionStorage.getItem('token');
+	mainUser!: UserI;
+	userPopup!: UserI;
+	paramId: string | null = sessionStorage.getItem('token');
 
 	allUsers: Array<UserI> = [];
 
@@ -29,12 +30,14 @@ export class ChatPageComponent implements OnInit {
 	users: Array<RoomI> = [];
 	channels: Array<RoomI> = [];
 
+
 	async ngOnInit() {
 		if (this.paramId)
 			await this.findUser(this.paramId);
 		await this.authService.showAllUsers()
 			.then(response => this.allUsers = response.data.filter(x => x.id != this.mainUser?.id));
 		await this.findRooms();
+		this.userPopup = this.mainUser;
 	}
 
 	private async findUser(id: string) {

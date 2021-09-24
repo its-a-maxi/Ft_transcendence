@@ -1,0 +1,184 @@
+div{
+    border: 0px solid black;
+}
+
+.body
+{
+	position: absolute;
+	width: 46vh;
+	height: 90%;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+
+	font-family: futura;
+    font-size: 2vh;
+    color: rgba(19, 5, 11, .8);
+	background-color: #ede5f2ff;
+	border-radius: 3.8vh;
+    transition-duration: 0.3s;
+}
+
+.box
+{
+	position: absolute;
+	height: 80%;
+	width: 90%;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	margin: auto;
+
+	text-align: center;
+	font-family: 'futura';
+}
+
+.profile
+{
+	position: absolute;
+	height: 15vh;
+	width: 15vh;
+	border-radius: 100vh;
+	right: 0;
+	left: 0;
+	margin: auto;
+    border: 0.5vh solid rgba(19, 5, 11, .3);
+}
+
+.nick
+{
+	position: absolute;
+	height: 10%;
+	width: 100%;
+	top: 32%;
+	right: 0;
+	left: 0;
+	margin: auto;
+}
+.nickStyle
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	bottom: -30%;
+	margin: auto;
+
+	font-size: 4vh;
+	letter-spacing: 0.2vh;
+}
+
+.user
+{
+	position: absolute;
+	height: 6%;
+	width: 100%;
+	top: 42%;
+	right: 0;
+	left: 0;
+	margin: auto;
+}
+.userStyle
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	bottom: -20%;
+	margin: auto;
+
+	font-size: 2.5vh;
+	letter-spacing: 0.2vh;
+	color: rgba(19, 5, 11, .5);
+}
+.userStyle:hover
+{
+	color: rgba(128, 88, 73, .8);
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.points
+{
+	position: absolute;
+	height: 10%;
+	width: 100%;
+	top: 50%;
+	right: 0;
+	left: 0;
+	margin: auto;
+
+	font-size: 2.5vh;
+	letter-spacing: 0.2vh;
+}
+.wins
+{
+	position: absolute;
+	height: 100%;
+	left: 10%;
+	top: 30%;
+	margin: auto;
+
+	text-align: left;
+}
+.defeats
+{
+	position: absolute;
+	height: 100%;
+	right: 10%;
+	top: 30%;
+	margin: auto;
+
+	text-align: right;
+}
+
+.bar
+{
+	position: absolute;
+	height: 10%;
+	width: 90%;
+	top: 60%;
+	right: 0;
+	left: 0;
+	margin: auto;
+	background-color: #59c977;
+	border-radius: 100vh;
+	font-size: 3vh;
+	color: linen;
+}
+
+.defeatsBar
+{
+	position: absolute;
+	height: 100%;
+	width: 50%;
+	right: 0%;
+	background-color: #e08080;
+	border-radius: 0% 100vh 100vh 0%;
+}
+
+.status
+{
+	position: absolute;
+	height: 12%;
+	width: 60%;
+	bottom: 0%;
+	right: 0;
+	left: 0;
+	margin: auto;
+    border: 0.5vh solid rgba(19, 5, 11, .3);
+	color: rgba(19, 5, 11, .3);
+	border-radius: 100vh;
+}
+.statusStyle
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 30%;
+	font-size: 3vh;
+	letter-spacing: 0.2vh;
+	margin: auto;
+
+}
