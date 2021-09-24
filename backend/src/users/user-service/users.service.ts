@@ -62,4 +62,10 @@ export class UsersService
     {
         return this.usersRepository.update(userId, { status })
     }
+
+	async updateFriends(friends: Array<UserI>, userId: number)
+    {
+		console.log(friends);
+        return this.usersRepository.update(userId, { friends })
+    }
 }

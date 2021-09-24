@@ -21,4 +21,14 @@ export interface UserI
     isBanned?: boolean;
 
     isAdmin?: boolean;
+
+    wins?: number;
+
+    defeats?: number;
+
+    coalition?: string;
+
+    user42?: string;
+
+    friends?: Array<UserI>;
 }

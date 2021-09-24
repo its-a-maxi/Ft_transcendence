@@ -6,7 +6,7 @@
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of allUsers">
 				<li [matMenuTriggerFor]="menu" >{{room.nick}}
-					<img src="../../../../assets/images/blockIcon.png" alt="block" [className]="room.isBlocked == true ? 'icon' : 'noIcon'">
+					<img src="../../../../assets/images/blockIcon.png" alt="block" title="Blocked" [className]="room.isBlocked == true ? 'icon' : 'noIcon'">
 				</li>
 				<mat-menu #menu="matMenu" class=hoverMenu>
 				  <button mat-menu-item (click)="directMessage(room)" class=hoverBtn>Open chat</button>
@@ -24,8 +24,8 @@
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of channels">
 				<li (click)="changeCurrentRoom(room)">{{room.name}}
-					<img src="../../../../assets/images/privateIcon.png" alt="private" [className]="room.option == 'private' ? 'icon' : 'noIcon'">
-					<img src="../../../../assets/images/OwnershipIcon.png" alt="owner" [className]="room.ownerId == mainUser.id ? 'icon' : 'noIcon'">
+					<img src="../../../../assets/images/privateIcon.png" alt="private" title="Private Channel" [className]="room.option == 'private' ? 'icon' : 'noIcon'">
+					<img src="../../../../assets/images/OwnershipIcon.png" alt="owner" title="Owner" [className]="room.ownerId == mainUser.id ? 'icon' : 'noIcon'">
 				</li>
 			</ul>
 		</div>

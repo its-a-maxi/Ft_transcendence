@@ -75,6 +75,11 @@ export class AuthService
 		return await axios.put<User>('http://localhost:3000/auth/updateUser', user)
 	}
 
+	async updateFriends(friends: Array<UserI>)
+	{
+		return await axios.put('http://localhost:3000/auth/updateFriends', friends)
+	}
+
 	async enableTwofactor()
 	{
 		//return await axios.put<User>('http://localhost:3000/auth/updateUser', user)

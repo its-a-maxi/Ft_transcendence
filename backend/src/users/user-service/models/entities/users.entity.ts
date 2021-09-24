@@ -2,7 +2,7 @@ import { ConnectedUserEntity } from "src/chat/models/connected-user/connected-us
 import { JoinedRoomEntity } from "src/chat/models/joined-room/joined-room.entity";
 import { MessageEntity } from "src/chat/models/messages/messages.entity";
 import { RoomEntity } from "src/chat/models/room/room.entity";
-import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn} from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn} from "typeorm";
 import { UserI } from "../user.interface";
 
 @Entity('users')
@@ -49,5 +49,21 @@ export class UserEntity
 
     @OneToMany(() => MessageEntity, message => message.user)
     messages: MessageEntity[];
+
+    @Column({default: '0'})
+    wins?: number;
+
+    @Column({default: '0'})
+    defeats?: number;
+
+    @Column({default: 'default'})
+    coalition?: string;
+    
+    @Column({default: 'default'})
+    user42?: string;
+
+    @ManyToMany(() => UserEntity)
+    @JoinTable()
+    friends: Array<UserEntity>;
 
 }

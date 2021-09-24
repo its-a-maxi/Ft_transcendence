@@ -159,4 +159,12 @@ export class AuthController
             res.send(clientID)
         }
     }
+
+    @UseGuards(verifyUser)
+    @Put('updateFriends')
+    async updateFriends(@Req() req: Request, @Body() params: any)
+    {
+        const id = req.body.id
+        return await this.userService.updateFriends(params, id)
+    }
 }
