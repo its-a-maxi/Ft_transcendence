@@ -16,7 +16,7 @@
 			<span *ngFor="let message of (messagesPaginate$ | async)?.items">
 			<app-chat-message [message]="message" [userId]="userId" [matMenuTriggerFor]="menuUser"></app-chat-message>
 			<mat-menu #menuUser="matMenu" class=hoverMenu>
-			  <button mat-menu-item class=hoverBtn (click)="changeChannelOption()">{{checkIfAdmin(message.user!) ? 'Demote user' : 'Promote to admin'}}</button>
+			  <button mat-menu-item class=hoverBtn (click)="updateAdmin(message.user!)">{{checkIfAdmin(message.user!) ? 'Demote user' : 'Promote to admin'}}</button>
 			  <button mat-menu-item class=hoverBtnDelete (click)="BanUser(message.user!)">Ban user</button>
 			</mat-menu>
 			</span>

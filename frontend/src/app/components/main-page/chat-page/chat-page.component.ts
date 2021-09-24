@@ -58,26 +58,6 @@ export class ChatPageComponent implements OnInit {
 		})
 	}
 
-	private sortRooms() {
-		this.channels = [];
-		this.users = [];
-		for (let i = 0; this.rooms[i]; i++) {
-			if (this.rooms[i].name[0] == '#')
-				this.channels.push(this.rooms[i]);
-			else
-				this.users.push(this.rooms[i]);
-		}
-	}
-
-	changeCurrentRoom(room: RoomI) {
-		if (room.option == "private" && room.ownerId.toString() != this.paramId) {
-			this.toChangeRoom = room;
-			this.showOverlay("password");
-		}
-		else
-			this.currentRoom = room;
-	}
-
   private sortRooms()
   {
     this.channels = [];
@@ -131,7 +111,7 @@ export class ChatPageComponent implements OnInit {
             {
                 this.changeCurrentRoom(this.users[i]);
                 return;
-        }
+        	}
         }
         console.log('new room created');
             const newRoom: RoomI = {
@@ -142,27 +122,6 @@ export class ChatPageComponent implements OnInit {
                 users: [user]
             }
             this.chatService.createRoom(newRoom);
-	}
-
-	directMessage(user: UserI) {
-		let cmp1, cmp2: string;
-		cmp1 = this.mainUser.id.toString() + '/' + user.id.toString();
-		cmp2 = user.id.toString() + '/' + this.mainUser.id.toString();
-		for (let i = 0; this.users[i]; i++) {
-			if (this.users[i].name == cmp1 || this.users[i].name == cmp2) {
-				this.changeCurrentRoom(this.users[i]);
-				return;
-			}
-		}
-		console.log('new room created');
-		const newRoom: RoomI = {
-			ownerId: parseInt(this.paramId!),
-			name: this.mainUser.id + '/' + user.id,
-			password: "",
-			option: "Direct",
-			users: [user]
-		}
-		this.chatService.createRoom(newRoom);
 	}
 
 	showOverlay(type: string): void {
