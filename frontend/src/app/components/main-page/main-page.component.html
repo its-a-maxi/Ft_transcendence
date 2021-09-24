@@ -3,6 +3,16 @@
         <div class="container" id="all">
             
             <div class="top">
+                <nav class="tabs">
+                    <ul class="tabsText" id="tabsText">
+                        <a class="otherTab" routerLink="/mainPage/play/{{paramId}}" routerLinkActive="currentTab">Play</a>
+                        <a class="otherTab" routerLink="/mainPage/chat/{{paramId}}" routerLinkActive="currentTab">Chat</a>
+                        <a class="otherTab" routerLink="/mainPage/friends/{{paramId}}" routerLinkActive="currentTab">Friends</a>
+                        <a class="otherTab" routerLink="/mainPage/ranking/{{paramId}}" routerLinkActive="currentTab">Ranking</a>
+                        <a class="otherTab" routerLink="/mainPage/settings/{{paramId}}" routerLinkActive="currentTab">Settings</a>
+                    </ul>
+                    <div class="hamburger" (click)="showTabs()" id="hamburger"></div>
+                </nav>
                 <div class="profile" id="profile">
                     <div class="profContainer">
                         <div class="profileCircle">
@@ -22,16 +32,6 @@
                         </div>
                     </div>
                 </div>
-                <nav class="tabs">
-                    <ul class="tabsText" id="tabsText">
-                        <a class="otherTab" routerLink="/mainPage/play/{{paramId}}" routerLinkActive="currentTab">Play</a>
-                        <a class="otherTab" routerLink="/mainPage/chat/{{paramId}}" routerLinkActive="currentTab">Chat</a>
-                        <a class="otherTab" routerLink="/mainPage/friends/{{paramId}}" routerLinkActive="currentTab">Friends</a>
-                        <a class="otherTab" routerLink="/mainPage/ranking/{{paramId}}" routerLinkActive="currentTab">Ranking</a>
-                        <a class="otherTab" routerLink="/mainPage/settings/{{paramId}}" routerLinkActive="currentTab">Settings</a>
-                    </ul>
-                    <div class="hamburger" (click)="showTabs()" id="hamburger"></div>
-                </nav>
             </div>
 
             <div class="bottom" id="bottom">
