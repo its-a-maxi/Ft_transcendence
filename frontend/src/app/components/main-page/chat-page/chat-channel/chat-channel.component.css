@@ -150,6 +150,16 @@
         opacity: 100%;
         cursor: pointer;
     }
+    .userMessage
+    {
+        position: absolute;
+        height: 20px;
+        width: 150px;
+    }
+    .userMessage:hover
+    {
+        cursor: pointer;
+    }
 
 	/* width */
 	::-webkit-scrollbar {

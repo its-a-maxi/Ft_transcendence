@@ -146,18 +146,18 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 		this.refreshChat.emit();
 	}
 
-	checkIfAdmin(user: UserI): boolean
+	checkIfAdmin(userId: number): boolean
 	{
 		if (this.chatRoom.admins)
 			for (let i = 0; this.chatRoom.admins[i]; i++)
-				if (this.chatRoom.admins[i] == user)
+				if (this.chatRoom.admins[i].id == userId)
 					return (true);
 		return (false);
 	}
 
 	updateAdmin(user: UserI)
 	{
-		if (!this.checkIfAdmin(user))
+		if (!this.checkIfAdmin(user!.id))
 		{
 			this.chatRoom.admins?.push(user);
 			this.chatService.updateAdmins(this.chatRoom.admins!, this.chatRoom);
@@ -172,7 +172,6 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 			this.chatRoom.admins = temp;
 			this.chatService.updateAdmins(this.chatRoom.admins!, this.chatRoom);
 		}
-
 	}
 
 	BanUser(user: UserI)
