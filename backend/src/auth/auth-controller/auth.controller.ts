@@ -168,11 +168,9 @@ export class AuthController
         {
             const id = req.body.id
             const user: UserI = await this.userService.getUser(params.id)
-            console.log(user);
-            if (!user.friends)
-                user.friends = []
-            for (let friend of params.friends)
-                user.friends.push(friend)
+            user.friendsId = [];
+            for (let i = 0; params.friends[i]; i++)
+                user.friendsId.push(params.friends[i].id);
             await this.userService.updateFriends(user)
             return res.status(200).send("OK")
             

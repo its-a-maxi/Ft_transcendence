@@ -11,5 +11,5 @@ export class User{
       defeats: number = 0;
       coalition: string = "";
       isConnected: boolean = false;
-      friends: Array<User> = [];
+      friends: Array<number> = [];
 }

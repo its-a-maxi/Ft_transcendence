@@ -27,17 +27,17 @@ export class FriendsComponent implements OnInit {
   {
     if (this.paramId)
       await this.findUser(this.paramId);
-    if (this.mainUser && this.mainUser.friends)
-    {
-      if (this.mainUser.friends == undefined)
-        this.friends = [];
-      else
-        this.friends = this.mainUser.friends;
-    }
-    this.sortConnected();
     await this.authService.showAllUsers()
       .then(response => this.allUsers = response.data.filter(x => x.id != this.mainUser?.id));
-    console.log(this.mainUser!.friends);
+    if (this.mainUser && this.mainUser.friendsId)
+    {
+      if (this.mainUser.friendsId == null)
+        this.friends = [];
+      else
+        this.getFriends();
+    }
+    this.sortConnected();
+    console.log(this.friends);
   }
 
 	async findUser(id: string)
@@ -69,6 +69,7 @@ export class FriendsComponent implements OnInit {
       if (this.friends[i] != exFriend)
         rst.push(this.friends[i]);
     this.friends = rst;
+    this.authService.updateFriends(this.friends, this.paramId!);
     this.sortConnected();
   }
 
@@ -148,6 +149,22 @@ export class FriendsComponent implements OnInit {
       if (!this.friends[j])
         this.notFriends.push(this.allUsers[i]);
     }
+  }
+
+  private getFriends()
+  {
+    this.friends = [];
+    if (this.mainUser?.friendsId)
+      for (let i = 0; this.allUsers[i]; i++)
+      {
+        let j : number;
+        for (j = 0; this.mainUser.friendsId[j]; j++)
+          if (this.mainUser.friendsId[j] == this.allUsers[i].id)
+          {
+            this.friends.push(this.allUsers[i]);
+            break;
+          }
+      }
   }
 
 }
