@@ -57,7 +57,7 @@ export class FriendsComponent implements OnInit {
   async addFriend(newFriend: UserI)
   {
     this.friends.push(newFriend);
-    this.authService.updateFriends(this.friends);
+    this.authService.updateFriends(this.friends, this.paramId!);
     this.sortConnected();
     this.closeOverlay();
   }

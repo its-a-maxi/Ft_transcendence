@@ -162,15 +162,16 @@ export class AuthController
 
     @UseGuards(verifyUser)
     @Put('updateFriends')
-    async updateFriends(@Req() req: Request,  @Res() res: Response, @Body() params: UserI[])
+    async updateFriends(@Req() req: Request,  @Res() res: Response, @Body() params: any)
     {
         try
         {
             const id = req.body.id
-            const user: UserI = await this.userService.getUser(id)
+            const user: UserI = await this.userService.getUser(params.id)
+            console.log(user);
             if (!user.friends)
                 user.friends = []
-            for (let friend of params)
+            for (let friend of params.friends)
                 user.friends.push(friend)
             await this.userService.updateFriends(user)
             return res.status(200).send("OK")
@@ -180,7 +181,5 @@ export class AuthController
         {
             return res.status(400)
         }
-        
-        
     }
 }
