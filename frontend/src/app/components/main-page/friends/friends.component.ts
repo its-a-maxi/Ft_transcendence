@@ -29,7 +29,7 @@ export class FriendsComponent implements OnInit {
       await this.findUser(this.paramId);
     if (this.mainUser && this.mainUser.friends)
     {
-      if (this.mainUser.friends == undefined)
+      if (this.mainUser.friends === undefined)
         this.friends = [];
       else
         this.friends = this.mainUser.friends;
@@ -50,7 +50,7 @@ export class FriendsComponent implements OnInit {
 					this.router.navigate(['/landingPage/start'])
 				}
 				else
-					this.mainUser = res.data;
+                    console.log(res.data.friends)
 			})
 	}
 

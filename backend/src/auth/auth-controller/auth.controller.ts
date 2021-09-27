@@ -174,7 +174,6 @@ export class AuthController
                 user.friends.push(friend)
             await this.userService.updateFriends(user)
             return res.status(200).send("OK")
-            
         }
         catch
         {
