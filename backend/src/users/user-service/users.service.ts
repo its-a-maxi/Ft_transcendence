@@ -65,7 +65,7 @@ export class UsersService
 
 	async updateFriends(user: UserI)
     {
-        console.log(user.friends[0]);
-        return await this.usersRepository.save(user)
+		console.log(user);
+        return await this.usersRepository.save(user);
     }
 }

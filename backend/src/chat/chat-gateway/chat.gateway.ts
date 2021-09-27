@@ -50,6 +50,7 @@ export class ChatGateway
 		{
 			const token: any = socket.handshake.query.token
 			const user: UserI = await this.userService.getUser(token)
+			console.log(user);
 			if (!user)
 				this.disconnect(socket)
 			else
@@ -134,7 +135,8 @@ export class ChatGateway
 	async handleDisconnect(socket: Socket)
 	{
 		const user: UserI = socket.data.user
-		await this.userService.updateStatus(Status.offline, user.id)
+		if (user)
+			await this.userService.updateStatus(Status.offline, user.id)
 		await this.connectedUserService.deleteSocket(socket.id)
 		socket.disconnect();
 	}
