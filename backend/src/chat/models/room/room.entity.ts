@@ -26,10 +26,6 @@ export class RoomEntity
     @JoinTable()
     users: UserEntity[]
 
-    @ManyToMany(() => UserEntity)
-    @JoinTable()
-    admins: UserEntity[];
-
     @OneToMany(() => JoinedRoomEntity, joinedRoom => joinedRoom.room)
     joinedUsers: JoinedRoomEntity[];
 
@@ -41,4 +37,7 @@ export class RoomEntity
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    @Column("simple-array", {nullable: true})
+    adminsId: number[];
 }

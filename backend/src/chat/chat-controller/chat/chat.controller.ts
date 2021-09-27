@@ -87,16 +87,23 @@ export class ChatController
 	@Put('updateAdmins')
 	async updateAdmins(@Req() req: Request, @Res() res: Response, @Body() params: any)
 	{
-		try
-		{
-			await this.roomService.updateAdmins(params.admins, params.room.id);
-			return res.status(200).send("OK")	
-		}
-		catch
-		{
-			return res.status(400)
-		}
-		
+        try
+        {
+			const room = await this.roomService.getRoom(params.room.id);
+			if (!room.adminsId)
+				room.adminsId = [];
+			if (room.adminsId?.includes(params.userId))
+				room.adminsId = room.adminsId?.filter(x => x != params.userId);
+			else
+				room.adminsId?.push(params.userId);
+            await this.roomService.updateAdmins(room)
+            return res.status(200).send("OK")
+            
+        }
+        catch
+        {
+            return res.status(400)
+        }
 	}
 
 }

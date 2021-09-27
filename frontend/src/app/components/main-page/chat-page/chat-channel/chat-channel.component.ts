@@ -9,6 +9,8 @@ import { RoomI } from 'src/app/services/models/room.interface';
 import { map, startWith, tap } from 'rxjs/operators';
 import { UserI } from 'src/app/services/models/user.interface';
 import { Session } from 'inspector';
+import { User } from 'src/app/services/models/user';
+import { threadId } from 'worker_threads';
 
 @Component({
 	selector: 'app-chat-channel',
@@ -31,6 +33,7 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 	write: string = ""
 
 	message: string = "";
+
 	//chatMessage: FormControl = new FormControl(null, [Validators.required])
 
 	messagesPaginate$: Observable<MessagePaginateI> = combineLatest([this.chatService.getMessages(),
@@ -50,12 +53,11 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 		tap(() => this.scrollToBottom())
 		)
 
-	constructor(private chatService: ChatService) { }
+	constructor(private chatService: ChatService, private authService: AuthService) { }
 
 	ngOnInit(): void
 	{
 		this.userId = sessionStorage.getItem('token')
-		
 	}
 
 	ngOnChanges(changes: SimpleChanges)
@@ -65,6 +67,7 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 		{
 			this.chatService.joinRoom(this.chatRoom);
 			this.typingMessage();
+			console.log(this.chatRoom);
 		}
 	}
 
@@ -148,30 +151,23 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 
 	checkIfAdmin(userId: number): boolean
 	{
-		if (this.chatRoom.admins)
-			for (let i = 0; this.chatRoom.admins[i]; i++)
-				if (this.chatRoom.admins[i].id == userId)
+		if (this.chatRoom.adminsId)
+			for (let i = 0; this.chatRoom.adminsId[i]; i++)
+			{
+				if (this.chatRoom.adminsId[i] == userId)
 					return (true);
+			}
 		return (false);
 	}
 
 	updateAdmin(user: UserI)
 	{
-		if (!this.checkIfAdmin(user!.id))
-		{
-			this.chatRoom.admins?.push(user);
-			this.chatService.updateAdmins(this.chatRoom.admins!, this.chatRoom);
-		}
+		this.chatService.updateAdmins(user.id, this.chatRoom);
+		if (this.chatRoom.adminsId?.includes(user.id))
+			this.chatRoom.adminsId = this.chatRoom.adminsId?.filter(x => x != user.id);
 		else
-		{
-			let temp: UserI[] = [];
-			if (this.chatRoom.admins)
-				for (let i = 0; this.chatRoom.admins[i]; i++)
-					if (this.chatRoom.admins[i] != user)
-						temp.push(this.chatRoom.admins[i])
-			this.chatRoom.admins = temp;
-			this.chatService.updateAdmins(this.chatRoom.admins!, this.chatRoom);
-		}
+			this.chatRoom.adminsId?.push(user.id);
+		this.refreshChat.emit();
 	}
 
 	BanUser(user: UserI)

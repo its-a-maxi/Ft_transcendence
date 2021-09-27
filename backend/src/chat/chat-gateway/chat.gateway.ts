@@ -113,17 +113,17 @@ export class ChatGateway
 			{
 				if (room.option !== 'Direct')
 				{
-                    if (!room.admins)
+                    /*if (!room.admins)
                         room.admins = []
                     check = false
                     for (let user of room.admins)
                     {
                         if (user.id === newUser.id)
                             check = true
-                    }
+                    }*/
                     if (!check)
                     {
-                        room.admins.unshift(newUser)
+                        //room.admins.unshift(newUser)
                         await this.roomService.updateRoom(room)
                     }
 				}
