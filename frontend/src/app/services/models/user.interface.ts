@@ -20,7 +20,7 @@ export interface UserI
 
     isBlocked?: boolean;
 
-    friends?: Array<UserI>;
+    friendsId?: Array<number>;
 
     wins?: number;
 

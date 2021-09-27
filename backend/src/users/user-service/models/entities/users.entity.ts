@@ -62,8 +62,7 @@ export class UserEntity
     @Column({default: 'default'})
     user42?: string;
 
-    @ManyToMany(() => UserEntity)
-    @JoinTable()
-    friends: UserEntity[];
+    @Column("simple-array", {nullable: true})
+    friendsId: number[];
 
 }

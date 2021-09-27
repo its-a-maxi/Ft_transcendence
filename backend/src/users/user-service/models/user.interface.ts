@@ -30,5 +30,5 @@ export interface UserI
 
     user42?: string;
 
-    friends?: Array<UserI>;
+    friendsId?: number[];
 }
