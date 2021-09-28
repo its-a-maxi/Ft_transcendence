@@ -27,6 +27,41 @@ export class GameService
 		this.socket.emit('keyboard', data)
 	}
 
+    getMove(): Observable<any>
+    {
+        return this.socket.fromEvent('move')
+    }
+
+    setMove(move: any)
+    {
+        this.socket.emit('setMove', move)
+    }
+
+    getMovePlayer(): Observable<any>
+    {
+        return this.socket.fromEvent('movePlayer')
+    }
+
+    setMoveTwo(move: any)
+    {
+        this.socket.emit('setMoveTwo', move)
+    }
+
+    getMovePlayerTwo(): Observable<any>
+    {
+        return this.socket.fromEvent('movePlayerTwo')
+    }
+
+    moveBall(ball: any)
+    {
+        this.socket.emit('moveBall', ball)
+    }
+
+    getMoveBall(): Observable<any>
+    {
+        return this.socket.fromEvent('returnBall')
+    }
+
 	getListUsers(): Observable<any>
 	{
 		return this.socket.fromEvent<any>('listUsers')
@@ -56,5 +91,17 @@ export class GameService
     changeStatus()
     {
         this.socket.emit('gameStatus')
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+
+    createGame(game: any)
+    {
+        this.socket.emit('createGame', game)
+    }
+
+    startGame(): Observable<any>
+    {
+        return this.socket.fromEvent('startGame')
     }
 }

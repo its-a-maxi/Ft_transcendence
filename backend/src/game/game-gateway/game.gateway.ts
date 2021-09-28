@@ -5,6 +5,8 @@ import { Server, Socket } from 'socket.io';
 import { Status } from 'src/users/user-service/models/status.enum';
 import { UserI } from 'src/users/user-service/models/user.interface';
 import { UsersService } from 'src/users/user-service/users.service';
+import { Ball } from '../classes/ball';
+import { Paddle } from '../classes/paddle';
 import { GameEntity } from '../models/game.entity';
 import { GameI } from '../models/game.interface';
 import { UserSocketI } from '../models/user-socket.interface';
@@ -30,6 +32,18 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     listRooms: GameI[] = []
 
     listUsers: UserSocketI[] = []
+
+    ///////////////
+
+    paddleWidth: number = 10;
+	paddleHeight: number = 100;
+    canvasHeight: number = 600;
+    canvasWidth: number = 800;
+
+    upArrowPressed: boolean = false;
+	downArrowPressed: boolean = false;
+	key_wPressed: boolean = false;
+	key_sPressed: boolean = false;
 
 	constructor(private userService: UsersService,
                 private gameService: GameService) {}
@@ -176,9 +190,136 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         await this.userService.updateStatus(Status.inGame, userId)
     }
 
+    @SubscribeMessage('createGame')
+    createGame(socket: Socket, game: any)
+    {
+        let plOne = new Paddle(10,  this.canvasHeight / 2 - this.paddleHeight / 2,
+            0, game.playerOne, game.id)
+        let plTwo = new Paddle(this.canvasWidth - (this.paddleWidth + 10),
+            this.canvasHeight / 2 - this.paddleHeight / 2, 0, game.playerTwo, game.id)
+        let ball = new Ball(this.canvasWidth / 2, this.canvasHeight / 2, 7, 5, 5)
+		if (socket.id === game.socketList[0])
+        	setInterval(() => this.update(plOne, plTwo, ball), 1000 / 60) 
+        
+    }
+
+    ///////////////////////////////////////////
+
+	private resetBallPos(ball: Ball)
+	{
+		ball.x = this.canvasWidth / 2;
+		ball.y = this.canvasHeight / 2;
+		ball.speed = 7;
+		ball.velocityX = -ball.velocityX;
+		ball.velocityY = -ball.velocityY;
+		
+	}
+
+	private paddleCollision(paddle: Paddle, ball: Ball): boolean
+	{
+		let ballTop = ball.y - 7;
+		let ballBottom = ball.y + 7;
+		let ballRight = ball.x + 7;
+		let ballLeft = ball.x - 7;
+
+		let paddleTop = paddle.y;
+		let paddleRight = paddle.x + this.paddleWidth;
+		let paddleBottom = paddle.y + this.paddleHeight;
+		let paddleLeft = paddle.x;
+
+		return (ballLeft < paddleRight && ballTop < paddleBottom && ballRight > paddleLeft && ballBottom > paddleTop);
+	}
+
+    private update(plOne: Paddle, plTwo: Paddle, ball: Ball)
+    {
+		ball.x += ball.velocityX;
+		ball.y += ball.velocityY;
+
+        if (this.key_wPressed && plOne.y > 0)
+            plOne.y -= 10;
+		else if (this.key_sPressed && (plOne.y < this.canvasHeight - this.paddleHeight))
+            plOne.y += 10;
+
+		if (this.upArrowPressed && plTwo.y > 0)
+            plTwo.y -= 10;
+		else if (this.downArrowPressed && (plTwo.y < this.canvasHeight - this.paddleHeight))
+            plTwo.y += 10;
+
+		if (ball.y + 7 >= this.canvasHeight || ball.y - 7 <= 0)
+		{
+			ball.velocityY = -ball.velocityY;
+		}
+
+		if (ball.x + 7 >= this.canvasWidth)
+		{
+			plOne.score += 1;
+			this.resetBallPos(ball);
+		}
+		if (ball.x - 7 <= 0)
+		{
+			plTwo.score += 1;
+			this.resetBallPos(ball);
+		}
+
+		let paddle: Paddle;
+		if (ball.x <= this.canvasWidth / 2)
+			paddle = plOne;
+		else
+			paddle = plTwo;
+	
+		if (this.paddleCollision(paddle, ball))
+		{
+			let angle = 0;
+			if (ball.y < (paddle.y + this.paddleHeight / 2))
+				angle = -(Math.PI / 4);
+			else if (ball.y > (paddle.y + this.paddleHeight / 2))
+				angle = Math.PI / 4;
+			let dir = -1;
+			if (paddle === plOne)
+				dir = 1;
+			ball.velocityX = dir * ball.speed * Math.cos(angle);
+			ball.velocityY = ball.speed * Math.sin(angle);
+			ball.speed += 0.2;
+		}
+		let data = {
+			plOne,
+			plTwo,
+			ball
+		}
+		this.server.emit('startGame', data)
+		
+    }
+
 	@SubscribeMessage('keyboard')
 	handdleKeyboard(socket: Socket, data: any)
 	{
-		//console.log("ESTO ES DATA: ", data)
+		//console.log("ESTO KEYBOARD: ", data)
+        this.upArrowPressed =  data.keyUp 
+        this.downArrowPressed = data.keyDown
+        this.key_wPressed = data.keyW
+        this.key_sPressed = data.keyS
+        //this.server.emit('move', data)
 	}
+
+    @SubscribeMessage('setMove')
+    handdleMove(socket: Socket, move: any)
+    {
+        //console.log("Esto es move: ", move.gameRoom.socketList)
+        this.server.to(move.room.socketList[0]).emit('movePlayer', move)
+        this.server.to(move.room.socketList[1]).emit('movePlayer', move)
+    }
+
+    @SubscribeMessage('setMoveTwo')
+    handdleMoveTwo(socket: Socket, move: any)
+    {
+        //console.log("Esto es move: ", move)
+        this.server.emit('movePlayerTwo', move)
+    }
+
+    @SubscribeMessage('moveBall')
+    handdleMoveBall(socket: Socket, ball: any)
+    {
+        //console.log(ball)
+        this.server.emit('returnBall', ball)
+    }
 }

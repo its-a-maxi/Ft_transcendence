@@ -52,7 +52,7 @@ export class FriendsComponent implements OnInit {
 					this.router.navigate(['/landingPage/start'])
 				}
 				else
-					this.mainUser = res.data;
+                    console.log(res.data.friends)
 			})
 	}
 

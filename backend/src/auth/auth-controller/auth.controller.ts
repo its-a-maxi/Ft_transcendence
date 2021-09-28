@@ -173,7 +173,6 @@ export class AuthController
                 user.friendsId.push(params.friends[i].id);
             await this.userService.updateFriends(user)
             return res.status(200).send("OK")
-            
         }
         catch
         {
