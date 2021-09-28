@@ -13,6 +13,9 @@ export class GameEntity
     @Column()
     playerTwo: number;
 
+    @Column()
+    option: string;
+
     @Column("simple-array", {nullable: true})
     socketList: string[];
 }

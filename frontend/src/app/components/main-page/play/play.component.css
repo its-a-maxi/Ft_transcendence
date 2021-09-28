@@ -1,0 +1,54 @@
+.optionButton
+{
+    position: absolute;
+    width: 100%;
+    height: 70%;
+}
+
+.option
+{
+    position: absolute;
+    width: 20%;
+    height: 10%;
+    /* right: 0;
+    left: 0;
+    bottom: 0;*/
+    top: 10em;
+    margin: auto;
+    
+    background-color: rgba(237, 229, 242, .25);
+    border: 4px solid #ede5f2ff;
+    border-radius: 1000px;
+
+    color: #ede5f2ff;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 1%;
+    font-family: futura;
+    font-size: 1.5vw;
+    text-shadow: 2px 2px 10px rgba(19, 5, 11, .35);
+    
+    transition-duration: 0.2s;
+}
+
+.option + .special
+{
+    left: 30em;
+}
+
+.option + .demo
+{
+    left: 15em;
+}
+
+.option + .normal
+{
+    left: 15em;
+}
+
+.option:hover
+{
+    background-color: #fbc900ff;
+    border: 0px solid #ede5f2ff;
+    cursor: pointer;
+}

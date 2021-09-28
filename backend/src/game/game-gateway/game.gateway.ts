@@ -9,10 +9,9 @@ import { Ball } from '../classes/ball';
 import { Paddle } from '../classes/paddle';
 import { GameEntity } from '../models/game.entity';
 import { GameI } from '../models/game.interface';
+import { OptionGame } from '../models/option-gameRoom.enum';
 import { UserSocketI } from '../models/user-socket.interface';
 import { GameService } from '../service/game/game.service';
-
-//let listUsers: number[] = []
 
 @WebSocketGateway({
     path: "/game",
@@ -56,7 +55,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     }
 
 	async handleConnection(socket: Socket)
-	{console.log("SOCKET: ", socket.handshake.query.gate)
+	{//console.log("SOCKET: ", socket.handshake.query.gate)
         try
         {
             const token: any = socket.handshake.query.token
@@ -66,7 +65,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             else
             {
                 socket.data.user = user
-                console.log("ENTRADA", this.listUsers)
+                //console.log("ENTRADA", this.listUsers)
                 this.addUsers({userId: user.id, socketId: socket.id})
             }
             
@@ -162,6 +161,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                     .create({
                         playerOne: this.listUsers[i - 1].userId,
                         playerTwo: this.listUsers[i].userId,
+						option: OptionGame.normal,
                         socketList: [this.listUsers[i - 1].socketId, this.listUsers[i].socketId]
                     })
                 this.listUsers.splice(i - 1, 2)
@@ -183,6 +183,30 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         }
 	}
 
+	@SubscribeMessage('playDemo')
+	async playDemo(socket: Socket)
+	{
+		const userId: number = socket.data.user.id
+		const newGame: GameI = await this.gameService
+            .create({
+				playerOne: userId,
+				playerTwo: -1,
+				option: OptionGame.demo,
+				socketList: [socket.id]
+			})
+		for (let user of this.listUsers)
+		{
+			if (user.socketId === socket.id)
+			{
+				let index = this.listUsers.indexOf(user)
+				if (index > -1)
+					this.listUsers.splice(index, 1)
+			}
+		}
+		this.listRooms.push(newGame)
+		this.server.to(socket.id).emit('roomDemo', newGame)
+	}
+
     @SubscribeMessage('gameStatus')
     async gameStatus(socket: Socket)
     {
@@ -190,8 +214,10 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         await this.userService.updateStatus(Status.inGame, userId)
     }
 
+	///////////////////////////////////////////////////////////////
+
     @SubscribeMessage('createGame')
-    createGame(socket: Socket, game: any)
+    createGame(socket: Socket, game: GameI)
     {
         let plOne = new Paddle(10,  this.canvasHeight / 2 - this.paddleHeight / 2,
             0, game.playerOne, game.id)
@@ -199,11 +225,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.canvasHeight / 2 - this.paddleHeight / 2, 0, game.playerTwo, game.id)
         let ball = new Ball(this.canvasWidth / 2, this.canvasHeight / 2, 7, 5, 5)
 		if (socket.id === game.socketList[0])
-        	setInterval(() => this.update(plOne, plTwo, ball), 1000 / 60) 
+        	setInterval(() => this.update(plOne, plTwo, ball, game), 1000 / 60) 
         
     }
-
-    ///////////////////////////////////////////
 
 	private resetBallPos(ball: Ball)
 	{
@@ -230,7 +254,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		return (ballLeft < paddleRight && ballTop < paddleBottom && ballRight > paddleLeft && ballBottom > paddleTop);
 	}
 
-    private update(plOne: Paddle, plTwo: Paddle, ball: Ball)
+    private update(plOne: Paddle, plTwo: Paddle, ball: Ball, game: GameI)
     {
 		ball.x += ball.velocityX;
 		ball.y += ball.velocityY;
@@ -239,11 +263,13 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             plOne.y -= 10;
 		else if (this.key_sPressed && (plOne.y < this.canvasHeight - this.paddleHeight))
             plOne.y += 10;
-
-		if (this.upArrowPressed && plTwo.y > 0)
-            plTwo.y -= 10;
-		else if (this.downArrowPressed && (plTwo.y < this.canvasHeight - this.paddleHeight))
-            plTwo.y += 10;
+		if (game.option !== OptionGame.demo)
+		{
+			if (this.upArrowPressed && plTwo.y > 0)
+				plTwo.y -= 10;
+			else if (this.downArrowPressed && (plTwo.y < this.canvasHeight - this.paddleHeight))
+				plTwo.y += 10;
+		}
 
 		if (ball.y + 7 >= this.canvasHeight || ball.y - 7 <= 0)
 		{
@@ -281,45 +307,34 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			ball.velocityY = ball.speed * Math.sin(angle);
 			ball.speed += 0.2;
 		}
+
+		if (game.option === OptionGame.demo)
+			plTwo.y += ((ball.y - (plTwo.y + this.paddleHeight / 2))) * 0.09; 
 		let data = {
 			plOne,
 			plTwo,
 			ball
 		}
-		this.server.emit('startGame', data)
+		if (plOne.score < 10 && plTwo.score < 10)
+		{
+			this.server.to(game.socketList[0]).emit('startGame', data)
+			this.server.to(game.socketList[1]).emit('startGame', data)
+		}
+		else
+		{
+			this.server.to(game.socketList[0]).emit('startGame', "GameOver")
+			this.server.to(game.socketList[1]).emit('startGame', "GameOver")
+		}
 		
     }
 
 	@SubscribeMessage('keyboard')
 	handdleKeyboard(socket: Socket, data: any)
 	{
-		//console.log("ESTO KEYBOARD: ", data)
         this.upArrowPressed =  data.keyUp 
         this.downArrowPressed = data.keyDown
         this.key_wPressed = data.keyW
         this.key_sPressed = data.keyS
-        //this.server.emit('move', data)
 	}
 
-    @SubscribeMessage('setMove')
-    handdleMove(socket: Socket, move: any)
-    {
-        //console.log("Esto es move: ", move.gameRoom.socketList)
-        this.server.to(move.room.socketList[0]).emit('movePlayer', move)
-        this.server.to(move.room.socketList[1]).emit('movePlayer', move)
-    }
-
-    @SubscribeMessage('setMoveTwo')
-    handdleMoveTwo(socket: Socket, move: any)
-    {
-        //console.log("Esto es move: ", move)
-        this.server.emit('movePlayerTwo', move)
-    }
-
-    @SubscribeMessage('moveBall')
-    handdleMoveBall(socket: Socket, ball: any)
-    {
-        //console.log(ball)
-        this.server.emit('returnBall', ball)
-    }
 }

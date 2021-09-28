@@ -45,12 +45,11 @@ export class ChatGateway
 	}
 
 	async handleConnection(socket: Socket)
-	{console.log("SOCKET: ", socket.handshake.query.gate)
+	{//console.log("SOCKET: ", socket.handshake.query.gate)
 		try
 		{
 			const token: any = socket.handshake.query.token
 			const user: UserI = await this.userService.getUser(token)
-			console.log(user);
 			if (!user)
 				this.disconnect(socket)
 			else
@@ -194,7 +193,6 @@ export class ChatGateway
 	@SubscribeMessage('leaveRoom')
 	async onLeaveRoom(socket: Socket)
 	{
-		//console.log("LEAVE ROOM: ", socket.data.user.nick)
 		await this.joinedRoomService.deleteBySocketId(socket.id);
 	}
 

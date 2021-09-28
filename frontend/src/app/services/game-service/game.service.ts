@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CustomSocket } from '../chat-service/custom-socket/custom-socket';
 import { UserI } from '../models/user.interface';
 import { GameSocket } from './socket-game/socket-game';
 
@@ -12,11 +11,6 @@ export class GameService
 
 	constructor(private socket: GameSocket) { }
 
-	test(): Promise<any>
-	{
-		return this.socket.fromOneTimeEvent<any>('listUsers')
-	}
-
 	connect()
 	{
 		this.socket.connect()
@@ -26,41 +20,6 @@ export class GameService
 	{
 		this.socket.emit('keyboard', data)
 	}
-
-    getMove(): Observable<any>
-    {
-        return this.socket.fromEvent('move')
-    }
-
-    setMove(move: any)
-    {
-        this.socket.emit('setMove', move)
-    }
-
-    getMovePlayer(): Observable<any>
-    {
-        return this.socket.fromEvent('movePlayer')
-    }
-
-    setMoveTwo(move: any)
-    {
-        this.socket.emit('setMoveTwo', move)
-    }
-
-    getMovePlayerTwo(): Observable<any>
-    {
-        return this.socket.fromEvent('movePlayerTwo')
-    }
-
-    moveBall(ball: any)
-    {
-        this.socket.emit('moveBall', ball)
-    }
-
-    getMoveBall(): Observable<any>
-    {
-        return this.socket.fromEvent('returnBall')
-    }
 
 	getListUsers(): Observable<any>
 	{
@@ -87,6 +46,16 @@ export class GameService
 		console.log("FIND")
 		this.socket.emit('findUsers')
 	}
+
+    playDemo()
+    {
+        this.socket.emit('playDemo')
+    }
+
+    getDemo(): Observable<any>
+    {
+        return this.socket.fromEvent('roomDemo')
+    }
 
     changeStatus()
     {

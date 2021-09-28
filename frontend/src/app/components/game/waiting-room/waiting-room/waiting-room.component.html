@@ -1,18 +1,11 @@
 
-<!-- <div class="users">{{users.plOne}}</div> -->
-<!-- <button (click)="changeCheck()">MatchMaking</button> -->
-<!-- <div class="match" *ngIf="check">
-</div> -->
 <div class="container" *ngIf="!roomGame; else room">
-    <!-- <app-game></app-game> -->
     <h1 class="match">MatchMaking...</h1>
     <div class="spinner"></div>
 </div>
-<!-- <div  *ngIf="roomGame">
-    <app-game [gameRoom]="roomGame!"></app-game>
-</div> -->
+
 <ng-template #room>
     <p class="users">{{roomGame.playerOne}}</p>
     <app-pong-game [gameRoom]="roomGame!"></app-pong-game>
 </ng-template>
-<!-- <button (click)="destroyUsers()">DESTROY</button> -->
+

@@ -18,13 +18,13 @@ interface PlayerI {
 export class WaitingRoomComponent implements OnInit
 {
 	check: boolean = false
-    inter!: any
+   
     roomGame!: GameI
     roomId: number = 0
     userId: string = sessionStorage.getItem('token')!
 
 	constructor(private gameService: GameService,
-                private router: Router) { this.gameService.connect() }
+                private router: Router) { }//this.gameService.connect() }
 
 	ngOnInit()
 	{
@@ -48,11 +48,6 @@ export class WaitingRoomComponent implements OnInit
 	ngOnDestroy()
 	{
         this.gameService.leaveRoom(this.roomId)
-        if (this.inter)
-        {
-            clearInterval(this.inter)
-           
-        }
 	}
 
 	changeCheck()

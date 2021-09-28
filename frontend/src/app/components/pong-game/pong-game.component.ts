@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { isAbsolute } from 'path';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
@@ -10,9 +11,11 @@ import { Paddle } from './classes/class-paddle';
 	templateUrl: './pong-game.component.html',
 	styleUrls: ['./pong-game.component.css']
 })
-export class PongGameComponent implements OnInit, AfterViewInit
+export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 {
 	@Input() gameRoom!: GameI
+
+	userId: string = sessionStorage.getItem('token')!
 
 	canvas!: HTMLCanvasElement
 	context!: CanvasRenderingContext2D
@@ -34,34 +37,38 @@ export class PongGameComponent implements OnInit, AfterViewInit
 
 	test: any
 
-	constructor(private gameService: GameService) { }
+	constructor(private gameService: GameService,
+				private router: Router) { }
 
 	ngAfterViewInit()
     {
 		this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
 		this.context = this.canvas.getContext("2d")!
 		this.netHeight = this.canvas.height;
-
-
-		// let user = new Paddle(10, this.canvas.height / 2 - this.paddleHeight / 2,
-		// 	0, this.gameRoom.playerOne!, this.gameRoom.id!);
-		// let ai = new Paddle(this.canvas.width - (this.paddleWidth + 10),
-		// 	this.canvas.height / 2 - this.paddleHeight / 2, 0, this.gameRoom.playerTwo!, this.gameRoom.id!)
-		// let ball = new Ball(this.canvas.width / 2, this.canvas.height / 2, 7, 5, 5);
         
         this.gameService.createGame(this.gameRoom)
 
         this.gameService.startGame().subscribe(res => {
+			if (res === "GameOver")
+			{
+				console.log("GAMEOVER")
+				this.router.navigate([`/mainPage/settings/${this.userId}`])
+				return
+			}
 			this.ft_gameLoop(res.plOne, res.plTwo, res.ball, this.gameRoom)
-            //setInterval(() => this.ft_gameLoop(res.plOne, res.plTwo, res.ball, this.gameRoom), 1000 / 30)
         })
 		
-		//setInterval(() => this.ft_gameLoop(user, ai, ball, this.gameRoom), 1000 / 60)
 	}
 
 	ngOnInit(): void
 	{
 		this.keyboard()
+	}
+
+	ngOnDestroy()
+	{
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+		this.gameService.leaveRoom(this.gameRoom.id!)
 	}
 
 	keyboard()
@@ -141,92 +148,10 @@ export class PongGameComponent implements OnInit, AfterViewInit
 		this.context!.fill();
 	}
 
-	resetBallPos(ball: Ball)
-	{
-		ball.x = this.canvas.width / 2;
-		ball.y = this.canvas.height / 2;
-		ball.speed = 7;
-		ball.velocityX = -ball.velocityX;
-		ball.velocityY = -ball.velocityY;
-		
-	}
-
-	paddleCollision(paddle: Paddle, ball: Ball): boolean
-	{
-		let ballTop = ball.y - 7;
-		let ballBottom = ball.y + 7;
-		let ballRight = ball.x + 7;
-		let ballLeft = ball.x - 7;
-
-		let paddleTop = paddle.y;
-		let paddleRight = paddle.x + this.paddleWidth;
-		let paddleBottom = paddle.y + this.paddleHeight;
-		let paddleLeft = paddle.x;
-
-		return (ballLeft < paddleRight && ballTop < paddleBottom && ballRight > paddleLeft && ballBottom > paddleTop);
-	}
-
-	update(userOne: Paddle, userTwo: Paddle, ball: Ball)
-	{
-		ball.x += ball.velocityX;
-		ball.y += ball.velocityY;
-
-		// if (this.key_wPressed && userOne.y > 0)
-		// 	userOne.y -= 8;
-		// else if (this.key_sPressed && (userOne.y < this.canvas.height - this.paddleHeight))
-		// 	userOne.y += 8;
-
-		// if (this.upArrowPressed && userTwo.y > 0)
-		// 	userTwo.y -= 8;
-		// else if (this.downArrowPressed && (userTwo.y < this.canvas.height - this.paddleHeight))
-		// 	userTwo.y += 8;
-		
-		// if (ball.y + 7 >= this.canvas.height || ball.y - 7 <= 0)
-		// {
-		// 	ball.velocityY = -ball.velocityY;
-		// }
-
-		// if (ball.x + 7 >= this.canvas.width)
-		// {
-		// 	userOne.score += 1;
-		// 	this.resetBallPos(ball);
-		// }
-		// if (ball.x - 7 <= 0)
-		// {
-		// 	userTwo.score += 1;
-		// 	this.resetBallPos(ball);
-		// }
-
-		// let paddle: Paddle;
-		// if (ball.x <= this.canvas.width / 2)
-		// 	paddle = userOne;
-		// else
-		// 	paddle = userTwo;
-	
-		// if (this.paddleCollision(paddle, ball))
-		// {
-		// 	let angle = 0;
-		// 	if (ball.y < (paddle.y + this.paddleHeight / 2))
-		// 		angle = -(Math.PI / 4);
-		// 	else if (ball.y > (paddle.y + this.paddleHeight / 2))
-		// 		angle = Math.PI / 4;
-		// 	let dir = -1;
-		// 	if (paddle === userOne)
-		// 		dir = 1;
-		// 	ball.velocityX = dir * ball.speed * Math.cos(angle);
-		// 	ball.velocityY = ball.speed * Math.sin(angle);
-		// 	ball.speed += 0.2;
-		// }
-	}
-
 	ft_gameLoop(userOne: Paddle, userTwo: Paddle, ball: Ball, gameRoom: GameI)
 	{
-		//if (userOne.gameId === gameRoom.id && userTwo.gameId === gameRoom.id)
-		//{
-            //this.keyboard()
-			//this.update(userOne, userTwo, ball);
+		if (userOne.gameId === gameRoom.id && userTwo.gameId === gameRoom.id)
 			this.render(userOne, userTwo, ball);
-		//}
 	}
 
 }

@@ -1,6 +1,13 @@
 <div class="container">
-	<div class="pongContainer">
+	<!-- <div class="pongContainer">
 	</div>
 	<div class="chatContainer">
-	</div>
+	</div> -->
+    <button class="option normal" (click)="changeNormal()" id="normal">NORMAL GAME</button>
+    <button class="option demo" (click)="changeDemo()" id="demo">DEMO</button>
+    <button class="option special" (click)="changeSpecial()" id="special">SPECIAL GAME</button>
+</div>
+
+<div class="" *ngIf="demo">
+    <app-pong-game [gameRoom]="roomGame"></app-pong-game>
 </div>
