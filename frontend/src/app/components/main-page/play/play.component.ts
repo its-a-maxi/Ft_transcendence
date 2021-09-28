@@ -57,7 +57,7 @@ export class PlayComponent implements OnInit, OnDestroy
 
 	changeToOnline()
 	{
-		//this.router.navigate([`mainPage/waitingRoom/${this.userId}`])
+		this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
 		this.OnlineMode = true;
 		this.Menu = false;
 		this.gameService.connect()

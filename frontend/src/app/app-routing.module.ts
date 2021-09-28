@@ -26,7 +26,9 @@ const routes: Routes = [
   ]},
   { path: 'mainPage', component: MainPageComponent, children: [
     {path: 'waitingRoom/:id', component: WaitingRoomComponent},
-    {path: 'play/:id', component: PlayComponent},
+    {path: 'play/:id', component: PlayComponent, children: [
+      { path: 'matchmaking', component: WaitingRoomComponent }
+    ]},
     {path: 'chat/:id', component: ChatPageComponent},
     {path: 'oldChat/:id', component: ChatRoomComponent},
     {path: 'friends/:id', component: FriendsComponent},
