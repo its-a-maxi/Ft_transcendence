@@ -1,7 +1,7 @@
 #canvas
 {
     /* background-color: black; */
-    position: relative;
+    position: absolute;
     left: 20em;
-    top: 1em;
+    top: 0;
 }
