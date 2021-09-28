@@ -49,7 +49,7 @@ import { UserListHiddenComponent } from './components/main-page/chat-page/user-l
 import { ChannelListHiddenComponent } from './components/main-page/chat-page/channel-list-hidden/channel-list-hidden.component';
 import { WaitingRoomComponent } from './components/game/waiting-room/waiting-room/waiting-room.component';
 import { ProfilePopupComponent } from './components/main-page/profile-popup/profile-popup.component';
-
+import { PongGameComponent } from './components/pong-game/pong-game.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -84,6 +84,7 @@ export function tokenGetter(): string | null {
     ChannelListHiddenComponent,
     WaitingRoomComponent,
     ProfilePopupComponent,
+    PongGameComponent,
   ],
   imports: [
     BrowserModule,
