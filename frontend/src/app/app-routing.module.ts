@@ -25,10 +25,7 @@ const routes: Routes = [
     { path: 'start', component: StartComponent }
   ]},
   { path: 'mainPage', component: MainPageComponent, children: [
-<<<<<<< HEAD
     {path: 'waitingRoom/:id', component: WaitingRoomComponent},
-=======
->>>>>>> d8523b79052cd80dd55e8aea5d661add58541c55
     {path: 'play/:id', component: PlayComponent},
     {path: 'chat/:id', component: ChatPageComponent},
     {path: 'oldChat/:id', component: ChatRoomComponent},
