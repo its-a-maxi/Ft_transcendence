@@ -10,7 +10,7 @@ div{
 	height: 100%;
 	background-color: rgba(19, 5, 11, .50);
 	box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-	border-radius: 35px;
+	border-radius: 3.8vh;
 	border: 0.5vh solid #ede5f2ff;
     transition-duration: 0.3s;
 }
