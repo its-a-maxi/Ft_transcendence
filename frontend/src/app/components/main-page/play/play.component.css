@@ -1,0 +1,26 @@
+div{
+    border: 0px solid #ede5f2ff;
+}
+
+.container
+{
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+.pongContainer
+{
+	position: absolute;
+	width: 88.8vh;
+	height: 66.6vh;
+	left: 0;
+}
+
+.chatContainer
+{
+	position: absolute;
+	height: 66.6vh;
+	width: 25%;
+	right: 0;
+}

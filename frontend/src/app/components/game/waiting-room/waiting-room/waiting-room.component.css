@@ -1,22 +1,27 @@
 .container
 {
-    z-index: 1;
-   
-    position: relative;
-    /* top: 24em; */
-    left: 3em;
-
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border: 0.5vh solid #ede5f2ff;
+    background-color: rgba(19, 5, 11, .50);
+	border-radius: 3.8vh;
 }
 
 .users
 {
-    color: lightcyan;
+    color: #ede5f2ff;
 }
 
 .match
 {
-    color: lime;
-    z-index: 0;
+    color: #ede5f2ff;
+    font-family: 'futura';
+    text-align: center;
+    width: 100%;
+    right: 0;
+    left: 0;
+    margin: auto;
     
 }
 
@@ -30,22 +35,23 @@ h1
 
 .spinner, .spinner:after
 {
-    width: 32px;
-    height: 32px;
     border-radius: 50%;
     display: block;
     position: relative;
-    left: 35em;
     top: 10em;
+    width: 100%;
+    right: 0;
+    left: 0;
+    margin: auto;
 }
 
 .spinner
 {
     background-color: transparent;
-    border-top: 5px solid rgb(15, 6, 15, .1);
-    border-right: 5px solid rgb(15, 6, 15, .1);
-    border-bottom: 5px solid rgb(15, 6, 15, .1);
-    border-left: 5px solid rgba(15, 6, 15,.2);
+    border-top: 5px solid rgb(237, 229, 242, .1);
+    border-right: 5px solid rgb(237, 229, 242, .1);
+    border-bottom: 5px solid rgb(237, 229, 242, .1);
+    border-left: 5px solid rgba(237, 229, 242,.2);
 }
 
 .spinner,.spinner:after
@@ -58,10 +64,10 @@ h1
 
 .spinner {
     background-color: transparent;
-    border-top: 2em solid rgb(15, 6, 15, .5);
-    border-right: 2em solid rgb(15, 6, 15, .5);
-    border-bottom: 2em solid rgb(15, 6, 15, .5);
-    border-left: 2em solid rgba(15, 6, 15, .1);
+    border-top: 2em solid rgb(237, 229, 242, .5);
+    border-right: 2em solid rgb(237, 229, 242, .5);
+    border-bottom: 2em solid rgb(237, 229, 242, .5);
+    border-left: 2em solid rgba(237, 229, 242, .1);
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     animation-duration: .8s;
