@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GameService } from 'src/app/services/game-service/game.service';
@@ -15,9 +15,10 @@ interface PlayerI {
 	templateUrl: './waiting-room.component.html',
 	styleUrls: ['./waiting-room.component.css']
 })
+
 export class WaitingRoomComponent implements OnInit
 {
-	check: boolean = false
+	check: boolean = false;
    
     roomGame!: GameI
     roomId: number = 0
@@ -25,24 +26,32 @@ export class WaitingRoomComponent implements OnInit
 
 	constructor(private gameService: GameService,
                 private router: Router) { }//this.gameService.connect() }
+	
+	@Input() search: boolean = false;
 
 	ngOnInit()
 	{
-        
-        this.gameService.findUsers()
-        this.gameService.getListUsers().subscribe(res => {
-        
-            if (res === null)
-            {
-                this.gameService.leaveRoom(this.roomId)
-                this.router.navigate([`mainPage/settings/${this.userId}`])
-                return
-            }
-            console.log("Esto es re: ", res)
-            this.roomGame = res
-            this.roomId = this.roomGame.id!
-            
-        })
+			this.gameService.findUsers()
+			this.gameService.getListUsers().subscribe(res => {
+				if (res === null)
+				{
+					this.gameService.leaveRoom(this.roomId)
+					this.router.navigate([`mainPage/settings/${this.userId}`])
+					return
+				}
+				console.log("Esto es re: ", res)
+				this.roomGame = res
+				this.roomId = this.roomGame.id!
+			})
+	}
+
+	ngOnChanges(changes: SimpleChanges)
+	{
+		/*if ('search' in changes)
+		{
+			console.log('hey');
+			this.matchmaking();
+		}*/
 	}
 
 	ngOnDestroy()
@@ -58,6 +67,23 @@ export class WaitingRoomComponent implements OnInit
 	destroyUsers()
 	{
 		this.gameService.destroyUsers()
+	}
+
+	matchmaking()
+	{
+		console.log('works!!');
+		this.gameService.findUsers()
+		this.gameService.getListUsers().subscribe(res => {
+			if (res === null)
+			{
+				this.gameService.leaveRoom(this.roomId)
+				this.router.navigate([`mainPage/settings/${this.userId}`])
+				return
+			}
+			console.log("Esto es re: ", res)
+			this.roomGame = res
+			this.roomId = this.roomGame.id!
+		})
 	}
 
 }

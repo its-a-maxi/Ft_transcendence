@@ -1,15 +1,15 @@
-<div class="container">
-	<!-- <div class="pongContainer">
+<div  class="container">
 	<div class="pongContainer">
-		<app-waiting-room></app-waiting-room>
+		<div *ngIf="Menu" class='selection' id='selection'>
+			<p class='selectText'>Select a game mode:</p>
+			<button class="option OnlineMode" (click)="changeToOnline()" id="normal">Online</button>
+			<button class="option AImode" (click)="changeToAi()" id="demo">Vs AI</button>
+			<button class="option PowerUpMode" (click)="changeSpecial()" id="special">Power-ups</button>
+		</div>
+		<app-waiting-room *ngIf="OnlineMode" [search]="OnlineMode"></app-waiting-room>
+		<app-pong-game *ngIf="AImode" [gameRoom]="roomGame"></app-pong-game>
+		<!--<app-waiting-room></app-waiting-room>-->
 	</div>
-	<div class="chatContainer">
-	</div> -->
-    <button class="option normal" (click)="changeNormal()" id="normal">NORMAL GAME</button>
-    <button class="option demo" (click)="changeDemo()" id="demo">DEMO</button>
-    <button class="option special" (click)="changeSpecial()" id="special">SPECIAL GAME</button>
+	<!--<div class="chatContainer">-->
 </div>
 
-<div class="" *ngIf="demo">
-    <app-pong-game [gameRoom]="roomGame"></app-pong-game>
-</div>

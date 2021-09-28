@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { dashCaseToCamelCase } from '@angular/compiler/src/util';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
+import { WaitingRoomComponent } from '../../game/waiting-room/waiting-room/waiting-room.component';
 
 @Component({
 	selector: 'app-play',
@@ -11,9 +13,14 @@ import { GameI } from 'src/app/services/models/gameRoom.interface';
 export class PlayComponent implements OnInit, OnDestroy
 {
 
-	demo: boolean = false;
+	Menu: boolean = true;
+	OnlineMode: boolean = false;
+	AImode: boolean = false;
+	PowerUpMode: boolean = false;
 	roomGame!: GameI;
 	userId: string = sessionStorage.getItem('token')!
+
+	@ViewChild('waitingRoom') waitingRoom?: WaitingRoomComponent;
 
 	constructor(private gameService: GameService,
 				private router: Router) { }
@@ -28,7 +35,7 @@ export class PlayComponent implements OnInit, OnDestroy
 		//this.gameService.leaveRoom()
 	}
 
-	changeDemo()
+	changeToAi()
     {
         this.gameService.connect()
 		this.gameService.playDemo()
@@ -37,19 +44,22 @@ export class PlayComponent implements OnInit, OnDestroy
 			console.log("Esto es gameroom: ", this.roomGame)
 		})
 		setTimeout(() => {
-			this.demo = true
-			let btnDemo: HTMLElement = document.getElementById('demo')!
-			let btnNormal: HTMLElement = document.getElementById('normal')!
-			let btnSpecial: HTMLElement = document.getElementById('special')!
-			btnDemo!.style.display = "none"
-			btnNormal!.style.display = "none"
-			btnSpecial!.style.display = "none"
+			this.AImode = true;
+			this.Menu = false;
+			//let btnDemo: HTMLElement = document.getElementById('demo')!
+			//let btnNormal: HTMLElement = document.getElementById('normal')!
+			//let btnSpecial: HTMLElement = document.getElementById('special')!
+			//btnDemo!.style.display = "none"
+			//btnNormal!.style.display = "none"
+			//btnSpecial!.style.display = "none"
 		}, 100) 
     }
 
-	changeNormal()
+	changeToOnline()
 	{
-		this.router.navigate([`mainPage/waitingRoom/${this.userId}`])
+		//this.router.navigate([`mainPage/waitingRoom/${this.userId}`])
+		this.OnlineMode = true;
+		this.Menu = false;
 		this.gameService.connect()
 	}
 

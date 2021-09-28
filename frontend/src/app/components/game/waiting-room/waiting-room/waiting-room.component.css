@@ -3,9 +3,6 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    border: 0.5vh solid #ede5f2ff;
-    background-color: rgba(19, 5, 11, .50);
-	border-radius: 3.8vh;
 }
 
 .users
