@@ -15,6 +15,8 @@ export class RankingComponent implements OnInit {
 
   allUsers: UserI[] | undefined;
 
+  userPopup?: UserI;
+
   async ngOnInit()
   {
     let i: number = 0;
@@ -56,6 +58,58 @@ export class RankingComponent implements OnInit {
       }
       this.allUsers[j + 1] = temp;
     }
+  }
+
+  rankByWL(): void
+  {
+    for (let i = 1; this.allUsers && this.allUsers[i]; i++)
+    {
+      let j = i - 1;
+      let temp = this.allUsers[i];
+      while (j >= 0 && (this.getWinToLossRatio(this.allUsers[j]) < this.getWinToLossRatio(temp) || this.getWinToLossRatio(this.allUsers[j]) == 'None'))
+      {
+        this.allUsers[j + 1] = this.allUsers[j];
+        j--;
+      }
+      this.allUsers[j + 1] = temp;
+    }
+  }
+
+  getWinToLossRatio(user: UserI): string
+  {
+    if (user.wins == 0 && user.defeats == 0)
+      return ('None');
+    else if (user.defeats == 0)
+      return (user.wins!.toString());
+    else if (user.wins == 0)
+      return ((0).toString());
+    else
+      return ((user.wins! / user.defeats!).toFixed(2).toString())
+  }
+
+  showOverlay(type: string, user?: UserI) : void
+  {
+    let container = document.getElementById("container");
+    let overlayBack = document.getElementById("overlayBack");
+    let profilePopup = document.getElementById("profilePopup");
+    container!.style.opacity = "50%";
+    overlayBack!.style.display = "block";
+    if (type == 'profilePopup')
+    {
+      this.userPopup = user;
+      profilePopup!.style.display = 'block';
+    }
+      
+  }
+
+  closeOverlay() : void
+  {
+    let container = document.getElementById("container");
+    let overlayBack = document.getElementById("overlayBack");
+    let profilePopup = document.getElementById("profilePopup");
+    container!.style.opacity = "100%";
+    overlayBack!.style.display = "none";
+    profilePopup!.style.display = 'none';
   }
 
 }

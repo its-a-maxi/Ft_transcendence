@@ -8,7 +8,7 @@ export interface RoomI
     password: string;
     option: string;
     users: UserI[];
-    admins: UserI[];
+    adminsId: number[];
     crated_at?: Date;
     update_at?: Date;
 }

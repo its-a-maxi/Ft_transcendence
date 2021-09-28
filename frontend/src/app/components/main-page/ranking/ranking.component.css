@@ -118,7 +118,13 @@ p
 	color: rgba(237, 229, 242, .6);
 }
 
-.sortByWins:hover, .sortByDefeats:hover
+.sortByWL
+{
+	left: 29vh;
+	color: rgba(237, 229, 242, .6);
+}
+
+.sortByWins:hover, .sortByDefeats:hover, .sortByWL:hover
 {
 	color: rgba(237, 229, 242, 1);
 	cursor: pointer;
@@ -144,4 +150,19 @@ p
 
   ::-webkit-scrollbar-corner {
 	  background: transparent;
+	}
+
+
+	.overlayBack
+	{
+		display: none;
+	
+		position: fixed;
+		width: 100vw;
+		height: 100vh;
+		right: 0;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		margin: auto;
 	}

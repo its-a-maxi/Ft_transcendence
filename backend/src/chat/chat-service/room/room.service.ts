@@ -100,8 +100,8 @@ export class RoomService
 		return this.roomRepository.update(roomId, { option });
 	}
 
-	async updateAdmins(admins: UserI[], roomId: number): Promise<any>
+	async updateAdmins(room: RoomI): Promise<any>
 	{
-		return this.roomRepository.update(roomId, { admins });
+		return this.roomRepository.save(room);
 	}
 }

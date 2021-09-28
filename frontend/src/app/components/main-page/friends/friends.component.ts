@@ -23,6 +23,8 @@ export class FriendsComponent implements OnInit {
 
   paramId: string | null = sessionStorage.getItem('token');
 
+  userPopup?: UserI;
+
   async ngOnInit()
   {
     if (this.paramId)
@@ -78,21 +80,30 @@ export class FriendsComponent implements OnInit {
     window.open("https://profile.intra.42.fr/users/" + user);
   }
 
-  showOverlay() : void
+  showOverlay(type: string, user?: UserI) : void
   {
-    this.getNotFriends();
-    this.notFriendsSearch = this.notFriends;
-    
     let container = document.getElementById("container");
     let overlayBack = document.getElementById("overlayBack");
     let overlay = document.getElementById("overlay");
+    let profilePopup = document.getElementById("profilePopup");
     let btn = document.getElementById("addFriend");
     container!.style.opacity = "50%";
-    overlayBack!.style.display = "block";
-    overlay!.style.opacity = "100%";
-    overlay!.style.height = "80%";
-    overlay!.style.width = "46vh";
     btn!.style.opacity = "50%";
+    overlayBack!.style.display = "block";
+    if (type == 'friendPopup')
+    {
+      this.getNotFriends();
+      this.notFriendsSearch = this.notFriends;
+      overlay!.style.opacity = "100%";
+      overlay!.style.height = "80%";
+      overlay!.style.width = "46vh";
+    }
+    else if (type == 'profilePopup')
+    {
+      this.userPopup = user;
+      profilePopup!.style.display = 'block';
+    }
+      
   }
 
   closeOverlay() : void
@@ -101,12 +112,14 @@ export class FriendsComponent implements OnInit {
     let overlayBack = document.getElementById("overlayBack");
     let overlay = document.getElementById("overlay");
     let btn = document.getElementById("addFriend");
+    let profilePopup = document.getElementById("profilePopup");
     container!.style.opacity = "100%";
     overlayBack!.style.display = "none";
     overlay!.style.opacity = "0%";
     overlay!.style.height = "0vh";
     overlay!.style.width = "0vh";
     btn!.style.opacity = "100%";
+    profilePopup!.style.display = 'none';
   }
 
   showAtSearch()
@@ -165,6 +178,18 @@ export class FriendsComponent implements OnInit {
             break;
           }
       }
+  }
+
+  getWinToLossRatio(user: UserI)
+  {
+    if (user.wins == 0 && user.defeats == 0)
+      return ('None');
+    else if (user.defeats == 0)
+      return (100);
+    else if (user.wins == 0)
+      return (0);
+    else
+      return ((user.wins! / user.defeats!).toFixed(2))
   }
 
 }

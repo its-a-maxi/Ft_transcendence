@@ -15,7 +15,7 @@
 		<div class="message">
 			<span *ngFor="let message of (messagesPaginate$ | async)?.items">
 				<div>
-					<div *ngIf="(userId == chatRoom.ownerId || checkIfAdmin(userId)) && message.user!.id != userId" class=userMessage [matMenuTriggerFor]="menuUser">
+					<div *ngIf="(userId == chatRoom.ownerId || checkIfAdmin(userId)) && message.user!.id != userId && message.user!.id != chatRoom.ownerId" class=userMessage [matMenuTriggerFor]="menuUser">
 					</div>
 					<app-chat-message [message]="message" [userId]="userId" ></app-chat-message>
 				</div>

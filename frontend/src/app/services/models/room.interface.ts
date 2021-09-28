@@ -11,7 +11,7 @@ export interface RoomI
     users?: UserI[];
     crated_at?: Date;
     updated_at?: Date
-    admins?: UserI[];
+    adminsId?: number[];
 }
 
 export interface RoomPaginateI
