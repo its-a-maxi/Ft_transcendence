@@ -2,6 +2,8 @@
     <div [ngClass]="message.user!.id == userId ? 'myBody' : 'body'">
         <em [ngClass]="message.user!.id == userId ? 'myTitle' : 'title'">{{title}}</em>
         <p>{{message.text}}</p>
-        <button *ngIf="message.type! === 'challenge'" (click)="challengeUser()">CHALLENGE!</button>
+        <div class='button' *ngIf="message.type! === 'challenge'">
+            <button class='CHALLEEEEENGE' (click)="challengeUser()">CHALLENGE !</button>
+        </div>
     </div>
 </div>
