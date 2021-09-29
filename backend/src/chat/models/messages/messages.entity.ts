@@ -12,6 +12,9 @@ export class MessageEntity
     @Column()
     text: string;
 
+    @Column({default: null})
+    type?: string;
+
     @ManyToOne(() => UserEntity, user => user.messages)
     @JoinColumn()
     user: UserEntity;

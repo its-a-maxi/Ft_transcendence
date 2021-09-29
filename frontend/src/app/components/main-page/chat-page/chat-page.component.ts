@@ -30,6 +30,8 @@ export class ChatPageComponent implements OnInit {
 	users: Array<RoomI> = [];
 	channels: Array<RoomI> = [];
 
+    challengeRoom!: RoomI;
+
 
 	async ngOnInit() {
 		if (this.paramId)
@@ -82,7 +84,10 @@ export class ChatPageComponent implements OnInit {
       this.showOverlay("password");
     }
     else
+    {
       this.currentRoom = room;
+      this.challengeRoom = room;
+    }
   }
 
   async checkPassword(password :string)
@@ -117,14 +122,15 @@ export class ChatPageComponent implements OnInit {
         	}
         }
         console.log('new room created');
-            const newRoom: RoomI = {
-                ownerId: parseInt(this.paramId!),
-                name: this.mainUser.id + '/' + user.id,
-                password: "",
-                option: "Direct",
-                users: [user]
-            }
-            this.chatService.createRoom(newRoom);
+        const newRoom: RoomI = {
+            ownerId: parseInt(this.paramId!),
+            name: this.mainUser.id + '/' + user.id,
+            password: "",
+            option: "Direct",
+            users: [user]
+        }
+        this.challengeRoom = newRoom;
+        this.chatService.createRoom(newRoom);
 	}
 
 	showProfile(user: UserI)
@@ -191,13 +197,23 @@ export class ChatPageComponent implements OnInit {
 		}
 	}
 
-  changeChannelPassword(password: string)
-  {
-    this.child!.changeChannelPassword(password);
-  }
+    changeChannelPassword(password: string)
+    {
+        this.child!.changeChannelPassword(password);
+    }
 
-  refreshChat()
-  {
-    this.ngOnInit();
-  }
+    refreshChat()
+    {
+        this.ngOnInit();
+    }
+
+    challengeUser(user: UserI)
+    {
+        this.directMessage(user)
+        this.chatService.sendMessage({
+            text: `${user.nick.toUpperCase()}! I dare you to play a game with me!`,
+            room: this.challengeRoom,
+            type: "challenge"
+        });
+    }
 }

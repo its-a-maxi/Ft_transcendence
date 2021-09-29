@@ -7,6 +7,7 @@ export interface MessageI
     id?: number;
     text: string;
     user: UserI;
+    type?: string;
     room: RoomI;
     crated_at?: Date;
     update_at?: Date;

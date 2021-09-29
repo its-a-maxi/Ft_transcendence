@@ -199,6 +199,7 @@ export class ChatGateway
 	@SubscribeMessage('addMessage')
 	async onAddMessage(socket: Socket, message: MessageI)
 	{
+        console.log("ESTO ES MESSAGE: ", message)
 		let check: boolean = false
 		const currentUser: UserI = await this.userService.getUser(socket.data.user.id)
 		let userBanned = await this.userService.getUser(currentUser.id)
