@@ -139,16 +139,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		this.addUsers({userId: socket.data.user.id, socketId: socket.id})
   	}
 
-	// @SubscribeMessage('destroyUsers')
-	// async destroyUsers(socket: Socket)
-	// {
-	// 	let list: number[] = listUsers
-	// 	for (let user of list)
-	// 	{
-	// 		listUsers.pop()
-	// 	}
-	// }
-
 	@SubscribeMessage('findUsers')
 	async handdleTest(socket: Socket)
 	{
@@ -183,6 +173,12 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         }
 	}
 
+    @SubscribeMessage('showRooms')
+    async showRooms(socket: Socket)
+    {
+        this.server.to(socket.id).emit('liveRooms', this.listRooms)
+    }
+
 	@SubscribeMessage('playDemo')
 	async playDemo(socket: Socket)
 	{
@@ -204,6 +200,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			}
 		}
 		this.listRooms.push(newGame)
+        await this.userService.updateStatus(Status.inGame, userId)
 		this.server.to(socket.id).emit('roomDemo', newGame)
 	}
 

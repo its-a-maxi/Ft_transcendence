@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { GameI } from '../models/gameRoom.interface';
 import { UserI } from '../models/user.interface';
 import { GameSocket } from './socket-game/socket-game';
 
@@ -36,11 +37,6 @@ export class GameService
 		this.socket.emit('joinUser')
 	}
 
-	destroyUsers()
-	{
-		this.socket.emit('destroyUsers')
-	}
-
 	findUsers()
 	{
 		console.log("FIND")
@@ -72,5 +68,17 @@ export class GameService
     startGame(): Observable<any>
     {
         return this.socket.fromEvent('startGame')
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+
+    showRooms()
+    {
+        this.socket.emit('showRooms')
+    }
+
+    getLiveRooms(): Observable<GameI[]>
+    {
+        return this.socket.fromEvent('liveRooms')
     }
 }

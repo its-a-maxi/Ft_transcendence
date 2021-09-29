@@ -19,6 +19,7 @@ export class PlayComponent implements OnInit, OnDestroy
 	PowerUpMode: boolean = false;
 	roomGame!: GameI;
 	userId: string = sessionStorage.getItem('token')!
+    liveRooms!: GameI[];
 
 	@ViewChild('waitingRoom') waitingRoom?: WaitingRoomComponent;
 
@@ -27,7 +28,11 @@ export class PlayComponent implements OnInit, OnDestroy
 
 	ngOnInit(): void
 	{
-
+        this.gameService.showRooms()
+        this.gameService.getLiveRooms().subscribe(res => {
+            this.liveRooms = res
+            console.log(res)
+        })
 	}
 
 	ngOnDestroy()

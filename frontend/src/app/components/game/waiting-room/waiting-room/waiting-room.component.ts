@@ -6,8 +6,8 @@ import { GameI } from 'src/app/services/models/gameRoom.interface';
 import { UserI } from 'src/app/services/models/user.interface';
 
 interface PlayerI {
-    plOne: number;
-    plTwo: number;
+	plOne: number;
+	plTwo: number;
 }
 
 @Component({
@@ -16,48 +16,37 @@ interface PlayerI {
 	styleUrls: ['./waiting-room.component.css']
 })
 
-export class WaitingRoomComponent implements OnInit
-{
+export class WaitingRoomComponent implements OnInit {
 	check: boolean = false;
-   
-    roomGame!: GameI
-    roomId: number = 0
-    userId: string = sessionStorage.getItem('token')!
+
+	roomGame!: GameI
+	roomId: number = 0
+	userId: string = sessionStorage.getItem('token')!
 
 	constructor(private gameService: GameService,
-                private router: Router) { }//this.gameService.connect() }
-	
+		private router: Router) { }//this.gameService.connect() }
+
 	@Input() search: boolean = false;
 
-	ngOnInit()
-	{
-			this.gameService.findUsers()
-			this.gameService.getListUsers().subscribe(res => {
-				if (res === null)
-				{
-					this.gameService.leaveRoom(this.roomId)
-					this.router.navigate([`mainPage/settings/${this.userId}`])
-					return
-				}
-				console.log("Esto es re: ", res)
-				this.roomGame = res
-				this.roomId = this.roomGame.id!
-			})
+	ngOnInit() {
+		this.gameService.findUsers()
+		this.gameService.getListUsers().subscribe(res => {
+			if (res === null) {
+				this.gameService.leaveRoom(this.roomId)
+				this.router.navigate([`mainPage/settings/${this.userId}`])
+				return
+			}
+
+			this.roomGame = res
+			this.roomId = this.roomGame.id!
+		})
 	}
 
-	ngOnDestroy()
-	{
-        this.gameService.leaveRoom(this.roomId)
+	ngOnDestroy() {
+		this.gameService.leaveRoom(this.roomId)
 	}
 
-	changeCheck()
-	{
+	changeCheck() {
 		this.check = true
 	}
-
-	destroyUsers()
-	{
-		this.gameService.destroyUsers()
-	}
-
 }
