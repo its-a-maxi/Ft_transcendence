@@ -1,9 +1,12 @@
 #canvas
 {
     position: absolute;
-    left: 20em;
+    left: 0;
     top: 0;
-    transform: scale(1);
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    transform: scale(1.12);
    
 }
 
