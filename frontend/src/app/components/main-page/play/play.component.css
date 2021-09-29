@@ -95,3 +95,59 @@ div{
 {
     margin-top: 10%;
 }
+
+
+.currentChannel
+{
+    position: absolute;
+    height: 8vh;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+
+.currentChannelText
+{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-family: futura;
+    font-size: 2.5vh;
+    color: #ede5f2ff;
+    top: 12%;
+    margin: auto;
+    letter-spacing: 0.2vh;
+}
+
+
+.listContainer
+{
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    right: 0;
+    left: 0;
+    bottom: 11%;
+    margin: auto;
+    overflow: auto;
+}
+
+.list
+{
+    color: #ede5f2ff;
+    font-family: futura;
+    font-size: 2vh;
+    font-weight: normal;
+    letter-spacing: 0vh;
+    list-style: none;
+    padding-left: 0%;
+    margin-bottom: 1vh;
+}
+
+.list:hover
+{
+    color: #fbc900ff;
+    cursor: pointer;
+}

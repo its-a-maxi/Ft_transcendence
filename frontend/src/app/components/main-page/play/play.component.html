@@ -11,6 +11,15 @@
 		<!--<app-waiting-room *ngIf="OnlineMode" [search]="OnlineMode"></app-waiting-room>-->
 		<!--<app-waiting-room></app-waiting-room>-->
 	</div>
-	<div class="chatContainer"></div>
+	<div class="chatContainer">
+		<div class="currentChannel">
+			<h1 class="currentChannelText">Users</h1>
+		</div>
+		<div class="listContainer">
+			<ul class="list" *ngFor="let room of liveRooms">
+				<li>ID: {{room.id}} > '{{room.playerOne}}' vs '{{room.playerTwo}}'</li>
+			</ul>
+		</div>
+	</div>
 </div>
 
