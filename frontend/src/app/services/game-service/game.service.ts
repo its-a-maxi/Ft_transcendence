@@ -96,4 +96,9 @@ export class GameService
     {
         this.socket.emit('updateStats', data)
     }
+
+    createSpecialRoom(options: any)
+    {
+        this.socket.emit('createSpecialRooms', options)
+    }
 }

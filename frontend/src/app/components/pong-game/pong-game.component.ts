@@ -48,13 +48,13 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 		//this.canvas.style.transform = 'scale(0.01)';
 		this.context = this.canvas.getContext("2d")!
 		this.netHeight = this.canvas.height;
-        
+
         this.gameService.createGame(this.gameRoom)
 
         this.gameService.startGame().subscribe(res => {
 			if (res.text === "GameOver")
 			{
-				console.log("GAMEOVER WIINER IS: ", res.winner)
+				console.log("GAMEOVER WINNER IS: ", res.winner)
                 let data = {
                     winner: res.winner,
                     losser: res.losser

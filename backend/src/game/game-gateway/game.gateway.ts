@@ -28,11 +28,15 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
     cont: number = 0
 
+    listPowerUp: string[] = []
+
     listRooms: GameI[] = []
 
-    listUsers: UserSocketI[] = []
+    normalUsers: UserSocketI[] = []
 
     liveShowUsers: UserSocketI[] = []
+
+    specialUsers: UserSocketI[] = []
 
     ///////////////
 
@@ -52,12 +56,14 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     async onModuleInit()
     {
         this.listRooms = []
-        this.listUsers = []
+        this.normalUsers = []
+        this.specialUsers = []
+        this.liveShowUsers = []
         await this.gameService.deleteAll()
     }
 
 	async handleConnection(socket: Socket)
-	{//console.log("SOCKET: ", socket.handshake.query.gate)
+	{
         try
         {
             const token: any = socket.handshake.query.token
@@ -65,11 +71,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             if (!user)
                 return this.disconnect(socket)
             else
-            {
                 socket.data.user = user
-                //console.log("ENTRADA", this.listUsers)
-                this.addUsers({userId: user.id, socketId: socket.id})
-            }
             
         }
         catch
@@ -91,26 +93,35 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		socket.disconnect()
 	}
 
-	private addUsers(userSocket: UserSocketI)
-	{
-        let check: boolean = false
-
-        for (let user of this.listUsers)
-        {
-            if (user.userId === userSocket.userId)
-                check = true
-        }
-        if (!check)
-            this.listUsers.push(userSocket)
-	}
-
 	private removeUser(userSocket: UserSocketI)
 	{
-		let index = this.listUsers.indexOf(userSocket)
+		let index = this.normalUsers.indexOf(userSocket)
 
 		if (index > -1)
-			this.listUsers.splice(index, 1)
+			this.normalUsers.splice(index, 1)
+
+        index = this.specialUsers.indexOf(userSocket)
+        if (index > -1)
+            this.specialUsers.splice(index, 1)
 	}
+
+    private sendRooms(socket: Socket)
+    {
+        for (let room of this.listRooms)
+        {
+            if (socket.id === room.socketList[0] || socket.id === room.socketList[1])
+            {
+                if (room.socketList.length === 2)
+                {
+                    this.server.to(room.socketList[0]).emit('listUsers', room)
+                    this.server.to(room.socketList[1]).emit('listUsers', room)
+                }
+            }
+        }
+        if (this.listPowerUp.length === 2)
+            for (let i = 0; i <= this.listPowerUp.length; i++)
+                this.listPowerUp.pop()
+    }
 
     @SubscribeMessage('addLiveUsers')
     addLiveUsers(socket: Socket)
@@ -120,7 +131,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             socketId: socket.id
         }
         this.liveShowUsers.push(liveUser)
-        console.log("ADDLIVEUSER")
     }
 
     @SubscribeMessage('removeLiveUsers')
@@ -132,10 +142,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             {
                 let index: number = this.liveShowUsers.indexOf(user);
                 if (index > -1)
-                {
                     this.liveShowUsers.splice(index, 1);
-                    console.log("REMOVELIVEUSER")
-                }
             }
         }
     }
@@ -163,44 +170,27 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		this.disconnect(socket)
 	}
 
-	@SubscribeMessage('joinUser')
-  	async onJoinRoom(socket: Socket)
-	{
-		this.addUsers({userId: socket.data.user.id, socketId: socket.id})
-  	}
-
 	@SubscribeMessage('findUsers')
-	async handdleTest(socket: Socket)
+	async findUsers(socket: Socket)
 	{
-        let auxUsers: UserSocketI[] = this.listUsers
-        for (let i = 0; i < this.listUsers.length; i++)
+        this.normalUsers.push({userId: socket.data.user.id, socketId: socket.id})
+        for (let i = 0; i < this.normalUsers.length; i++)
         {
-            if (i != 0 && this.listUsers[i].userId !== this.listUsers[i - 1].userId)
+            if (i != 0 && this.normalUsers[i].userId !== this.normalUsers[i - 1].userId)
             {
                 const newGame: GameI = await this.gameService
                     .create({
-                        playerOne: this.listUsers[i - 1].userId,
-                        playerTwo: this.listUsers[i].userId,
-						option: OptionGame.normal,
-                        socketList: [this.listUsers[i - 1].socketId, this.listUsers[i].socketId]
+                        playerOne: this.normalUsers[i - 1].userId,
+                        playerTwo: this.normalUsers[i].userId,
+                        option: OptionGame.normal,
+                        socketList: [this.normalUsers[i - 1].socketId, this.normalUsers[i].socketId]
                     })
-                this.listUsers.splice(i - 1, 2)
+                this.normalUsers.splice(i - 1, 2)
                 this.listRooms.push(newGame)
                 break ;
             }
         }
-        
-        for (let room of this.listRooms)
-        {
-            if (socket.id === room.socketList[0] || socket.id === room.socketList[1])
-            {
-                if (room.socketList.length === 2)
-                {
-                    this.server.to(room.socketList[0]).emit('listUsers', room)
-                    this.server.to(room.socketList[1]).emit('listUsers', room)
-                }
-            }
-        }
+        this.sendRooms(socket)
 	}
 
     @SubscribeMessage('showRooms')
@@ -220,15 +210,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 				option: OptionGame.demo,
 				socketList: [socket.id]
 			})
-		for (let user of this.listUsers)
-		{
-			if (user.socketId === socket.id)
-			{
-				let index = this.listUsers.indexOf(user)
-				if (index > -1)
-					this.listUsers.splice(index, 1)
-			}
-		}
+
 		this.listRooms.push(newGame)
         await this.userService.updateStatus(Status.inGame, userId)
 		this.server.to(socket.id).emit('roomDemo', newGame)
@@ -349,7 +331,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.server.to(game.socketList[1]).emit('startGame', data)
             for (let user of this.liveShowUsers)
             {
-                console.log("ENVIA SOCKET: ", user.userId)
+                //console.log("ENVIA SOCKET: ", user.userId)
                 this.server.to(user.socketId).emit('startGame', data)
             }
 		}
@@ -413,4 +395,30 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
        }
     }
 
+    @SubscribeMessage('createSpecialRooms')
+    async createSpecialRooms(socket: Socket, option: any)
+    {
+        this.specialUsers.push({userId: socket.data.user.id, socketId: socket.id})
+        this.listPowerUp.push(Object.keys(option).toString())
+        
+        for (let i = 0; i < this.specialUsers.length; i++)
+        {
+            if (i != 0 && this.specialUsers[i].userId !== this.specialUsers[i - 1].userId)
+            {
+                const newGame: GameI = await this.gameService
+                    .create({
+                        playerOne:this.specialUsers[i - 1].userId,
+                        playerTwo: this.specialUsers[i].userId,
+                        option: OptionGame.special,
+                        socketList: [this.specialUsers[i - 1].socketId, this.specialUsers[i].socketId],
+                        powerList: this.listPowerUp
+                    })
+                this.specialUsers.splice(i - 1, 2)
+                this.listRooms.push(newGame)
+                break ;
+            }
+        }
+
+        this.sendRooms(socket)
+    }
 }

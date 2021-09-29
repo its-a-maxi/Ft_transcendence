@@ -28,8 +28,8 @@ export class WaitingRoomComponent implements OnInit {
 
 	@Input() search: boolean = false;
 
-	ngOnInit() {
-		this.gameService.findUsers()
+	ngOnInit()
+    {
 		this.gameService.getListUsers().subscribe(res => {
 			if (res === null) {
 				this.gameService.leaveRoom(this.roomId)
@@ -42,7 +42,8 @@ export class WaitingRoomComponent implements OnInit {
 		})
 	}
 
-	ngOnDestroy() {
+	ngOnDestroy()
+    {
 		this.gameService.leaveRoom(this.roomId)
 	}
 

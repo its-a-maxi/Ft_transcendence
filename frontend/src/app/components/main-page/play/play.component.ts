@@ -81,11 +81,32 @@ export class PlayComponent implements OnInit, OnDestroy
 		this.OnlineMode = true;
 		this.Menu = false;
 		this.gameService.connect()
+        this.gameService.findUsers()
 	}
 
 	changeToPowerUp()
 	{
-
+        let powerUps = [
+            {PowerUpx2: this.PowerUpx2},
+		    {PowerUpBigPalette: this.PowerUpBigPalette},
+		    {PowerUpDisco: this.PowerUpDisco},
+		    {PowerUpQuickBall: this.PowerUpQuickBall},
+		    {PowerUpOnePoint: this.PowerUpOnePoint},
+		    {PowerUpQuickPalette: this.PowerUpQuickPalette},
+        ]
+        for (let option of powerUps)
+        {
+            if (Object.values(option).includes(true))
+            {
+                let pongContainer = document.getElementById("pongContainer");
+		        pongContainer!.style.backgroundColor = 'rgba(19, 5, 11, 1)';
+                this.gameService.createSpecialRoom(option)
+                this.PowerUpSelect = false
+                this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
+                this.gameService.connect()
+                return
+            }
+        }
 	}
 
     viewShowRoom(room :GameI)

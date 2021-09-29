@@ -18,4 +18,7 @@ export class GameEntity
 
     @Column("simple-array", {nullable: true})
     socketList: string[];
+
+    @Column("simple-array", {nullable: true})
+    powerList?: string[];
 }

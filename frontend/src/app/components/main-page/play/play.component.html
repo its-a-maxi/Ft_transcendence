@@ -23,7 +23,7 @@
 				&nbsp;&nbsp;&nbsp;
 				One point <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpOnePoint" (click)="justOne(PowerUpOnePoint)">
 			</div>
-			<button class="option PowerUpMode" (click)="changeToPowerUp" id="special">Start!</button>
+			<button class="option PowerUpMode" (click)="changeToPowerUp()" id="special">Start!</button>
 		</div>
 		<router-outlet></router-outlet>
 		<app-pong-game *ngIf="AImode" [gameRoom]="roomGame"></app-pong-game>

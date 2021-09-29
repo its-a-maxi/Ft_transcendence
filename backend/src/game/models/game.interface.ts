@@ -6,4 +6,5 @@ export interface GameI
     playerTwo?: number;
     option?: string;
     socketList?: string[];
+    powerList?: string[];
 }
