@@ -189,3 +189,35 @@ div{
         border: 0.5vw solid #ede5f2ff;
     }
 }
+
+.entry
+{
+    width: 100%;
+    margin-top: 8%;
+    font-size: 2.5vh;
+    font-style: italic;
+    color: rgba(237, 229, 242, 0.8);
+}
+
+.checkBox
+{
+	appearance: none;
+	width: 2.5vh;
+	height: 2.5vh;
+	left: 0;
+	margin-bottom: -0.5%;
+
+	background-color: #ede5f2ff;
+	border-radius: 50px;
+}
+
+.checkBox:checked
+{
+	background-color: #805849ff;
+	border: 0.5vh solid #ede5f2ff;
+}
+
+.checkBox:hover
+{
+	cursor: pointer;
+}
