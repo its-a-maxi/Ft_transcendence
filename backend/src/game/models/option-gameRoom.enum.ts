@@ -2,5 +2,6 @@ export enum OptionGame
 {
     demo = 'demo',
     normal = 'normal',
-    special = 'special'
+    special = 'special',
+    show = 'show'
 }
