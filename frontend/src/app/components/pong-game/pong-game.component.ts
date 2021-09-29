@@ -38,6 +38,10 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	test: any
 
+	winner: string = 'mmonroy-';
+
+	end: boolean = false;
+
 	constructor(private gameService: GameService,
 				private router: Router) { }
 
@@ -55,12 +59,14 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 			if (res.text === "GameOver")
 			{
 				console.log("GAMEOVER WIINER IS: ", res.winner)
+				this.winner = res.winner;
                 let data = {
                     winner: res.winner,
                     losser: res.losser
                 }
                 this.gameService.updateStats(data)
-				this.router.navigate([`/mainPage/settings/${this.userId}`])
+				this.end = true;
+				//this.router.navigate([`/mainPage/play/${this.userId}`])
 				return
 			}
 			this.ft_gameLoop(res.plOne, res.plTwo, res.ball, this.gameRoom)
@@ -162,6 +168,14 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 	{
 		if (userOne.gameId === gameRoom.id && userTwo.gameId === gameRoom.id)
 			this.render(userOne, userTwo, ball);
+	}
+
+	gameEnds()
+	{
+		this.router.navigate([`/mainPage/play/${this.userId}`])
+		.then(()=>{
+			window.location.reload();
+		});
 	}
 
 }
