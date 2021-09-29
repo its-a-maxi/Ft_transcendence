@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { GameService } from 'src/app/services/game-service/game.service';
 import { MessageI } from 'src/app/services/models/message.interface';
 import { UserI } from 'src/app/services/models/user.interface';
 
@@ -11,7 +12,8 @@ import { UserI } from 'src/app/services/models/user.interface';
 })
 export class ChatMessageComponent
 {
-  	constructor(private router: Router) { }
+  	constructor(private router: Router,
+                private gameService: GameService) { }
 
 	@Input() message!: MessageI;
 	@Input() userId: any
@@ -26,6 +28,9 @@ export class ChatMessageComponent
 
     challengeUser()
     {
+         
+        this.gameService.connect()
+        this.gameService.findUsers()
         this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
     }
 
