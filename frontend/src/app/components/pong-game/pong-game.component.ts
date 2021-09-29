@@ -54,7 +54,12 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
         this.gameService.startGame().subscribe(res => {
 			if (res.text === "GameOver")
 			{
-				console.log("GAMEOVER")
+				console.log("GAMEOVER WIINER IS: ", res.winner)
+                let data = {
+                    winner: res.winner,
+                    losser: res.losser
+                }
+                this.gameService.updateStats(data)
 				this.router.navigate([`/mainPage/settings/${this.userId}`])
 				return
 			}
