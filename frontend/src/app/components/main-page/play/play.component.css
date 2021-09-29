@@ -26,8 +26,6 @@ div{
 
     color: #ede5f2ff;
     text-align: center;
-    font-family: futura;
-    font-size: 3vh;
     text-shadow: 2px 2px 10px rgba(19, 5, 11, .35);
     
     transition-duration: 0.2s;
@@ -52,7 +50,7 @@ div{
 
 .pongContainer
 {
-	background-color: rgba(19, 5, 11, .50);
+	background-color: rgba(19, 5, 11, 0.5);
 	box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
 	border-radius: 3.8vh;
 	border: 0.5vh solid #ede5f2ff;
@@ -60,6 +58,8 @@ div{
 	width: 88.8vh;
 	height: 66.6vh;
 	left: 0;
+    font-family: futura;
+    font-size: 3vh;
 }
 
 .chatContainer
@@ -86,7 +86,6 @@ div{
     margin: auto;
 
     font-family: 'futura';
-    font-size: 3vh;
     text-align: center;
     color: #ede5f2ff;
 }
@@ -150,4 +149,43 @@ div{
 {
     color: #fbc900ff;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 1400px)
+{
+    .chatContainer
+    {
+        width: 18%;
+    }
+}
+
+@media only screen and (max-width: 1220px)
+{
+    .chatContainer
+    {
+        display: none;
+    }
+
+    .pongContainer
+    {
+        right: 0;
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 1000px)
+{
+    .pongContainer
+    {
+        width: 80vw;
+        height: 60vw;
+        top: 0;
+        bottom: 0;
+        font-size: 3vw;
+        border: 0.5vw solid #ede5f2ff;
+    }
+    .option
+    {
+        border: 0.5vw solid #ede5f2ff;
+    }
 }

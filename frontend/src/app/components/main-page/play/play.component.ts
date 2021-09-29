@@ -44,6 +44,8 @@ export class PlayComponent implements OnInit, OnDestroy
 
 	changeToAi()
     {
+		let pongContainer = document.getElementById("pongContainer");
+		pongContainer!.style.backgroundColor = 'rgba(19, 5, 11, 1)';
         this.gameService.connect()
 		this.gameService.playDemo()
 		this.gameService.getDemo().subscribe(res => {
@@ -64,6 +66,8 @@ export class PlayComponent implements OnInit, OnDestroy
 
 	changeToOnline()
 	{
+		let pongContainer = document.getElementById("pongContainer");
+		pongContainer!.style.backgroundColor = 'rgba(19, 5, 11, 1)';
 		this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
 		this.OnlineMode = true;
 		this.Menu = false;

@@ -44,6 +44,8 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 	ngAfterViewInit()
     {
 		this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
+		//console.log(this.canvas.height);
+		//this.canvas.style.transform = 'scale(0.01)';
 		this.context = this.canvas.getContext("2d")!
 		this.netHeight = this.canvas.height;
         
