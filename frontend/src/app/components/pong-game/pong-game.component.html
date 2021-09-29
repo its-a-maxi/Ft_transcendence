@@ -1,2 +1,9 @@
-<canvas id="canvas" width="800" height="600"></canvas>
+<canvas *ngIf='!end' id="canvas" width="800" height="600"></canvas>
+<div *ngIf='end' class='winScreen'>
+	<div class='selection'>
+		<p class='selectText'>Winner is:</p>
+		<p class='winner'>{{winner}}</p>
+		<button mat-menu-item (click)="gameEnds()" class=option>Continue</button>
+	</div>
+</div>
 

@@ -11,3 +11,70 @@
     /*transform: scale(1.08);*/
    
 }
+
+.winScreen
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.selection
+{
+    position: absolute;
+    height: 80%;
+    width: 60%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+
+    font-family: 'futura';
+    text-align: center;
+    color: #ede5f2ff;
+}
+
+.selectText
+{
+    margin-top: 30%;
+}
+
+.winner
+{
+    margin-top: 6%;
+    font-size: 70px;
+}
+
+.option
+{
+    margin-top: 10%;
+    position: relative;
+    width: 50%;
+    height: 12%;
+    /* right: 0;
+    left: 0;
+    bottom: 0;*/
+    
+    background-color: rgba(237, 229, 242, .25);
+    border: 0.5vh solid #ede5f2ff;
+    border-radius: 1000px;
+
+    color: #ede5f2ff;
+    text-align: center;
+    text-shadow: 2px 2px 10px rgba(19, 5, 11, .35);
+    font-family: 'futura';
+    font-size: larger;
+    
+    transition-duration: 0.2s;
+}
+
+.option:hover
+{
+    background-color: #fbc900ff;
+    border: 0px solid #ede5f2ff;
+    cursor: pointer;
+
+    border: 0px solid #ede5f2ff;
+	color: #805849ff;
+}
