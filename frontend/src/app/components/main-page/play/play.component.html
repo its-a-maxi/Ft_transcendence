@@ -4,7 +4,26 @@
 			<p class='selectText'>Select a game mode:</p>
 			<button class="option OnlineMode" (click)="changeToOnline()" id="normal">Online</button>
 			<button class="option AImode" (click)="changeToAi()" id="demo">Vs AI</button>
-			<button class="option PowerUpMode" (click)="changeSpecial()" id="special">Power-ups</button>
+			<button class="option PowerUpMode" (click)="PowerUpSelect = true; Menu = false;" id="special">Power-ups</button>
+		</div>
+		<div *ngIf='PowerUpSelect' class='selection'>
+			<p class='selectText'>Choose a Power-up:</p>
+			<div class='entry'>
+				Double points <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpx2" (click)="justOne(PowerUpx2)">
+				&nbsp;&nbsp;&nbsp;
+				Giant palette <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpBigPalette" (click)="justOne(PowerUpBigPalette)">
+			</div>
+			<div class='entry'>
+				Quick ball <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpQuickBall" (click)="justOne(PowerUpQuickBall)">
+				&nbsp;&nbsp;&nbsp;
+				Quick palettes <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpQuickPalette" (click)="justOne(PowerUpQuickPalette)">
+			</div>
+			<div class='entry'>
+				Disco PONG <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpDisco" (click)="justOne(PowerUpDisco)">
+				&nbsp;&nbsp;&nbsp;
+				One point <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpOnePoint" (click)="justOne(PowerUpOnePoint)">
+			</div>
+			<button class="option PowerUpMode" (click)="changeToPowerUp" id="special">Start!</button>
 		</div>
 		<router-outlet></router-outlet>
 		<app-pong-game *ngIf="AImode" [gameRoom]="roomGame"></app-pong-game>
@@ -17,7 +36,7 @@
 		</div>
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of liveRooms">
-				<li (click)="viewShowRoom(room)">ID: {{room.id}} > '{{room.playerOne}}' vs '{{room.playerTwo}}'</li>  
+				<li (click)="viewShowRoom(room)">ID: {{room.id}} -> '{{room.playerOne}}' vs '{{room.playerTwo}}'</li>  
 			</ul>
 		</div>
 	</div>

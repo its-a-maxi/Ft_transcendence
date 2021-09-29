@@ -12,18 +12,27 @@ import { WaitingRoomComponent } from '../../game/waiting-room/waiting-room/waiti
 })
 export class PlayComponent implements OnInit, OnDestroy
 {
+	/* POWER UPS */
+	PowerUpx2: boolean = false;
+	PowerUpBigPalette: boolean = false;
+	PowerUpDisco: boolean = false;
+	PowerUpQuickBall: boolean = false;
+	PowerUpOnePoint: boolean = false;
+	PowerUpQuickPalette: boolean = false;
 
+	/* RENDER */
 	Menu: boolean = true;
 	OnlineMode: boolean = false;
 	AImode: boolean = false;
 	PowerUpMode: boolean = false;
+	PowerUpSelect: boolean = false;
+
+
 	roomGame!: GameI;
 	userId: string = sessionStorage.getItem('token')!
     liveRooms!: GameI[];
     show: boolean = false
     roomSelected!: GameI;
-
-	@ViewChild('waitingRoom') waitingRoom?: WaitingRoomComponent;
 
 	constructor(private gameService: GameService,
 				private router: Router) { }
@@ -74,7 +83,7 @@ export class PlayComponent implements OnInit, OnDestroy
 		this.gameService.connect()
 	}
 
-	changeSpecial()
+	changeToPowerUp()
 	{
 
 	}
@@ -89,5 +98,16 @@ export class PlayComponent implements OnInit, OnDestroy
         this.router.navigate([`mainPage/play/${this.userId}/showRoom`])
         this.gameService.connect()
     }
+
+	justOne(save: boolean)
+	{
+		this.PowerUpx2 = false;
+		this.PowerUpBigPalette = false;
+		this.PowerUpDisco = false;
+		this.PowerUpQuickBall = false;
+		this.PowerUpOnePoint = false;
+		this.PowerUpQuickPalette = false;
+		save = true;
+	}
 
 }
