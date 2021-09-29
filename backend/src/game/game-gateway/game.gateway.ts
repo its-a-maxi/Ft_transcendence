@@ -32,6 +32,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
     listUsers: UserSocketI[] = []
 
+    liveShowUsers: UserSocketI[] = []
+
     ///////////////
 
     paddleWidth: number = 10;
@@ -109,6 +111,30 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		if (index > -1)
 			this.listUsers.splice(index, 1)
 	}
+
+    @SubscribeMessage('addLiveUsers')
+    addLiveUsers(socket: Socket)
+    {
+        let liveUser: UserSocketI = {
+            userId: socket.data.user.id,
+            socketId: socket.id
+        }
+        this.liveShowUsers.push(liveUser)
+    }
+
+    @SubscribeMessage('removeLiveUsers')
+    removeLiveUsers(socket: Socket)
+    {
+        for (let user of this.liveShowUsers)
+        {
+            if (user.socketId === socket.id)
+            {
+                let index: number = this.liveShowUsers.indexOf(user);
+                if (index > -1)
+                    this.liveShowUsers.splice(index, 1);
+            }
+        }
+    }
 
 	@SubscribeMessage('leaveUser')
 	async onLeaveRoom(socket: Socket, roomId: number)
@@ -316,6 +342,13 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		{
 			this.server.to(game.socketList[0]).emit('startGame', data)
 			this.server.to(game.socketList[1]).emit('startGame', data)
+            if (game.option === OptionGame.show)
+            {
+                for (let user of this.liveShowUsers)
+                {
+                    this.server.to(user.socketId).emit('startGame', data)
+                }
+            }
 		}
 		else
 		{

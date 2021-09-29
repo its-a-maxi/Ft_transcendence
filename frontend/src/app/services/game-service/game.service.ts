@@ -72,6 +72,16 @@ export class GameService
 
     ////////////////////////////////////////////////////////////////////////
 
+    addLiveUser()
+    {
+        this.socket.emit('addLiveUsers')
+    }
+
+    removeLiveUser()
+    {
+        this.socket.emit('removeLiveUsers')
+    }
+
     showRooms()
     {
         this.socket.emit('showRooms')
