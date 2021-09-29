@@ -50,7 +50,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
         this.gameService.createGame(this.gameRoom)
 
         this.gameService.startGame().subscribe(res => {
-			if (res === "GameOver")
+			if (res.text === "GameOver")
 			{
 				console.log("GAMEOVER")
 				this.router.navigate([`/mainPage/settings/${this.userId}`])

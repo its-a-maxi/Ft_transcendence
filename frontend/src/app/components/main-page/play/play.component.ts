@@ -20,6 +20,8 @@ export class PlayComponent implements OnInit, OnDestroy
 	roomGame!: GameI;
 	userId: string = sessionStorage.getItem('token')!
     liveRooms!: GameI[];
+    show: boolean = false
+    roomSelected!: GameI;
 
 	@ViewChild('waitingRoom') waitingRoom?: WaitingRoomComponent;
 
@@ -73,6 +75,13 @@ export class PlayComponent implements OnInit, OnDestroy
 
 	}
 
-
+    viewShowRoom(room :GameI)
+    {
+        this.show = true
+        this.Menu = false;
+        this.roomSelected = room
+        this.router.navigate([`mainPage/play/${this.userId}/showRoom`])
+        this.gameService.connect()
+    }
 
 }

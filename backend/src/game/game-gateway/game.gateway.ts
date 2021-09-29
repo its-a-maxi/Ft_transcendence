@@ -120,6 +120,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             socketId: socket.id
         }
         this.liveShowUsers.push(liveUser)
+        console.log("ADDLIVEUSER")
     }
 
     @SubscribeMessage('removeLiveUsers')
@@ -131,7 +132,10 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             {
                 let index: number = this.liveShowUsers.indexOf(user);
                 if (index > -1)
+                {
                     this.liveShowUsers.splice(index, 1);
+                    console.log("REMOVELIVEUSER")
+                }
             }
         }
     }
@@ -286,7 +290,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             plOne.y -= 10;
 		else if (this.key_sPressed && (plOne.y < this.canvasHeight - this.paddleHeight))
             plOne.y += 10;
-		if (game.option !== OptionGame.demo)
+		if (game.playerTwo !== -1)
 		{
 			if (this.upArrowPressed && plTwo.y > 0)
 				plTwo.y -= 10;
@@ -331,29 +335,37 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			ball.speed += 0.2;
 		}
 
-		if (game.option === OptionGame.demo)
+		if (game.playerTwo === -1)
 			plTwo.y += ((ball.y - (plTwo.y + this.paddleHeight / 2))) * 0.09; 
 		let data = {
 			plOne,
 			plTwo,
-			ball
+			ball,
+            roomId: game.id
 		}
 		if (plOne.score < 10 && plTwo.score < 10)
 		{
-			this.server.to(game.socketList[0]).emit('startGame', data)
-			this.server.to(game.socketList[1]).emit('startGame', data)
-            if (game.option === OptionGame.show)
+            this.server.to(game.socketList[0]).emit('startGame', data)
+            this.server.to(game.socketList[1]).emit('startGame', data)
+            for (let user of this.liveShowUsers)
             {
-                for (let user of this.liveShowUsers)
-                {
-                    this.server.to(user.socketId).emit('startGame', data)
-                }
+                console.log("ENVIA SOCKET: ", user.userId)
+                this.server.to(user.socketId).emit('startGame', data)
             }
 		}
 		else
-		{
-			this.server.to(game.socketList[0]).emit('startGame', "GameOver")
-			this.server.to(game.socketList[1]).emit('startGame', "GameOver")
+        {
+            let message = {
+                roomId: game.id,
+                text: "GameOver"
+            }
+            this.server.to(game.socketList[0]).emit('startGame', message)
+            this.server.to(game.socketList[1]).emit('startGame', message)
+            for (let user of this.liveShowUsers)
+            {
+                console.log("ENVIA SOCKET GAMEOVER: ", user.userId)
+                this.server.to(user.socketId).emit('startGame', message)
+            }
 		}
 		
     }

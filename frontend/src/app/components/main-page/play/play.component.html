@@ -17,9 +17,12 @@
 		</div>
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of liveRooms">
-				<li>ID: {{room.id}} > '{{room.playerOne}}' vs '{{room.playerTwo}}'</li>
+				<li (click)="viewShowRoom(room)">ID: {{room.id}} > '{{room.playerOne}}' vs '{{room.playerTwo}}'</li>  
 			</ul>
 		</div>
 	</div>
 </div>
-
+<div *ngIf="show">
+    <!-- <router-outlet></router-outlet> -->
+    <app-show-room [gameRoom]="roomSelected"></app-show-room>
+</div>

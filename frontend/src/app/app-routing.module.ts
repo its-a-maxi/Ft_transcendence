@@ -12,6 +12,7 @@ import { ChatPageComponent } from './components/main-page/chat-page/chat-page.co
 import { FriendsComponent } from './components/main-page/friends/friends.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { PlayComponent } from './components/main-page/play/play.component';
+import { ShowRoomComponent } from './components/main-page/play/show-room/show-room.component';
 import { RankingComponent } from './components/main-page/ranking/ranking.component';
 import { SettingsComponent } from './components/main-page/settings/settings.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'mainPage', component: MainPageComponent, children: [
     {path: 'waitingRoom/:id', component: WaitingRoomComponent},
     {path: 'play/:id', component: PlayComponent, children: [
-      { path: 'matchmaking', component: WaitingRoomComponent }
+      { path: 'matchmaking', component: WaitingRoomComponent },
+      { path: 'showRoom', component: ShowRoomComponent}
     ]},
     {path: 'chat/:id', component: ChatPageComponent},
     {path: 'oldChat/:id', component: ChatRoomComponent},
