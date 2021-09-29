@@ -355,9 +355,13 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		}
 		else
         {
+            let winner: number = (plOne.score > plTwo.score) ?  plOne.player : plTwo.player;
+            let losser: number = (plOne.score > plTwo.score) ?  plTwo.player : plOne.player;
             let message = {
                 roomId: game.id,
-                text: "GameOver"
+                text: "GameOver",
+                winner,
+                losser
             }
             this.server.to(game.socketList[0]).emit('startGame', message)
             this.server.to(game.socketList[1]).emit('startGame', message)
@@ -378,5 +382,35 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         this.key_wPressed = data.keyW
         this.key_sPressed = data.keyS
 	}
+
+    @SubscribeMessage('updateStats')
+    async updateStats(socket: Socket, data: any)
+    {
+       if (data.winner !== -1 && data.losser !== -1)
+       {
+           const userOne: UserI = await this.userService.getUser(data.winner)
+           const userTwo: UserI = await this.userService.getUser(data.losser)
+           if (userOne.id === data.winner)
+           {
+                userOne.wins += 1;
+                await this.userService.updateWins(userOne.wins, userOne.id)
+           }
+           else if (userOne.id === data.losser)
+           {
+                userOne.defeats += 1;
+                await this.userService.updateDefeats(userOne.defeats, userOne.id)
+           }
+           if (userTwo.id === data.winner)
+           {
+                userTwo.wins += 1;
+                await this.userService.updateWins(userTwo.wins, userTwo.id)
+           }
+           else if (userTwo.id === data.losser)
+           {
+                userTwo.defeats += 1;
+                await this.userService.updateDefeats(userTwo.defeats, userTwo.id)
+           }
+       }
+    }
 
 }

@@ -91,4 +91,9 @@ export class GameService
     {
         return this.socket.fromEvent('liveRooms')
     }
+
+    updateStats(data: any)
+    {
+        this.socket.emit('updateStats', data)
+    }
 }

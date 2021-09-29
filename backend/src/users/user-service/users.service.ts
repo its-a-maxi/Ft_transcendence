@@ -63,6 +63,16 @@ export class UsersService
         return this.usersRepository.update(userId, { status })
     }
 
+    async updateWins(wins: number, userId: number)
+    {
+        return this.usersRepository.update(userId, { wins })
+    }
+
+    async updateDefeats(defeats: number, userId: number)
+    {
+        return this.usersRepository.update(userId, { defeats })
+    }
+
 	async updateFriends(user: UserI)
     {
         return await this.usersRepository.save(user);
