@@ -81,6 +81,8 @@ export class PlayComponent implements OnInit, OnDestroy
 
     viewShowRoom(room :GameI)
     {
+		let pongContainer = document.getElementById("pongContainer");
+		pongContainer!.style.backgroundColor = 'rgba(19, 5, 11, 1)';
         this.show = true
         this.Menu = false;
         this.roomSelected = room
