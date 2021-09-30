@@ -23,6 +23,9 @@
 				&nbsp;&nbsp;&nbsp;
 				One point <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpOnePoint" (click)="justOne(PowerUpOnePoint)">
 			</div>
+			<div class='entry'>
+				Tennis PONG <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpTennis" (click)="justOne(PowerUpTennis)">
+			</div>
 			<button class="option PowerUpMode" (click)="changeToPowerUp()" id="special">Start!</button>
 		</div>
 		<router-outlet></router-outlet>
