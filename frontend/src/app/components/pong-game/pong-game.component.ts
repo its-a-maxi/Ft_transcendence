@@ -36,6 +36,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 	elementsColor = "#ede5f2ff";
 	scoreColor = "rgba(237, 229, 242, 0.2)";
 	randomColors = false;
+	wimbledon = false;
 
 	test: any
 
@@ -60,7 +61,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
         this.gameService.startGame().subscribe(res => {
 			if (res.text === "GameOver")
 			{
-				console.log("GAMEOVER WIINER IS: ", res.winner)
+				//console.log("GAMEOVER WINER IS: ", res.winner)
 				this.winner = res.winner;
                 let data = {
                     winner: res.winner,
@@ -81,15 +82,14 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                         this.paddleWidth = 20
                         this.paddleHeight = 200;
                     }
+					else if (power === 'PowerUpDisco')
+						this.randomColors = true;
+					else if (power === 'PowerUpTennis')
+						this.wimbledon = true;
                 }
             }
 			this.ft_gameLoop(res.plOne, res.plTwo, res.ball, this.gameRoom)
         })
-
-		for (let i=0; this.gameRoom.powerList![i]; i++)
-			if (this.gameRoom.powerList![i] == 'PowerUpDisco')
-				this.randomColors = true;
-		
 	}
 
 	ngOnInit(): void
@@ -167,8 +167,24 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 	{
 		if (this.randomColors)
 			this.elementsColor = this.getRandomColor();
-		this.context!.fillStyle = this.backgroundColor;													// Sets background color.
-		this.context!.fillRect(0, 0, this.canvas.width, this.canvas.height);									// Draws background.
+		if (this.wimbledon)
+		{
+			this.context!.fillStyle = '#5A8841';														// Sets background color.
+			this.context!.fillRect(0, 0, this.canvas.width, this.canvas.height/8);
+			this.context!.fillRect(0, this.canvas.height/8 * 2, this.canvas.width, this.canvas.height/8);
+			this.context!.fillRect(0, this.canvas.height/8 * 4, this.canvas.width, this.canvas.height/8);
+			this.context!.fillRect(0, this.canvas.height/8 * 6, this.canvas.width, this.canvas.height/8);
+			this.context!.fillStyle = '#7AA960';
+			this.context!.fillRect(0, this.canvas.height/8, this.canvas.width, this.canvas.height/8);
+			this.context!.fillRect(0, this.canvas.height/8 * 3, this.canvas.width, this.canvas.height/8);
+			this.context!.fillRect(0, this.canvas.height/8 * 5, this.canvas.width, this.canvas.height/8);
+			this.context!.fillRect(0, this.canvas.height/8 * 7, this.canvas.width, this.canvas.height/8);
+		}
+		else
+		{
+			this.context!.fillStyle = this.backgroundColor;														// Sets background color.
+			this.context!.fillRect(0, 0, this.canvas.width, this.canvas.height);									// Draws background.
+		}
 		this.context!.fillStyle = this.elementsColor;														// Sets elements color.
 		this.context!.font = "20vh futura";														// Sets font for text elements (score).
 		this.context!.fillRect(this.canvas.width / 2 - this.netWidth / 2, 0, this.netWidth, this.netHeight);				// Draws net.
@@ -178,6 +194,8 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 		this.context!.fillStyle = this.elementsColor;														// Sets elements color.
 		this.context!.fillRect(userOne.x, userOne.y, this.paddleWidth, this.paddleHeight);							// Draws user paddle.
 		this.context!.fillRect(userTwo.x, userTwo.y, this.paddleWidth, this.paddleHeight);								// Draws ai paddle.
+		if (this.wimbledon)
+			this.context!.fillStyle = '#EBFF00';
 		this.context!.beginPath();																	// Draws ball.
 		this.context!.arc(ball.x, ball.y, 7, 0, Math.PI * 2, true);
 		this.context!.closePath();

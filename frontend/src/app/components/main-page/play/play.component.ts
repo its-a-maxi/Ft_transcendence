@@ -19,6 +19,7 @@ export class PlayComponent implements OnInit, OnDestroy
 	PowerUpQuickBall: boolean = false;
 	PowerUpOnePoint: boolean = false;
 	PowerUpQuickPalette: boolean = false;
+	PowerUpTennis: boolean = false;
 
 	/* RENDER */
 	Menu: boolean = true;
@@ -93,6 +94,7 @@ export class PlayComponent implements OnInit, OnDestroy
 		    {PowerUpQuickBall: this.PowerUpQuickBall},
 		    {PowerUpOnePoint: this.PowerUpOnePoint},
 		    {PowerUpQuickPalette: this.PowerUpQuickPalette},
+		    {PowerUpTennis: this.PowerUpTennis},
         ]
         for (let option of powerUps)
         {
@@ -128,6 +130,7 @@ export class PlayComponent implements OnInit, OnDestroy
 		this.PowerUpQuickBall = false;
 		this.PowerUpOnePoint = false;
 		this.PowerUpQuickPalette = false;
+		this.PowerUpTennis = false;
 		save = true;
 	}
 
