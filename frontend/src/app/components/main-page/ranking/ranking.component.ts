@@ -23,6 +23,7 @@ export class RankingComponent implements OnInit {
     await this.authService.showAllUsers()
       .then(response => this.allUsers = response.data);
     this.rankByWins();
+    this.userPopup = this.allUsers![0];
   }
 
   openUser(user: string): void

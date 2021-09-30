@@ -288,3 +288,8 @@ p
 	color: #805849ff;
     cursor: pointer;
 }
+
+app-profile-popup
+{
+	display: none;
+}

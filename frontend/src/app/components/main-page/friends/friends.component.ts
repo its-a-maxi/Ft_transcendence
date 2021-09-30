@@ -30,7 +30,7 @@ export class FriendsComponent implements OnInit {
     if (this.paramId)
       await this.findUser(this.paramId);
     await this.authService.showAllUsers()
-      .then(response => this.allUsers = response.data.filter(x => x.id != this.mainUser?.id));
+      .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)));
     if (this.mainUser && this.mainUser.friendsId)
     {
       if (this.mainUser.friendsId == null)
@@ -38,6 +38,7 @@ export class FriendsComponent implements OnInit {
       else
         this.getFriends();
     }
+    this.userPopup = this.mainUser;
     this.sortConnected();
     console.log(this.friends);
   }
@@ -46,13 +47,12 @@ export class FriendsComponent implements OnInit {
 	{	
 		await this.authService.getUserById(id)
 			.then(res => {
-				if (res.data === "ERROR!!")
-				{
+				if (res.data === "ERROR!!") {
 					this.authService.logOutUser(false)
 					this.router.navigate(['/landingPage/start'])
 				}
 				else
-                    console.log(res.data.friends)
+					this.mainUser = res.data;
 			})
 	}
 
