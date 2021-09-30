@@ -62,7 +62,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
         this.gameService.startGame().subscribe(res => {
 			if (res.text === "GameOver" && !this.gameOver)
 			{
-				//console.log("GAMEOVER WINER IS: ", res.winner)
+				//console.log("GAMEOVER WINNER IS: ", res.winner)
 				this.winner = res.winner;
                 let data = {
                     winner: res.winner,
@@ -100,6 +100,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	ngOnDestroy()
 	{
+        this.gameService.getCable()
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 		this.gameService.leaveRoom(this.gameRoom.id!)
 	}
@@ -205,7 +206,8 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	ft_gameLoop(userOne: Paddle, userTwo: Paddle, ball: Ball, gameRoom: GameI)
 	{
-		if (userOne.gameId === gameRoom.id && userTwo.gameId === gameRoom.id)
+		if (userOne && userOne.gameId === gameRoom.id &&
+            userTwo.gameId === gameRoom.id)
 			this.render(userOne, userTwo, ball);
 	}
 

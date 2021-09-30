@@ -13,6 +13,7 @@ import { GameI } from 'src/app/services/models/gameRoom.interface';
 export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 {
 	@Input() gameRoom!: GameI;
+    gameOver: boolean = false
 
 	canvas!: HTMLCanvasElement
 	context!: CanvasRenderingContext2D
@@ -36,8 +37,7 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 
 	ngOnInit(): void
 	{
-		
-		
+		this.gameOver = false
 	}
 
 	ngAfterViewInit()
@@ -54,9 +54,10 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 		this.gameService.startGame().subscribe(res => {
 			if (this.gameRoom.id === res.roomId)
 			{
-				if (res.text === "GameOver")
+				if (res.text === "GameOver" && !this.gameOver)
 				{
-					console.log("GAMEOVER")
+                    this.gameOver = true
+					//console.log("GAMEOVER")
 					this.router.navigate([`/mainPage/settings/${this.userId}`])
 					return
 				}

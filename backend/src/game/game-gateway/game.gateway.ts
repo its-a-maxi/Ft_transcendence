@@ -2,6 +2,7 @@ import { OnModuleInit } from '@nestjs/common';
 import { UnauthorizedException } from '@nestjs/common/exceptions';
 import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { RoomI } from 'src/chat/models/room/room.interface';
 import { Status } from 'src/users/user-service/models/status.enum';
 import { UserI } from 'src/users/user-service/models/user.interface';
 import { UsersService } from 'src/users/user-service/users.service';
@@ -38,6 +39,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
     specialUsers: UserSocketI[] = []
 
+    leaveUsers: UserSocketI[] = []
+
     ///////////////
 
     paddleWidth: number = 10;
@@ -65,6 +68,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         this.normalUsers = []
         this.specialUsers = []
         this.liveShowUsers = []
+        this.leaveUsers = []
         await this.gameService.deleteAll()
     }
 
@@ -159,7 +163,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         let userId: number = socket.data.user.id
 		this.removeUser({userId, socketId: socket.id})
         let listAux: GameI[] = this.listRooms
-        console.log("ESTO ES ANTES: ", this.listRooms)
+
         for (let room of listAux)
         {
             if (room && room.id === roomId)
@@ -173,7 +177,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 break ;
             }
         }
-        console.log("ESTO ES DESPUES: ", this.listRooms)
         await this.userService.updateStatus(Status.online, userId)
 		this.disconnect(socket)
 	}
@@ -296,7 +299,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		let paddleBottom = paddle.y + this.paddleHeight;
 		let paddleLeft = paddle.x;
 
-		return (ballLeft < paddleRight && ballTop < paddleBottom && ballRight > paddleLeft && ballBottom > paddleTop);
+		return (ballLeft < paddleRight && ballTop < paddleBottom &&
+            ballRight > paddleLeft && ballBottom > paddleTop);
 	}
 
     private update(plOne: Paddle, plTwo: Paddle, ball: Ball, game: GameI)
@@ -306,13 +310,15 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
         if (this.key_wPressed && plOne.y > 0)
             plOne.y -= this.PowerUpQuickPalette;
-		else if (this.key_sPressed && (plOne.y < this.canvasHeight - this.paddleHeight))
+		else if (this.key_sPressed &&
+            (plOne.y < this.canvasHeight - this.paddleHeight))
             plOne.y += this.PowerUpQuickPalette;
 		if (game.playerTwo !== -1)
 		{
 			if (this.upArrowPressed && plTwo.y > 0)
 				plTwo.y -= this.PowerUpQuickPalette;
-			else if (this.downArrowPressed && (plTwo.y < this.canvasHeight - this.paddleHeight))
+			else if (this.downArrowPressed &&
+                (plTwo.y < this.canvasHeight - this.paddleHeight))
 				plTwo.y += this.PowerUpQuickPalette;
 		}
 
@@ -381,7 +387,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             let winner: number = (plOne.score > plTwo.score) ?  plOne.player : plTwo.player;
             let losser: number = (plOne.score > plTwo.score) ?  plTwo.player : plOne.player;
             let message = {
-                roomId: game.id,
                 text: "GameOver",
                 winner,
                 losser
@@ -389,10 +394,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.server.to(game.socketList[0]).emit('startGame', message)
             this.server.to(game.socketList[1]).emit('startGame', message)
             for (let user of this.liveShowUsers)
-            {
-                console.log("ENVIA SOCKET GAMEOVER: ", user.userId)
                 this.server.to(user.socketId).emit('startGame', message)
-            }
 		}
 		
     }
@@ -461,5 +463,23 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         }
 
         this.sendRooms(socket)
+    }
+
+    @SubscribeMessage('getCable')
+    getCable(socket: Socket)
+    {
+        this.leaveUsers.push({userId: socket.data.user.id, socketId: socket.id})
+
+        if (this.leaveUsers.length === 2 &&
+            this.leaveUsers[1].userId !== this.leaveUsers[0].userId)
+        {
+            let data = {
+                winner: this.leaveUsers[1].userId,
+                losser: this.leaveUsers[0].userId
+            }
+            this.updateStats(socket, data)
+            for (let i = 0; i <= this.leaveUsers.length; i++)
+                this.leaveUsers.pop()
+        }
     }
 }

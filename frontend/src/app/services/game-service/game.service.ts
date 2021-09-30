@@ -106,4 +106,9 @@ export class GameService
     {
         this.socket.emit('createSpecialRooms', options)
     }
+
+    getCable()
+    {
+        this.socket.emit('getCable')
+    }
 }
