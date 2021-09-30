@@ -35,6 +35,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 	backgroundColor = 'rgb(19, 5, 11)';
 	elementsColor = "#ede5f2ff";
 	scoreColor = "rgba(237, 229, 242, 0.2)";
+	randomColors = false;
 
 	test: any
 
@@ -47,6 +48,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	ngAfterViewInit()
     {
+		console.log(this.gameRoom);
 		this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
 		//console.log(this.canvas.height);
 		//this.canvas.style.transform = 'scale(0.01)';
@@ -71,6 +73,10 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 			}
 			this.ft_gameLoop(res.plOne, res.plTwo, res.ball, this.gameRoom)
         })
+
+		for (let i=0; this.gameRoom.powerList![i]; i++)
+			if (this.gameRoom.powerList![i] == 'PowerUpDisco')
+				this.randomColors = true;
 		
 	}
 
@@ -147,6 +153,8 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	render(userOne: Paddle, userTwo: Paddle, ball: Ball)
 	{
+		if (this.randomColors)
+			this.elementsColor = this.getRandomColor();
 		this.context!.fillStyle = this.backgroundColor;													// Sets background color.
 		this.context!.fillRect(0, 0, this.canvas.width, this.canvas.height);									// Draws background.
 		this.context!.fillStyle = this.elementsColor;														// Sets elements color.
@@ -177,5 +185,14 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 			window.location.reload();
 		});
 	}
+
+	private getRandomColor() {
+		var letters = '0123456789ABCDEF';
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+		  color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	  }
 
 }
