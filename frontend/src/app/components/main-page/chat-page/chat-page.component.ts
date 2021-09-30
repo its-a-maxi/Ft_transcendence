@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInfo } from 'os';
+import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
 import { RoomI } from 'src/app/services/models/room.interface';
@@ -35,13 +36,15 @@ export class ChatPageComponent implements OnInit {
 	private roomToChange: string = '';
 
 
-	async ngOnInit() {
+	async ngOnInit()
+    {
 		if (this.paramId)
 			await this.findUser(this.paramId);
 		await this.authService.showAllUsers()
 			.then(response => this.allUsers = response.data.filter(x => x.id != this.mainUser?.id));
 		await this.findRooms();
 		this.userPopup = this.mainUser;
+        
 	}
 
 	private async findUser(id: string) {
@@ -61,7 +64,9 @@ export class ChatPageComponent implements OnInit {
 		this.chatService.getMyRooms().subscribe(res => {
 
 			this.rooms = res;
+            this.currentRoom = this.rooms[0]
 			this.sortRooms();
+            
 		})
 	}
 

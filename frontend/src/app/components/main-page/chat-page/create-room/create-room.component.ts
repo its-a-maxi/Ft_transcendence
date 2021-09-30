@@ -1,10 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
 import { RoomI } from 'src/app/services/models/room.interface';
 import { User } from 'src/app/services/models/user';
 import { UserI } from 'src/app/services/models/user.interface';
+import { ChatPageComponent } from '../chat-page.component';
 
 @Component({
 	selector: 'app-create-room',
@@ -12,7 +14,8 @@ import { UserI } from 'src/app/services/models/user.interface';
 	styleUrls: ['./create-room.component.css']
 })
 
-export class CreateRoomComponent implements OnInit {
+export class CreateRoomComponent implements OnInit
+{
 
 	constructor(private authService: AuthService, private chatService: ChatService, private router: Router) { }
 
@@ -27,6 +30,7 @@ export class CreateRoomComponent implements OnInit {
 	private paramId: string | null = sessionStorage.getItem('token');
 
 	@Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
+
 
 	async ngOnInit() {
 		if (this.paramId)
