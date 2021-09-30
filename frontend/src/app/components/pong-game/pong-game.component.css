@@ -6,6 +6,7 @@
     top: 10em;
     left: 13em;
     font-family: futura;
+    z-index: 1;
 }
 
 .background
@@ -18,6 +19,7 @@
     right: 0;
     bottom: 0;
     margin: auto;
+    z-index: 0;
 
 }
 #canvas
