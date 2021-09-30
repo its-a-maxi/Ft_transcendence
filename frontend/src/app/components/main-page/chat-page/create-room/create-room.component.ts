@@ -85,7 +85,7 @@ export class CreateRoomComponent implements OnInit
 	}
 
 	private checkInputs(): boolean {
-		let check = /^[a-zA-Z0-9]+$/;
+		let check = /^[a-zA-Z0-9-]+$/;
 
 		if (this.name == "")
 			alert("Please, provide a name");
