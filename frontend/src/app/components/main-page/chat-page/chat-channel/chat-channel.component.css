@@ -182,7 +182,7 @@
 
       ::ng-deep .hoverBtnDelete
       {
-          color: rgba(255, 30, 30, .8);
+          color: rgb(252, 102, 102);
           font-family: 'futura';
           font-size: 1.8vh;
       }
