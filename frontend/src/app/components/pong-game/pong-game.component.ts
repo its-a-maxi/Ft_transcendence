@@ -71,6 +71,17 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 				//this.router.navigate([`/mainPage/play/${this.userId}`])
 				return
 			}
+            if (this.gameRoom.powerList)
+            {
+                for (let power of this.gameRoom.powerList)
+                {
+                    if (power === 'PowerUpBigPalette')
+                    {
+                        this.paddleWidth = 20
+                        this.paddleHeight = 200;
+                    }
+                }
+            }
 			this.ft_gameLoop(res.plOne, res.plTwo, res.ball, this.gameRoom)
         })
 
