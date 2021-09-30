@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInfo } from 'os';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
@@ -31,6 +31,8 @@ export class ChatPageComponent implements OnInit {
 	channels: Array<RoomI> = [];
 
     challengeRoom!: RoomI;
+
+	private roomToChange: string = '';
 
 
 	async ngOnInit() {
@@ -108,7 +110,7 @@ export class ChatPageComponent implements OnInit {
     this.closeOverlay();
   }
 
-	directMessage(user: UserI)
+	async directMessage(user: UserI)
 	{
         let cmp1, cmp2: string;
         cmp1 = this.mainUser.id.toString() + '/' + user.id.toString();
@@ -121,7 +123,6 @@ export class ChatPageComponent implements OnInit {
                 return;
         	}
         }
-        console.log('new room created');
         const newRoom: RoomI = {
             ownerId: parseInt(this.paramId!),
             name: this.mainUser.id + '/' + user.id,
@@ -129,8 +130,7 @@ export class ChatPageComponent implements OnInit {
             option: "Direct",
             users: [user]
         }
-        this.challengeRoom = newRoom;
-        this.chatService.createRoom(newRoom);
+        await this.chatService.createRoom(newRoom);
 	}
 
 	showProfile(user: UserI)
