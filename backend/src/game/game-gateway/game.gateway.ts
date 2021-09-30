@@ -50,6 +50,12 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	key_wPressed: boolean = false;
 	key_sPressed: boolean = false;
 
+    /*POWERUPS*/
+    PowerUpx2: boolean = false
+    PowerUpQuickBall: number = 0
+    PowerUpOnePoint: boolean = false
+    PowerUpQuickPalette: number = 8
+
 	constructor(private userService: UsersService,
                 private gameService: GameService) {}
 
@@ -225,9 +231,37 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
 	///////////////////////////////////////////////////////////////
 
+    private checkPowerUps(game: GameI)
+    {
+        this.PowerUpQuickBall = 0;
+        this.PowerUpx2 = false
+        this.PowerUpOnePoint = false
+        this.PowerUpQuickPalette= 8
+        if (game.powerList)
+        {
+            for (let power of game.powerList)
+            {
+                if (power === 'PowerUpx2')
+                    this.PowerUpx2 = true
+                if (power === 'PowerUpBigPalette')
+                {
+                    this.paddleHeight = 200;
+                    this.paddleWidth = 20;
+                }
+                if (power === 'PowerUpQuickBall')
+                    this.PowerUpQuickBall = 1;
+                if (power === 'PowerUpOnePoint')
+                    this.PowerUpOnePoint = true;
+                if (power === 'PowerUpQuickPalette')
+                    this.PowerUpQuickPalette = 16;
+            }
+        }
+    }
+
     @SubscribeMessage('createGame')
     createGame(socket: Socket, game: GameI)
     {
+        this.checkPowerUps(game)
         let plOne = new Paddle(10,  this.canvasHeight / 2 - this.paddleHeight / 2,
             0, game.playerOne, game.id)
         let plTwo = new Paddle(this.canvasWidth - (this.paddleWidth + 10),
@@ -269,30 +303,37 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		ball.y += ball.velocityY;
 
         if (this.key_wPressed && plOne.y > 0)
-            plOne.y -= 10;
+            plOne.y -= this.PowerUpQuickPalette;
 		else if (this.key_sPressed && (plOne.y < this.canvasHeight - this.paddleHeight))
-            plOne.y += 10;
+            plOne.y += this.PowerUpQuickPalette;
 		if (game.playerTwo !== -1)
 		{
 			if (this.upArrowPressed && plTwo.y > 0)
-				plTwo.y -= 10;
+				plTwo.y -= this.PowerUpQuickPalette;
 			else if (this.downArrowPressed && (plTwo.y < this.canvasHeight - this.paddleHeight))
-				plTwo.y += 10;
+				plTwo.y += this.PowerUpQuickPalette;
 		}
 
 		if (ball.y + 7 >= this.canvasHeight || ball.y - 7 <= 0)
 		{
 			ball.velocityY = -ball.velocityY;
 		}
-
 		if (ball.x + 7 >= this.canvasWidth)
 		{
 			plOne.score += 1;
+            if (this.PowerUpx2)
+                plOne.score += 1;
+            if (this.PowerUpOnePoint)
+                plOne.score += 9;
 			this.resetBallPos(ball);
 		}
 		if (ball.x - 7 <= 0)
 		{
 			plTwo.score += 1;
+            if (this.PowerUpx2)
+                plTwo.score += 1;
+            if (this.PowerUpOnePoint)
+                plTwo.score += 9;
 			this.resetBallPos(ball);
 		}
 
@@ -315,6 +356,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 			ball.velocityX = dir * ball.speed * Math.cos(angle);
 			ball.velocityY = ball.speed * Math.sin(angle);
 			ball.speed += 0.2;
+            ball.speed += this.PowerUpQuickBall
 		}
 
 		if (game.playerTwo === -1)
@@ -330,10 +372,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.server.to(game.socketList[0]).emit('startGame', data)
             this.server.to(game.socketList[1]).emit('startGame', data)
             for (let user of this.liveShowUsers)
-            {
-                //console.log("ENVIA SOCKET: ", user.userId)
                 this.server.to(user.socketId).emit('startGame', data)
-            }
 		}
 		else
         {
