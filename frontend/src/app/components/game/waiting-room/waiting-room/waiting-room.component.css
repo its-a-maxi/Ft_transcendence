@@ -3,6 +3,8 @@
     position: absolute;
     height: 100%;
     width: 100%;
+	background-color: rgb(19, 5, 11);
+	border-radius: 3.8vh;
 }
 
 .users

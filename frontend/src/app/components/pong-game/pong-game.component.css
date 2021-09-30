@@ -1,3 +1,15 @@
+.background
+{
+    position: absolute;
+    background-color: rgb(19, 5, 11);
+	border-radius: 3.8vh;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+
+}
 #canvas
 {
     position: absolute;
@@ -5,9 +17,9 @@
     top: 0;
     right: 0;
     bottom: 0;
+    height: 95%;
+    width: 95%;
     margin: auto;
-    height: 92%;
-    width: 92%;
     /*transform: scale(1.08);*/
    
 }
