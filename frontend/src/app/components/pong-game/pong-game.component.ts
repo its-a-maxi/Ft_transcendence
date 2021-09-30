@@ -66,6 +66,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                 }
                 this.gameService.updateStats(data)
 				this.end = true;
+                this.gameService.disconnect()
 				//this.router.navigate([`/mainPage/play/${this.userId}`])
 				return
 			}

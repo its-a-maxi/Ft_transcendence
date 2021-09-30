@@ -17,6 +17,11 @@ export class GameService
 		this.socket.connect()
 	}
 
+    disconnect()
+    {
+        this.socket.disconnect()
+    }
+
 	keyReled(data: any)
 	{
 		this.socket.emit('keyboard', data)
