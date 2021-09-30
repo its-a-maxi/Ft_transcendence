@@ -273,7 +273,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.canvasHeight / 2 - this.paddleHeight / 2, 0, game.playerTwo, game.id)
         let ball = new Ball(this.canvasWidth / 2, this.canvasHeight / 2, 7, 5, 5)
 		if (socket.id === game.socketList[0])
-        	setInterval(() => this.update(plOne, plTwo, ball, game), 1000 / 60) 
+        	 setTimeout(() => setInterval(() => this.update(plOne, plTwo, ball, game), 1000 / 60), 1500)  
         
     }
 
@@ -368,7 +368,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		}
 
 		if (game.playerTwo === -1)
-			plTwo.y += ((ball.y - (plTwo.y + this.paddleHeight / 2))) * 0.09; 
+			plTwo.y += ((ball.y - (plTwo.y + this.paddleHeight / 2))) * 0.10; 
 		let data = {
 			plOne,
 			plTwo,
@@ -469,7 +469,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     getCable(socket: Socket)
     {
         this.leaveUsers.push({userId: socket.data.user.id, socketId: socket.id})
-
+        
         if (this.leaveUsers.length === 2 &&
             this.leaveUsers[1].userId !== this.leaveUsers[0].userId)
         {

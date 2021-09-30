@@ -44,13 +44,14 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 	winner: string = 'mmonroy-';
 
 	end: boolean = false;
+    start: boolean = false
 
 	constructor(private gameService: GameService,
 				private router: Router) { }
 
 	ngAfterViewInit()
     {
-		console.log(this.gameRoom);
+		//console.log(this.gameRoom);
 		this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
 		//console.log(this.canvas.height);
 		//this.canvas.style.transform = 'scale(0.01)';
@@ -94,6 +95,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	ngOnInit(): void
 	{
+        setTimeout(() => this.start = true, 1500)
         this.gameOver = false
 		this.keyboard()
 	}

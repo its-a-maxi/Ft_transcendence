@@ -1,4 +1,5 @@
-<div class="background"></div>
+<p class="start" *ngIf="!start">START!</p>
+<div class="background" *ngIf="start"></div>
 <canvas *ngIf='!end' id="canvas" width="800" height="600"></canvas>
 <div *ngIf='end' class='winScreen'>
 	<div class='selection'>
