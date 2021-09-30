@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { User } from 'src/app/services/models/user';
+import { UserI } from 'src/app/services/models/user.interface';
 import { TwoFaPopupComponent } from './two-fa-popup/two-fa-popup.component';
 
 interface HtmlInputEvent extends Event {
@@ -21,6 +22,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 
 	private user?: User;
 	private files: File | undefined;
+	private allUsers: Array<UserI> = [];
 
 	oldNick: string = "default";
 	oldEmail: string = "default";
@@ -58,6 +60,8 @@ export class SettingsComponent implements OnInit, OnDestroy
 			this.authentication = this.user.authentication;
 		}
 		this.profilePicture = this.user?.avatar;
+		await this.authService.showAllUsers()
+		  .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)));
 	}
 
     ngOnDestroy()
@@ -91,7 +95,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 		}
 	}
 
-	validateEmail(email: string)
+	private validateEmail(email: string)
 	{
 		let check = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 		if (email.match(check))
@@ -100,19 +104,30 @@ export class SettingsComponent implements OnInit, OnDestroy
 			return false;
 	}
 
-	validatePhone(phone: string)
+	private validateName(name: string)
 	{
-		let check = /^\d{9}$/;
-		if (phone.match(check))
+		let check = /^[a-zA-Z0-9-]+$/;;
+		if (name.match(check))
 			return true;
 		else
 			return false;
+	}
+
+	private checkRepeatedNicks(): boolean {
+		for (let i = 0; this.allUsers[i]; i++)
+			if (this.allUsers[i].nick == this.nick.toLowerCase())
+				return (true);
+		return (false);
 	}
 
 	async uploadNewSettings()
 	{
 		if (this.nick.length > 0 && this.nick.length < 4)
 			alert("Please, check that your nickname has at least 4 characters")
+		else if (this.nick.length > 0 && !this.validateName(this.nick))
+			alert("Please, don't use special characters")
+		else if (this.nick.length > 0 && this.checkRepeatedNicks())
+			alert("Nickname already in use")
 		else if (this.email.length > 0 && !this.validateEmail(this.email))
 			alert("Please, input a valid e-mail")
 		else if (this.user)
@@ -125,7 +140,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 			else
 				this.user.avatar = this.user.avatar?.substring(34);
 			if (this.nick != "")
-				this.user.nick = this.nick;
+				this.user.nick = this.nick.toLowerCase();
 			if (this.email != "")
 				this.user.email = this.email;
 			this.user.authentication = this.authentication;
