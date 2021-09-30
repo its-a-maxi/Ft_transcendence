@@ -20,6 +20,7 @@ export class PlayComponent implements OnInit, OnDestroy
 	PowerUpOnePoint: boolean = false;
 	PowerUpQuickPalette: boolean = false;
 	PowerUpTennis: boolean = false;
+	PowerUpRandom: boolean = false;
 
 	/* RENDER */
 	Menu: boolean = true;
@@ -87,6 +88,7 @@ export class PlayComponent implements OnInit, OnDestroy
 
 	changeToPowerUp()
 	{
+		let i = Math.round(Math.random() * (6 - 0) + 0);
         let powerUps = [
             {PowerUpx2: this.PowerUpx2},
 		    {PowerUpBigPalette: this.PowerUpBigPalette},
@@ -95,14 +97,18 @@ export class PlayComponent implements OnInit, OnDestroy
 		    {PowerUpOnePoint: this.PowerUpOnePoint},
 		    {PowerUpQuickPalette: this.PowerUpQuickPalette},
 		    {PowerUpTennis: this.PowerUpTennis},
-        ]
+        ];
+
         for (let option of powerUps)
         {
-            if (Object.values(option).includes(true))
+            if (Object.values(option).includes(true) || this.PowerUpRandom)
             {
                 let pongContainer = document.getElementById("pongContainer");
 		        pongContainer!.style.backgroundColor = 'rgba(19, 5, 11, 1)';
-                this.gameService.createSpecialRoom(option)
+				if (this.PowerUpRandom)
+					this.gameService.createSpecialRoom(powerUps[Math.round(Math.random() * (6 - 0) + 0)])
+				else
+                	this.gameService.createSpecialRoom(option)
                 this.PowerUpSelect = false
                 this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
                 this.gameService.connect()
@@ -132,6 +138,14 @@ export class PlayComponent implements OnInit, OnDestroy
 		this.PowerUpQuickPalette = false;
 		this.PowerUpTennis = false;
 		save = true;
+	}
+
+	reloadPage()
+	{
+		this.router.navigate([`/mainPage/play/${this.userId}`])
+		.then(()=>{
+			window.location.reload();
+		});
 	}
 
 }

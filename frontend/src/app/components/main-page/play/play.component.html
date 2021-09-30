@@ -21,10 +21,12 @@
 			<div class='entry'>
 				Disco PONG <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpDisco" (click)="justOne(PowerUpDisco)">
 				&nbsp;&nbsp;&nbsp;
-				One point <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpOnePoint" (click)="justOne(PowerUpOnePoint)">
+				Tennis PONG <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpTennis" (click)="justOne(PowerUpTennis)">
 			</div>
 			<div class='entry'>
-				Tennis PONG <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpTennis" (click)="justOne(PowerUpTennis)">
+				One point <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpOnePoint" (click)="justOne(PowerUpOnePoint)">
+				&nbsp;&nbsp;&nbsp;
+				Random <input type="checkbox" class="checkBox" [(ngModel)]="PowerUpRandom" (click)="justOne(PowerUpRandom)">
 			</div>
 			<button class="option PowerUpMode" (click)="changeToPowerUp()" id="special">Start!</button>
 		</div>
@@ -32,6 +34,7 @@
 		<app-pong-game *ngIf="AImode" [gameRoom]="roomGame"></app-pong-game>
 		<!--<app-waiting-room *ngIf="OnlineMode" [search]="OnlineMode"></app-waiting-room>-->
 		<!--<app-waiting-room></app-waiting-room>-->
+		<button class='close' (click)='reloadPage()'>x</button>
 	</div>
 	<div class="chatContainer">
 		<div class="currentChannel">

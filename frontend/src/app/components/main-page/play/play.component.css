@@ -221,3 +221,8 @@ div{
 {
 	cursor: pointer;
 }
+
+.close
+{
+    position: absolute;
+}
