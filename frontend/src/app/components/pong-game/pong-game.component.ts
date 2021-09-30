@@ -16,6 +16,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 	@Input() gameRoom!: GameI
 
 	userId: string = sessionStorage.getItem('token')!
+    gameOver: boolean = false
 
 	canvas!: HTMLCanvasElement
 	context!: CanvasRenderingContext2D
@@ -59,7 +60,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
         this.gameService.createGame(this.gameRoom)
 
         this.gameService.startGame().subscribe(res => {
-			if (res.text === "GameOver")
+			if (res.text === "GameOver" && !this.gameOver)
 			{
 				//console.log("GAMEOVER WINER IS: ", res.winner)
 				this.winner = res.winner;
@@ -69,8 +70,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                 }
                 this.gameService.updateStats(data)
 				this.end = true;
-                //this.gameService.disconnect()
-				//this.router.navigate([`/mainPage/play/${this.userId}`])
+                this.gameOver = true
 				return
 			}
             if (this.gameRoom.powerList)
@@ -94,6 +94,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	ngOnInit(): void
 	{
+        this.gameOver = false
 		this.keyboard()
 	}
 
@@ -210,7 +211,6 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	gameEnds()
 	{
-        
 		this.router.navigate([`/mainPage/play/${this.userId}`])
 		.then(()=>{
 			window.location.reload();
