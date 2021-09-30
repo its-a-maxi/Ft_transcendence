@@ -68,7 +68,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                 }
                 this.gameService.updateStats(data)
 				this.end = true;
-                this.gameService.disconnect()
+                //this.gameService.disconnect()
 				//this.router.navigate([`/mainPage/play/${this.userId}`])
 				return
 			}
@@ -192,6 +192,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	gameEnds()
 	{
+        
 		this.router.navigate([`/mainPage/play/${this.userId}`])
 		.then(()=>{
 			window.location.reload();

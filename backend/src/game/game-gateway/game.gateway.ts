@@ -159,6 +159,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         let userId: number = socket.data.user.id
 		this.removeUser({userId, socketId: socket.id})
         let listAux: GameI[] = this.listRooms
+        console.log("ESTO ES ANTES: ", this.listRooms)
         for (let room of listAux)
         {
             if (room && room.id === roomId)
@@ -172,6 +173,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 break ;
             }
         }
+        console.log("ESTO ES DESPUES: ", this.listRooms)
         await this.userService.updateStatus(Status.online, userId)
 		this.disconnect(socket)
 	}
