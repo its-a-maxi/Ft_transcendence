@@ -28,7 +28,7 @@ ngOnInit(): void
 
 getQrCode()
 {
-  this.authService.twoFactor().then(res => this.qrImage =res.data.url)
+  this.authService.twoFactor().then(res => this.qrImage = res.data.url)
 }
 
 verifyCode(form: NgForm)
