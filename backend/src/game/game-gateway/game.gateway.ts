@@ -128,9 +128,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 }
             }
         }
-        if (this.listPowerUp.length === 2)
-            for (let i = 0; i <= this.listPowerUp.length; i++)
-                this.listPowerUp.pop()
     }
 
     @SubscribeMessage('addLiveUsers')
@@ -174,6 +171,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 await this.gameService.delete(room.id)
                 this.server.to(room.socketList[1]).emit('listUsers', null)
                 this.server.to(room.socketList[0]).emit('listUsers', null)
+                if (room.powerList && this.listPowerUp.length === 2)
+                    this.listPowerUp.splice(0, 2)
                 break ;
             }
         }
@@ -387,6 +386,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             let winner: number = (plOne.score > plTwo.score) ?  plOne.player : plTwo.player;
             let losser: number = (plOne.score > plTwo.score) ?  plTwo.player : plOne.player;
             let message = {
+                roomId: game.id,
                 text: "GameOver",
                 winner,
                 losser
