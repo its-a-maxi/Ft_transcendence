@@ -12,6 +12,7 @@ export class UserListHiddenComponent implements OnInit {
 
   @Output('directMessage') directMessage: EventEmitter<any> = new EventEmitter();
   @Output('blockUser') blockUser: EventEmitter<any> = new EventEmitter();
+  @Output('challengeUser') challengeUser: EventEmitter<any> = new EventEmitter();
   @Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
   @Output('showOverlay') showProfile: EventEmitter<any> = new EventEmitter();
   @Input() list: Array<UserI> = [];
@@ -28,6 +29,12 @@ export class UserListHiddenComponent implements OnInit {
   block(user: UserI)
   {
     this.blockUser.emit(user);
+    this.closeOverlay.emit();
+  }
+
+  challenge(user: UserI)
+  {
+    this.challengeUser.emit(user);
     this.closeOverlay.emit();
   }
 
