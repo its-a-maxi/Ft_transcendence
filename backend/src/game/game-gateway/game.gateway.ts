@@ -50,6 +50,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
     upArrowPressed: boolean = false;
 	downArrowPressed: boolean = false;
+    upArrowPressed2: boolean = false;
+	downArrowPressed2: boolean = false;
 	key_wPressed: boolean = false;
 	key_sPressed: boolean = false;
 
@@ -281,7 +283,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.canvasHeight / 2 - this.paddleHeight / 2, 0, game.playerTwo, game.id)
         let ball = new Ball(this.canvasWidth / 2, this.canvasHeight / 2, 7, 5, 5)
 		if (socket.id === game.socketList[0])
-        	 setTimeout(() => setInterval(() => this.update(plOne, plTwo, ball, game), 1000 / 60), 1500)  
+        	setTimeout(() => setInterval(() => this.update(plOne, plTwo, ball, game), 1000 / 60), 1500) 
         
     }
 
@@ -316,19 +318,17 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		ball.x += ball.velocityX;
 		ball.y += ball.velocityY;
 
-        if (this.key_wPressed && plOne.y > 0)
+        if (this.upArrowPressed && plOne.y > 0)
             plOne.y -= this.PowerUpQuickPalette;
-		else if (this.key_sPressed &&
+        else if (this.downArrowPressed &&
             (plOne.y < this.canvasHeight - this.paddleHeight))
             plOne.y += this.PowerUpQuickPalette;
-		if (game.playerTwo !== -1)
-		{
-			if (this.upArrowPressed && plTwo.y > 0)
-				plTwo.y -= this.PowerUpQuickPalette;
-			else if (this.downArrowPressed &&
-                (plTwo.y < this.canvasHeight - this.paddleHeight))
-				plTwo.y += this.PowerUpQuickPalette;
-		}
+
+        if (this.upArrowPressed2 && plTwo.y > 0)
+            plTwo.y -= this.PowerUpQuickPalette;
+        else if (this.downArrowPressed2 &&
+            (plTwo.y < this.canvasHeight - this.paddleHeight))
+            plTwo.y += this.PowerUpQuickPalette;
 
 		if (ball.y + 7 >= this.canvasHeight || ball.y - 7 <= 0)
 		{
@@ -411,10 +411,22 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	@SubscribeMessage('keyboard')
 	handdleKeyboard(socket: Socket, data: any)
 	{
-        this.upArrowPressed =  data.keyUp 
-        this.downArrowPressed = data.keyDown
-        this.key_wPressed = data.keyW
-        this.key_sPressed = data.keyS
+        if (socket.id === data.game.socketList[0])
+        {
+            this.upArrowPressed =  data.keyUp 
+            this.downArrowPressed = data.keyDown
+            this.upArrowPressed2 =  false
+            this.downArrowPressed2 = false
+        }
+        else if (socket.id === data.game.socketList[1])
+        {
+            this.upArrowPressed =  false
+            this.downArrowPressed = false
+            this.upArrowPressed2 =  data.keyUp
+            this.downArrowPressed2 = data.keyDown
+        }
+        // this.key_wPressed = data.keyW
+        // this.key_sPressed = data.keyS
 	}
 
     @SubscribeMessage('updateStats')

@@ -118,7 +118,8 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 				keyUp: this.upArrowPressed,
 				keyDown: this.downArrowPressed,
 				keyW: this.key_wPressed,
-				keyS: this.key_sPressed
+				keyS: this.key_sPressed,
+                game: this.gameRoom
 			}
 			this.gameService.keyReled(data)
 		});
@@ -132,7 +133,8 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 				keyUp: this.upArrowPressed,
 				keyDown: this.downArrowPressed,
 				keyW: this.key_wPressed,
-				keyS: this.key_sPressed
+				keyS: this.key_sPressed,
+                game: this.gameRoom
 			}
 			this.gameService.keyReled(data)
 		});
@@ -146,7 +148,8 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                 keyUp: this.upArrowPressed,
                 keyDown: this.downArrowPressed,
                 keyW: this.key_wPressed,
-                keyS: this.key_sPressed
+                keyS: this.key_sPressed,
+                game: this.gameRoom
             }
             this.gameService.keyReled(data)
 		});
@@ -160,7 +163,8 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                 keyUp: this.upArrowPressed,
                 keyDown: this.downArrowPressed,
                 keyW: this.key_wPressed,
-                keyS: this.key_sPressed
+                keyS: this.key_sPressed,
+                game: this.gameRoom
             }
             this.gameService.keyReled(data)
 		});
