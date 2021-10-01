@@ -52,6 +52,7 @@ import { ProfilePopupComponent } from './components/main-page/profile-popup/prof
 import { PongGameComponent } from './components/pong-game/pong-game.component';
 import { ShowRoomComponent } from './components/main-page/play/show-room/show-room.component';
 import { CookieService } from 'ngx-cookie-service';
+import { TwoFaCheckComponent } from './components/landing-page/two-fa-check/two-fa-check.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -88,6 +89,7 @@ export function tokenGetter(): string | null {
     ProfilePopupComponent,
     PongGameComponent,
     ShowRoomComponent,
+    TwoFaCheckComponent,
   ],
   imports: [
     BrowserModule,

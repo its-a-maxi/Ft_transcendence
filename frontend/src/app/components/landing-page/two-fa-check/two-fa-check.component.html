@@ -1,0 +1,12 @@
+<div class=body id=body>
+	<h2>Two Factor Authentication</h2>
+    <form #Verify2factor="ngForm" (ngSubmit)="verifyCode(Verify2factor)">
+        <div class='inputCode'>
+            <div class='searchBar'>
+                <input type="text" name="code" id="code" placeholder="Your code" [(ngModel)]="this.code" class='searchInput'>
+            </div>
+            <button type="submit" class="btn">></button>
+        </div>
+    </form>
+    <h1>Use your Google Authenticator code</h1>
+</div>

@@ -7,6 +7,7 @@ import { WaitingRoomComponent } from './components/game/waiting-room/waiting-roo
 import { HomeComponent } from './components/home/home.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { StartComponent } from './components/landing-page/start/start.component';
+import { TwoFaCheckComponent } from './components/landing-page/two-fa-check/two-fa-check.component';
 import { LoginComponent } from './components/login/login.component';
 import { ChatPageComponent } from './components/main-page/chat-page/chat-page.component';
 import { FriendsComponent } from './components/main-page/friends/friends.component';
@@ -24,7 +25,8 @@ import { CookieGuard } from './guards/cookie.guard';
 const routes: Routes = [
   {path: "login", component: LoginComponent},
   { path: 'landingPage', component: LandingPageComponent, children: [
-    { path: 'start', component: StartComponent }
+    { path: 'start', component: StartComponent },
+    { path: 'twoFaCheck', component: TwoFaCheckComponent }
   ]},
   { path: 'mainPage', component: MainPageComponent, children: [
     {path: 'waitingRoom/:id', component: WaitingRoomComponent},
