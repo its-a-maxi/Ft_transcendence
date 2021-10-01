@@ -105,14 +105,23 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
 	private removeUser(userSocket: UserSocketI)
 	{
-		let index = this.normalUsers.indexOf(userSocket)
+        if (this.normalUsers.length === 1)
+            this.normalUsers.splice(0, 1)
+        else
+        {
+            let index = this.normalUsers.indexOf(userSocket)
+            if (index > -1)
+                this.normalUsers.splice(index, 1)
+        }
 
-		if (index > -1)
-			this.normalUsers.splice(index, 1)
-
-        index = this.specialUsers.indexOf(userSocket)
-        if (index > -1)
-            this.specialUsers.splice(index, 1)
+        if (this.specialUsers.length === 1)
+            this.specialUsers.splice(0, 1)
+        else
+        {
+            let index = this.specialUsers.indexOf(userSocket)
+            if (index > -1)
+                this.specialUsers.splice(index, 1)
+        }
 	}
 
     private sendRooms(socket: Socket)
