@@ -45,9 +45,11 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 	winner: string = '';
 	user1: string = '';
 	user2: string = '';
+	private user1id: number = -1;
+	private user2id: number = -1;
 
 	end: boolean = false;
-    start: boolean = false
+    start: boolean = false;
 
 	constructor(private gameService: GameService,
 				private router: Router,
@@ -65,20 +67,26 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
         this.gameService.createGame(this.gameRoom)
 
 		await this.authService.getUserById(this.gameRoom.playerOne!.toString())
-		.then(res => { this.user1 = res.data.nick; })
+			.then(res => {
+				this.user1 = res.data.nick;
+				this.user1id = res.data.id})
 		if (this.gameRoom.playerTwo! == -1)
 			this.user2 = 'AI';
 		else
 			await this.authService.getUserById(this.gameRoom.playerTwo!.toString())
-			.then(res => { this.user2 = res.data.nick; })
+			.then(res => {
+				this.user2 = res.data.nick;
+				this.user2id = res.data.id})
 
 		console.log(this.user1 + this.user2);
 
         this.gameService.startGame().subscribe(res => {
 			if (res.text === "GameOver" && !this.gameOver)
 			{
-				//console.log("GAMEOVER WINNER IS: ", res.winner)
-				this.winner = res.winner;
+				if (res.winner = this.user1id)
+					this.winner = this.user1;
+				else
+					this.winner = this.user2;
                 let data = {
                     winner: res.winner,
                     losser: res.losser

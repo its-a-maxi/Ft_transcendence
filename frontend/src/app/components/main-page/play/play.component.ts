@@ -137,6 +137,7 @@ export class PlayComponent implements OnInit, OnDestroy
 		this.PowerUpOnePoint = false;
 		this.PowerUpQuickPalette = false;
 		this.PowerUpTennis = false;
+		this.PowerUpRandom = false;
 		save = true;
 	}
 

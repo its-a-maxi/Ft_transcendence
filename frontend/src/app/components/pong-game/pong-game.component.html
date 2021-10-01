@@ -1,6 +1,10 @@
 <p class="start" *ngIf="!start">START!</p>
 <div class="background" ></div>
-<canvas *ngIf='!end' id="canvas" width="800" height="600"></canvas>
+<div *ngIf='!end'>
+	<canvas id="canvas" width="800" height="600"></canvas>
+	<p *ngIf='start' class=user1>{{user1}}</p>
+	<p *ngIf='start' class=user2>{{user2}}</p>
+</div>
 <div *ngIf='end' class='winScreen'>
 	<div class='selection'>
 		<p class='selectText'>Winner is:</p>
