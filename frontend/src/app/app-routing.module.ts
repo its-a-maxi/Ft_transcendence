@@ -20,6 +20,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TwoFAComponent } from './components/two-fa/two-fa.component';
+import { CookieGuard } from './guards/cookie.guard';
 
 const routes: Routes = [
   {path: "login", component: LoginComponent},
@@ -38,7 +39,7 @@ const routes: Routes = [
     {path: 'friends/:id', component: FriendsComponent},
     {path: 'ranking/:id', component: RankingComponent},
     {path: 'settings/:id', component: SettingsComponent},
-  ]},
+  ], canActivate: [CookieGuard]},
   //{path: "mainPage/:id", component: NavigationComponent},
   //{path: "game", component: GameComponent},
   //{path: "register", component: RegisterComponent},

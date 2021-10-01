@@ -108,12 +108,15 @@ export class AuthController
         const code = req.body.code
         const userID = await this.authService.clientID(req)
         const client = await this.userService.getUser(userID)
-        console.log(client);
         const verify = authenticator.verify({token: code, secret: client.secret})
         if (!verify)
+        {
             throw new UnauthorizedException('Wrong authentication code');
+        }
         else
+        {
             return res.json({nick: client.id})
+        }
     }
 
     @UseGuards(verifyUser)

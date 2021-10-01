@@ -51,6 +51,7 @@ import { WaitingRoomComponent } from './components/game/waiting-room/waiting-roo
 import { ProfilePopupComponent } from './components/main-page/profile-popup/profile-popup.component';
 import { PongGameComponent } from './components/pong-game/pong-game.component';
 import { ShowRoomComponent } from './components/main-page/play/show-room/show-room.component';
+import { CookieService } from 'ngx-cookie-service';
 import { TwoFaCheckComponent } from './components/landing-page/two-fa-check/two-fa-check.component';
 
 export function tokenGetter(): string | null {

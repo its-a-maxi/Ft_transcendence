@@ -56,7 +56,7 @@ export class UsersService
 
 	async saveUserSecret(secret: string, clientID: number): Promise<any>
 	{
-		return this.usersRepository.update(clientID, { secret });
+		return await this.usersRepository.update(clientID, { secret });
 	}
 
 	async updateStatus(status: string, userId: number)
