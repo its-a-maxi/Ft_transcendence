@@ -16,4 +16,6 @@ export class CreateUserDto
     avatar?: string;
 
     authentication?: boolean;
+    
+    user42?: string;
 }

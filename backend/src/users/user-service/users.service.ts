@@ -37,6 +37,7 @@ export class UsersService
 	{
 		user.avatar = 'http://localhost:3000/auth/assets/ryu.jpg'
 		user.authentication = false
+        user.user42 = user.nick
 		const newUser = this.usersRepository.create(user)
 		return await this.usersRepository.save(newUser)
 	}
