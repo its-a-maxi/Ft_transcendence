@@ -138,6 +138,21 @@ export class ChatPageComponent implements OnInit {
         await this.chatService.createRoom(newRoom);
 	}
 
+	dmExists(user: UserI)
+	{
+        let cmp1, cmp2: string;
+        cmp1 = this.mainUser.id.toString() + '/' + user.id.toString();
+        cmp2 = user.id.toString() + '/' + this.mainUser.id.toString();
+        for (let i = 0; this.users[i]; i++)
+        {
+            if (this.users[i].name == cmp1 || this.users[i].name == cmp2)
+            {
+                return (true);
+        	}
+        }
+		return (false);
+	}
+
 	showProfile(user: UserI)
 	{
 		this.userPopup = user;

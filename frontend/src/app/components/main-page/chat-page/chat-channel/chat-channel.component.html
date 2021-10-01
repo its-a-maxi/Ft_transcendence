@@ -2,7 +2,7 @@
 	<div class="currentChannel">
 		<h1 class="currentChannelText">{{chatRoom.name}}</h1>
 		<div *ngIf='userId == chatRoom.ownerId' class="iconBox">
-			<img src="/assets/images/settingsIcon.png" class="settingsIcon"
+			<img *ngIf='chatRoom.name[0] == "#"' src="/assets/images/settingsIcon.png" class="settingsIcon"
 			title="Channel settings" [matMenuTriggerFor]="menuhidden">
 			<mat-menu #menuhidden="matMenu" class=hoverMenu>
 			  <button mat-menu-item class=hoverBtn (click)="changeChannelOption()">{{chatRoom.option == "private" ? 'Make channel public' : 'Make channel private'}}</button>
