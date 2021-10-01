@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, Query } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
 import { User } from 'src/app/services/models/user';
@@ -13,7 +14,10 @@ import { UserI } from 'src/app/services/models/user.interface';
 export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 {
 
-	constructor(public authService: AuthService, private router: Router, private chatService: ChatService) { }
+	constructor(public authService: AuthService,
+                private router: Router,
+                private chatService: ChatService,
+                private cookieService: CookieService) { }
 
 	private user?: User;
 	nick: string | undefined;
@@ -25,6 +29,7 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 
 	async ngOnInit()
 	{
+        //console.log("ESTO ES COOKIE: ", this.cookieService.get('clientID'))
 		if (this.paramId)
 			await this.findUser(this.paramId);
 		// this.chatService.findUsersConnected()
