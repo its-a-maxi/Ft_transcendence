@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { isAbsolute } from 'path';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
 import { Ball } from './classes/class-ball';
@@ -41,15 +42,18 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	test: any
 
-	winner: string = 'mmonroy-';
+	winner: string = '';
+	user1: string = '';
+	user2: string = '';
 
 	end: boolean = false;
     start: boolean = false
 
 	constructor(private gameService: GameService,
-				private router: Router) { }
+				private router: Router,
+				public authService: AuthService) { }
 
-	ngAfterViewInit()
+	async ngAfterViewInit()
     {
 		//console.log(this.gameRoom);
 		this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
@@ -59,6 +63,16 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 		this.netHeight = this.canvas.height;
 
         this.gameService.createGame(this.gameRoom)
+
+		await this.authService.getUserById(this.gameRoom.playerOne!.toString())
+		.then(res => { this.user1 = res.data.nick; })
+		if (this.gameRoom.playerTwo! == -1)
+			this.user2 = 'AI';
+		else
+			await this.authService.getUserById(this.gameRoom.playerTwo!.toString())
+			.then(res => { this.user2 = res.data.nick; })
+
+		console.log(this.user1 + this.user2);
 
         this.gameService.startGame().subscribe(res => {
 			if (res.text === "GameOver" && !this.gameOver)

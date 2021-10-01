@@ -76,9 +76,8 @@
     position: relative;
     width: 50%;
     height: 12%;
-    /* right: 0;
+    right: 0;
     left: 0;
-    bottom: 0;*/
     
     background-color: rgba(237, 229, 242, .25);
     border: 0.5vh solid #ede5f2ff;

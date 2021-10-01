@@ -101,7 +101,7 @@ export class AuthController
         return res.send({url: 'http://localhost:3000/auth/assets/qrImage.png'})
     }
 
-    @UseGuards(verifyUser)
+    //@UseGuards(verifyUser)
     @Post('verify')
     async verifyCode(@Res() res: Response, @Req() req: Request)
     {
