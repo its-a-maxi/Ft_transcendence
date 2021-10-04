@@ -13,21 +13,21 @@ export class HomeComponent implements OnInit {
 
 	ngOnInit(): void
 	{
-		this.showUsers()
+		//this.showUsers()
 		
 	}
 
-	showUsers()
-	{
-		this.authService.showAllUsers()
-			.then(res => res.data.map(obj => console.log(obj)))
-	}
+	// showUsers()
+	// {
+	// 	this.authService.showAllUsers()
+	// 		.then(res => res.data.map(obj => console.log(obj)))
+	// }
 
 	getPlay()
 	{
-		if (this.authService.statusLogin())
-			this.router.navigate(['/game'])
-		else
-			this.router.navigate(['/login'])
+		// if (this.authService.statusLogin())
+		// 	this.router.navigate(['/game'])
+		// else
+		// 	this.router.navigate(['/login'])
 	}
 }

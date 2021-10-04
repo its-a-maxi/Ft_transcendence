@@ -28,9 +28,11 @@ export class ChatMessageComponent
 
     challengeUser()
     {
-         
+        console.log("ETOE: ", this.message)
+        let enemy: number | undefined = (this.message.enemy! == this.userId) ?
+            this.message.user?.id : this.message.enemy
         this.gameService.connect()
-        this.gameService.findUsers()
+        this.gameService.createChallenge(enemy as number)
         this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
     }
 

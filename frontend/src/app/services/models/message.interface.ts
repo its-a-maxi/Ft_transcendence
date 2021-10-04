@@ -9,6 +9,7 @@ export interface MessageI
     user?: UserI;
     type?: string;
     room: RoomI;
+    enemy?: number;
     created_at?: Date;
     updated_at?: Date;
 }

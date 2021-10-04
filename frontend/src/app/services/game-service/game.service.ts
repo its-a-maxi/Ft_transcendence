@@ -111,4 +111,9 @@ export class GameService
     {
         this.socket.emit('getCable')
     }
+
+    createChallenge(enemy: number)
+    {
+        this.socket.emit('challengeRoom', enemy)
+    }
 }

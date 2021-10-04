@@ -8,6 +8,7 @@ export interface MessageI
     text: string;
     user: UserI;
     type?: string;
+    enemy?: number;
     room: RoomI;
     crated_at?: Date;
     update_at?: Date;

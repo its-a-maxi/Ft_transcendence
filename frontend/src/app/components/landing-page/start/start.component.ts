@@ -17,11 +17,11 @@ export class StartComponent implements OnInit {
 		
 	}
 
-	showUsers()
-	{
-		this.authService.showAllUsers()
-			.then(res => res.data.map(obj => console.log(obj)))
-	}
+	// showUsers()
+	// {
+	// 	this.authService.showAllUsers()
+	// 		.then(res => res.data.map(obj => console.log(obj)))
+	// }
 
 	getPlay()
 	{

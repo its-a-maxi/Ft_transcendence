@@ -15,6 +15,9 @@ export class MessageEntity
     @Column({default: null})
     type?: string;
 
+    @Column({default: 0})
+    enemy?: number;
+
     @ManyToOne(() => UserEntity, user => user.messages)
     @JoinColumn()
     user: UserEntity;

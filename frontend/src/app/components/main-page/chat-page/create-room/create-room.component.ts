@@ -24,7 +24,7 @@ export class CreateRoomComponent implements OnInit
 	check: boolean = false;
 
 	private mainUser: UserI | undefined;
-	private allUsers: Array<User> = [];
+	private allUsers: Array<UserI> = [];
 	private rooms: Array<RoomI> = [];
 
 	private paramId: string | null = sessionStorage.getItem('token');
@@ -36,6 +36,7 @@ export class CreateRoomComponent implements OnInit
 		if (this.paramId)
 			await this.findUser(this.paramId);
 		await this.findRooms();
+        //this.authService.showUsers_test().subscribe(response => this.allUsers = response.filter(x => x.id != this.mainUser?.id))
 		await this.authService.showAllUsers()
 			.then(response => this.allUsers = response.data.filter(x => x.id != this.mainUser?.id));
 	}

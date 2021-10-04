@@ -52,11 +52,11 @@ export class ProfileComponent implements OnInit
 		this.findUser()
 	}
 
-	showUsers()
-	{
-		this.authService.showAllUsers()
-			.then(res => res.data.map(obj => console.log(obj)))
-	}
+	// showUsers()
+	// {
+	// 	this.authService.showAllUsers()
+	// 		.then(res => res.data.map(obj => console.log(obj)))
+	// }
 
 	findUser()
 	{

@@ -41,6 +41,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
     leaveUsers: UserSocketI[] = []
 
+    challengeUsers: UserSocketI[] = []
+
     ///////////////
 
     paddleWidth: number = 10;
@@ -59,7 +61,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     PowerUpx2: boolean = false
     PowerUpQuickBall: number = 0
     PowerUpOnePoint: boolean = false
-    PowerUpQuickPalette: number = 8
+    PowerUpQuickPalette: number = 10
 
 	constructor(private userService: UsersService,
                 private gameService: GameService) {}
@@ -71,6 +73,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         this.specialUsers = []
         this.liveShowUsers = []
         this.leaveUsers = []
+        this.challengeUsers = []
         await this.gameService.deleteAll()
     }
 
@@ -123,6 +126,15 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             let index = this.specialUsers.indexOf(userSocket)
             if (index > -1)
                 this.specialUsers.splice(index, 1)
+        }
+
+        if (this.challengeUsers.length === 1)
+            this.challengeUsers.splice(0, 1)
+        else
+        {
+            let index = this.challengeUsers.indexOf(userSocket)
+            if (index > -1)
+                this.challengeUsers.splice(index, 1)
         }
 	}
 
@@ -246,6 +258,36 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
 	///////////////////////////////////////////////////////////////
 
+    @SubscribeMessage('challengeRoom')
+    async challengeRoom(socket: Socket, enemy: number)
+    {
+        console.log("ENENMY: ", enemy)
+        this.challengeUsers.push({userId: socket.data.user.id, socketId: socket.id, enemy})
+        console.log("ESSTO: ", this.challengeUsers)
+        for (let i = 0; i < this.challengeUsers.length; i++)
+        {
+            for (let j = i + 1; j < this.challengeUsers.length; j++)
+            {
+                if (this.challengeUsers[i].userId === this.challengeUsers[j].enemy &&
+                    this.challengeUsers[i].enemy === this.challengeUsers[j].userId)
+                    {
+                        const newGame: GameI = await this.gameService
+                        .create({
+                            playerOne: this.challengeUsers[i].userId,
+                            playerTwo: this.challengeUsers[j].userId,
+                            option: OptionGame.challenge,
+                            socketList: [this.challengeUsers[i].socketId, this.challengeUsers[j].socketId]
+                        })
+                        this.challengeUsers.splice(i, 1)
+                        this.challengeUsers.splice(j, 1)
+                        this.listRooms.push(newGame)
+                        break ;
+                    }
+            }
+        }
+        this.sendRooms(socket)
+    }
+
     private checkPowerUps(game: GameI)
     {
         this.PowerUpQuickBall = 0;
@@ -268,7 +310,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 if (power === 'PowerUpOnePoint')
                     this.PowerUpOnePoint = true;
                 if (power === 'PowerUpQuickPalette')
-                    this.PowerUpQuickPalette = 16;
+                    this.PowerUpQuickPalette = 20;
             }
         }
     }
@@ -377,12 +419,12 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 				dir = 1;
 			ball.velocityX = dir * ball.speed * Math.cos(angle);
 			ball.velocityY = ball.speed * Math.sin(angle);
-			ball.speed += 0.2;
+			ball.speed += 0.4;
             ball.speed += this.PowerUpQuickBall
 		}
 
 		if (game.playerTwo === -1)
-			plTwo.y += ((ball.y - (plTwo.y + this.paddleHeight / 2))) * 0.10; 
+			plTwo.y += ((ball.y - (plTwo.y + this.paddleHeight / 2))) * 0.14; 
 		let data = {
 			plOne,
 			plTwo,
@@ -421,13 +463,13 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         {
             this.upArrowPressed =  data.keyUp 
             this.downArrowPressed = data.keyDown
-            this.upArrowPressed2 =  false
-            this.downArrowPressed2 = false
+            // this.upArrowPressed2 =  false
+            // this.downArrowPressed2 = false
         }
         else if (socket.id === data.game.socketList[1])
         {
-            this.upArrowPressed =  false
-            this.downArrowPressed = false
+            // this.upArrowPressed =  false
+            // this.downArrowPressed = false
             this.upArrowPressed2 =  data.keyUp
             this.downArrowPressed2 = data.keyDown
         }

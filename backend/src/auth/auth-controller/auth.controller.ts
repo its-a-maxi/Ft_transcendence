@@ -12,6 +12,7 @@ import { diskStorage } from "multer";
 import { authenticator } from 'otplib'
 import  QRCode  from "qrcode";
 import { UserI } from 'src/users/user-service/models/user.interface';
+import { Observable, from, of } from 'rxjs';
 
 
 @Controller('auth')
@@ -25,7 +26,7 @@ export class AuthController
     @Get('/callback')
     async callback(@Req() req, @Res({passthrough: true}) res: Response)
     {
-        res.cookie('clientID', req.user, {httpOnly: true});
+        res.cookie('clientID', req.user, {httpOnly: false});
         const client = await this.jwtService.verifyAsync(req.user);
         const clientData = await this.userService.getUser(client['id']);
 
@@ -53,6 +54,12 @@ export class AuthController
             return res.redirect(`http://localhost:4200/mainPage/settings/${clientData.id}`)
     }
 
+    @Post('/refresh')
+    async refreshToken(@Req() req: any)
+    {
+        console.log("ENTRA REFRESHTOKEN", req.cookies['clientID'])
+    }
+
     @UseGuards(verifyUser)
     @Get('authUser')
     async authUser(@Req() req: Request)
@@ -71,9 +78,10 @@ export class AuthController
 
     @UseGuards(verifyUser)
     @Get('allUsers')
-    async showUsers()
+    async showUsers() 
     {
-        return this.userService.getAllUsers()
+        
+        return await this.userService.getAllUsers()
     }
     
     //@UseGuards(verifyUser)
@@ -104,7 +112,7 @@ export class AuthController
         return res.send({url: 'http://localhost:3000/auth/assets/qrImage.png'})
     }
 
-    //@UseGuards(verifyUser)
+    @UseGuards(verifyUser)
     @Post('verify')
     async verifyCode(@Res() res: Response, @Req() req: Request)
     {
