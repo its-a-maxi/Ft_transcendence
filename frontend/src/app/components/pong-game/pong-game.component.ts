@@ -83,7 +83,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
         this.gameService.startGame().subscribe(res => {
 			if (res.text === "GameOver" && !this.gameOver)
 			{
-				if (res.winner = this.user1id)
+				if (res.winner == this.user1id)
 					this.winner = this.user1;
 				else
 					this.winner = this.user2;
@@ -91,7 +91,8 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                     winner: res.winner,
                     losser: res.losser
                 }
-                this.gameService.updateStats(data)
+				if (this.user2 != 'AI' && this.winner == this.user2)
+                	this.gameService.updateStats(data);
 				this.end = true;
                 this.gameOver = true
 				return
