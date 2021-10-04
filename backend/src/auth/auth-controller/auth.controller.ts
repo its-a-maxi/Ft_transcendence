@@ -186,4 +186,27 @@ export class AuthController
             return res.status(400)
         }
     }
+
+    @UseGuards(verifyUser)
+    @Put('addMatch')
+    async addMatch(@Req() req: Request,  @Res() res: Response, @Body() params: any)
+    {
+        try
+        {
+            if (params.id == '-1')
+                return res.status(200).send("OK")
+            const id = req.body.id
+            const user: UserI = await this.userService.getUser(params.id)
+            if (!user.matches)
+                user.matches = [];
+            user.matches.push(params.match);
+            console.log(params);
+            await this.userService.updateFriends(user)
+            return res.status(200).send("OK")
+        }
+        catch
+        {
+            return res.status(400)
+        }
+    }
 }

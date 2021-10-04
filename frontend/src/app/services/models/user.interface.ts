@@ -29,4 +29,6 @@ export interface UserI
     coalition?: string;
 
     user42?: string;
+
+    matches: Array<string>;
 }

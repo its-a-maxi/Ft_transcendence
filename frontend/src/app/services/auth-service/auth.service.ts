@@ -80,6 +80,10 @@ export class AuthService
 	{
 		return await axios.put('http://localhost:3000/auth/updateFriends', {friends, id})
 	}
+	async addMatch(match: string, id: string)
+	{
+		return await axios.put('http://localhost:3000/auth/addMatch', {match, id})
+	}
 
 	async enableTwofactor()
 	{

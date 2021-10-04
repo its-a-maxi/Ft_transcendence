@@ -31,4 +31,6 @@ export interface UserI
     user42?: string;
 
     friendsId?: number[];
+
+    matches?: string[];
 }

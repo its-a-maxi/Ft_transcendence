@@ -91,8 +91,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                     winner: res.winner,
                     losser: res.losser
                 }
-				if (this.user2 != 'AI' && this.winner == this.user2)
-                	this.gameService.updateStats(data);
+				//this.updatehistorial();
 				this.end = true;
                 this.gameOver = true
 				return
@@ -256,5 +255,11 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 		}
 		return color;
 	  }
+
+	private async updatehistorial()
+	{
+		await this.authService.addMatch('Losses vs ' + this.user2, this.gameRoom.playerOne!.toString());
+		await this.authService.addMatch('Wins vs ' + this.user1, this.gameRoom.playerTwo!.toString());
+	}
 
 }

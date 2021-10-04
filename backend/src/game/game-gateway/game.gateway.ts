@@ -292,8 +292,14 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		ball.x = this.canvasWidth / 2;
 		ball.y = this.canvasHeight / 2;
 		ball.speed = 7;
-		ball.velocityX = -ball.velocityX;
-		ball.velocityY = -ball.velocityY;
+        if (ball.velocityX < 0)
+            ball.velocityX = +5//-ball.velocityX;
+        else
+            ball.velocityX = -5
+        if (ball.velocityY < 0)
+		    ball.velocityY = +5//-ball.velocityY;
+        else
+            ball.velocityY = -5
 		
 	}
 
@@ -436,26 +442,28 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
        {
            const userOne: UserI = await this.userService.getUser(data.winner)
            const userTwo: UserI = await this.userService.getUser(data.losser)
-           if (userOne.id === data.winner)
-           {
-                userOne.wins += 1;
-                await this.userService.updateWins(userOne.wins, userOne.id)
-           }
-           else if (userOne.id === data.losser)
-           {
-                userOne.defeats += 1;
-                await this.userService.updateDefeats(userOne.defeats, userOne.id)
-           }
            if (userTwo.id === data.winner)
            {
-                userTwo.wins += 1;
-                await this.userService.updateWins(userTwo.wins, userTwo.id)
+                console.log('1 wins!')
+                userOne.wins += 1;
+                userTwo.defeats += 1;
+                userOne.matches.push('Wins vs ' + userTwo.nick);
+                userTwo.matches.push('Losses vs ' + userOne.nick);
+                await this.userService.updateWins(userOne.wins, userOne.id)
+                await this.userService.updateDefeats(userTwo.defeats, userTwo.id)
            }
            else if (userTwo.id === data.losser)
            {
-                userTwo.defeats += 1;
-                await this.userService.updateDefeats(userTwo.defeats, userTwo.id)
+                console.log('2 wins!')
+                userTwo.wins += 1;
+                userOne.defeats += 1;
+                userOne.matches.push('Losses vs ' + userTwo.nick);
+                userTwo.matches.push('Wins vs ' + userOne.nick);
+                await this.userService.updateWins(userTwo.wins, userTwo.id)
+                await this.userService.updateDefeats(userOne.defeats, userOne.id)
            }
+           await this.userService.updateFriends(userOne);
+           await this.userService.updateFriends(userTwo);
        }
     }
 

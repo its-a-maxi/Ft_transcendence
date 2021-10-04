@@ -65,7 +65,7 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
                         return
                     }
                     if (this.gameRoom.powerList)
-                    {//console.log("ENTRA", this.gameRoom.powerList)
+                    {
                         for (let power of this.gameRoom.powerList)
                         {
                             if (power === 'PowerUpBigPalette')
