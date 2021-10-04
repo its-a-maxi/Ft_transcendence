@@ -37,6 +37,7 @@
 			(showOverlay)='showOverlay($event)'
 			(refreshChat)='refreshChat()'>
 		</app-chat-channel>
+		<button *ngIf='currentRoom' class=close (click)='leaveRoom()'>x</button>
 	</div>
 	<img src="../../../../assets/images/openRightIcon.png" (click)="showOverlay('hiddenChannelList')" alt="openRightIcon" class="openRight">
 	<img src="../../../../assets/images/openLeftIcon.png" (click)="showOverlay('hiddenUserList')" alt="openLeftIcon" class="openLeft">

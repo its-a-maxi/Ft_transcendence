@@ -47,7 +47,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit
 		this.chatService.findUsersConnected()
 		this.chatService.getConnectedUsers().subscribe(res => {
 			this.usersConnected = res
-			console.log(this.usersConnected)
 		})
 		
 	}
