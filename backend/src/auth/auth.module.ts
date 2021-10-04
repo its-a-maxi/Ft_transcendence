@@ -14,7 +14,7 @@ import { OauthStrategy } from './strategies/oauth.strategy';
             PassportModule,
             JwtModule.register({
               secret: enviroment.PASS_SECRET,
-              signOptions: { expiresIn: '1h'}
+              signOptions: { expiresIn: '7200s'}
             })],
   controllers: [AuthController],
   providers: [AuthService, OauthStrategy],

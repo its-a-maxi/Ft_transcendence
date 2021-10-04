@@ -29,6 +29,7 @@ export class FriendsComponent implements OnInit {
   {
     if (this.paramId)
       await this.findUser(this.paramId);
+    //this.authService.showUsers_test().subscribe(response => this.allUsers = response.filter(x => x.id != parseFloat(this.paramId!)))
     await this.authService.showAllUsers()
       .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)));
     if (this.mainUser && this.mainUser.friendsId)

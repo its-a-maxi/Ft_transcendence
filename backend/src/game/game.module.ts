@@ -12,7 +12,7 @@ import { GameService } from './service/game/game.service';
     imports: [TypeOrmModule.forFeature([UserEntity, GameEntity])
                 , JwtModule.register({
             secret: enviroment.PASS_SECRET,
-            signOptions: { expiresIn: '1h'}
+            signOptions: { expiresIn: '7200s'}
     })],
     providers: [GameGateway, UsersService, GameService]
 })

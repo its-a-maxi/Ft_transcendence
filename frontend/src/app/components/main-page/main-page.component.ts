@@ -16,8 +16,7 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 
 	constructor(public authService: AuthService,
                 private router: Router,
-                private chatService: ChatService,
-                private cookieService: CookieService) { }
+                private chatService: ChatService) { }
 
 	private user?: User;
 	nick: string | undefined;
@@ -29,24 +28,26 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 
 	async ngOnInit()
 	{
-        //console.log("ESTO ES COOKIE: ", this.cookieService.get('clientID'))
 		if (this.paramId)
 			await this.findUser(this.paramId);
 		// this.chatService.findUsersConnected()
 		// this.chatService.getConnectedUsers().subscribe(res => {
 		// 	this.liveUsers = res.length
 		// })
-
+        this.chatService.findUsersConnected()
+		this.chatService.getConnectedUsers().subscribe(res => {
+			this.liveUsers = res.length
+		})
 		this.nick = this.user?.nick;
 		this.picture = this.user?.avatar;
 	}
 
 	async ngAfterViewInit()
 	{
-		await this.chatService.findUsersConnected()
-		await this.chatService.getConnectedUsers().subscribe(res => {
-			this.liveUsers = res.length
-		})
+		// await this.chatService.findUsersConnected()
+		// await this.chatService.getConnectedUsers().subscribe(res => {
+		// 	this.liveUsers = res.length
+		// })
 	}
 
 	ngOnDestroy()
@@ -64,6 +65,7 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 				else
 					this.user = res.data;
 			})
+            .catch(() => this.authService.refreshToken())
 	}
 
 	showTabs(): void {

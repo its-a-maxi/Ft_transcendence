@@ -16,8 +16,8 @@ export class RegisterComponent implements OnInit {
 
 	ngOnInit(): void
 	{
-		this.authService.getAuthUser()
-			.catch(() => this.router.navigate(['login']))
+		// this.authService.getAuthUser()
+		// 	.catch(() => this.router.navigate(['login']))
 
 	}
 
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
 			return
 		}
 		//NavigationComponent.updateUserStatus.next(true)
-		this.authService.postAuthUser(form.value)//.then(() => ProfileComponent.oldAvatar.next("ryu.jpg"))
+		//this.authService.postAuthUser(form.value)//.then(() => ProfileComponent.oldAvatar.next("ryu.jpg"))
 		//localStorage.setItem('nick', form.value['nick'])
 		//localStorage.setItem('avatar', "ryu.jpg")
 		form.reset()

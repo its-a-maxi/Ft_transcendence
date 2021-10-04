@@ -40,6 +40,7 @@ export class ChatPageComponent implements OnInit {
     {
 		if (this.paramId)
 			await this.findUser(this.paramId);
+        //this.authService.showUsers_test().subscribe(response => this.allUsers = response.filter(x => x.id != this.mainUser?.id))
 		await this.authService.showAllUsers()
 			.then(response => this.allUsers = response.data.filter(x => x.id != this.mainUser?.id));
 		await this.findRooms();
@@ -233,7 +234,8 @@ export class ChatPageComponent implements OnInit {
         this.chatService.sendMessage({
             text: `${user.nick.toUpperCase()}! I dare you to play a game with me!`,
             room: this.challengeRoom,
-            type: "challenge"
+            type: "challenge",
+            enemy: user.id
         });
     }
 }

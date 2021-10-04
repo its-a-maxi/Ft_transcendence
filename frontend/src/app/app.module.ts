@@ -53,6 +53,7 @@ import { PongGameComponent } from './components/pong-game/pong-game.component';
 import { ShowRoomComponent } from './components/main-page/play/show-room/show-room.component';
 import { CookieService } from 'ngx-cookie-service';
 import { TwoFaCheckComponent } from './components/landing-page/two-fa-check/two-fa-check.component';
+import { CookieModule } from 'ngx-cookie';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -109,9 +110,10 @@ export function tokenGetter(): string | null {
     FlexLayoutModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatMenuModule
+    MatMenuModule,
+    CookieModule.forRoot()
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [CookieService],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

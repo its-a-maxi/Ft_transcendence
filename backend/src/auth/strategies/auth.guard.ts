@@ -20,6 +20,5 @@ export class verifyUser implements CanActivate
         {
             throw new UnauthorizedException('unauthorized!!')
         }
-        
     }
 }

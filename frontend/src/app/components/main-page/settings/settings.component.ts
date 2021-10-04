@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat-service';
 import { GameService } from 'src/app/services/game-service/game.service';
@@ -41,8 +42,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 
 	constructor(public authService: AuthService,
 				private router: Router,
-				private activateRoute: ActivatedRoute,
-				) { }
+				private activateRoute: ActivatedRoute) { }
 
 	async ngOnInit()
 	{
@@ -60,8 +60,10 @@ export class SettingsComponent implements OnInit, OnDestroy
 			this.authentication = this.user.authentication;
 		}
 		this.profilePicture = this.user?.avatar;
-		await this.authService.showAllUsers()
-		  .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)));
+		//this.authService.showUsers_test().subscribe(res => res.filter(x => x.id != parseFloat(this.paramId!)))
+        this.authService.showAllUsers()
+		  .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)))
+          .catch(() => this.authService.refreshToken())
 	}
 
     ngOnDestroy()
@@ -80,6 +82,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 				else
 					this.user = res.data;
 			})
+            
 	}
 
 	onImageSelected(event: any): void

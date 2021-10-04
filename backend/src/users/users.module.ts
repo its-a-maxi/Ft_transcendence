@@ -11,7 +11,7 @@ import { UsersService } from './user-service/users.service';
   imports: [TypeOrmModule.forFeature([UserEntity]),
             JwtModule.register({
                     secret: enviroment.PASS_SECRET,
-                    signOptions: { expiresIn: '1h'}
+                    signOptions: { expiresIn: '7200s'}
             })],
   controllers: [UsersController],
   providers: [UsersService, AuthService],

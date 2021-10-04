@@ -20,6 +20,7 @@ export class RankingComponent implements OnInit {
   async ngOnInit()
   {
     let i: number = 0;
+    //this.authService.showUsers_test().subscribe(response => this.allUsers = response)
     await this.authService.showAllUsers()
       .then(response => this.allUsers = response.data);
     this.rankByWins();
