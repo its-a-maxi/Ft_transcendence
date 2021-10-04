@@ -18,6 +18,12 @@ export class ProfilePopupComponent implements OnInit {
     this.updateStatusColor();
   }
 
+  ngOnChanges()
+  {
+    this.winsDefeats();
+    this.updateStatusColor();
+  }
+
   winsDefeats(): void
   {
     let defeatsPercent: number;
@@ -42,8 +48,14 @@ export class ProfilePopupComponent implements OnInit {
       back!.style.backgroundColor = "#e08080";
     }
     else
+    {
 		  front!.style.width = defeatsPercent + "%";
-    console.log(defeatsPercent);
+		  front!.style.right = "0%";
+      front!.style.left = "";
+      front!.style.borderRadius = "0% 100vh 100vh 0%";
+      front!.style.backgroundColor = "#e08080";
+      back!.style.backgroundColor = "#59c977";
+    }
   }
 
   openUser(): void
@@ -69,6 +81,13 @@ export class ProfilePopupComponent implements OnInit {
       status!.style.color = "rgba(126, 179, 217, .8)";
       status!.style.border = "0.5vh solid rgba(126, 179, 217, .8)";
       avatar!.style.border = "0.5vh solid rgba(126, 179, 217, .8)";
+    }
+    else if (this.userPopup.status == 'offline')
+    {
+      this.status = "Offline";
+      status!.style.color = "rgba(19, 5, 11, .3)";
+      status!.style.border = "0.5vh solid rgba(19, 5, 11, .3)";
+      avatar!.style.border = "0.5vh solid rgba(19, 5, 11, .3)";
     }
   }
 
