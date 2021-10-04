@@ -12,4 +12,5 @@ export class User{
       coalition: string = "";
       isConnected: boolean = false;
       friends: Array<number> = [];
+      matches: Array<string> = [];
 }

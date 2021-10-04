@@ -33,9 +33,6 @@ export class ChatPageComponent implements OnInit {
 
     challengeRoom!: RoomI;
 
-	private roomToChange: string = '';
-
-
 	async ngOnInit()
     {
 		if (this.paramId)
@@ -65,7 +62,7 @@ export class ChatPageComponent implements OnInit {
 		this.chatService.getMyRooms().subscribe(res => {
 
 			this.rooms = res;
-            this.currentRoom = this.rooms[0]
+            //this.currentRoom = this.rooms[0]
 			this.sortRooms();
             
 		})
@@ -238,4 +235,10 @@ export class ChatPageComponent implements OnInit {
             enemy: user.id
         });
     }
+
+	leaveRoom()
+	{
+		let room!: RoomI;
+		this.currentRoom = room;
+	}
 }

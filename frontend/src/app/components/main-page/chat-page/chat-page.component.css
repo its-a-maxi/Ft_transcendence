@@ -295,3 +295,26 @@ app-profile-popup
 	font-family: 'futura';
 	font-size: 1.8vh;
 }
+
+
+.close
+{
+	font-family: 'futura';
+    position: absolute;
+    right: 4%;
+    top: 1.8%;
+    appearance: none;
+    height: 3vh;
+    width: 3vh;
+    background-color: transparent;
+    border: transparent;
+    font-size: 3.5vh;
+    color: #ede5f2ff;
+    opacity: 60%;
+}
+
+.close:hover
+{
+    color: rgb(252, 102, 102);
+    opacity: 100%;
+}

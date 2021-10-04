@@ -65,4 +65,6 @@ export class UserEntity
     @Column("simple-array", {nullable: true})
     friendsId: number[];
 
+    @Column("simple-array", {nullable: true})
+    matches: string[];
 }

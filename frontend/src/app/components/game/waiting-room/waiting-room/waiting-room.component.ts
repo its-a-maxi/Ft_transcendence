@@ -35,6 +35,7 @@ export class WaitingRoomComponent implements OnInit {
             {
 				//this.gameService.leaveRoom(this.roomId)
 				this.router.navigate([`mainPage/settings/${this.userId}`])
+				
 				return
 			}
 
