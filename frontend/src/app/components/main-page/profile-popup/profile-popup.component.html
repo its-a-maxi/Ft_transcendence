@@ -1,5 +1,5 @@
 <div class=body id=body>
-	<div class="box">
+	<div class="box" id='ProfileBox'>
 		<img src={{userPopup.avatar}} alt="Profile Picture" id="avatarPopup" class="profile" >
 		<div class=nick>
 			<p class=nickStyle>{{userPopup.nick}}</p>
@@ -16,8 +16,20 @@
 			<p class=wins>{{userPopup.wins}}</p>
 			<p class=defeats>{{userPopup.defeats}}</p>
 		</div>
+			<p class='matchHistorialBtn' (click)='showMatchHistorial()'>Match historial</p>
 		<div class=status id="status">
 			<p class=statusStyle>{{status}}</p>
+		</div>
+	</div>
+	<div class='MatchHistorial' id='MatchHistorial'>
+		<button class='close' (click)='hideMatchHistorial()'>x</button>
+		<p class=match>Match historial</p>
+		<div class="overlayListContainer">
+			<div class="overlayListElementsContainer">
+				<ul class="overlayList" id="overlayList" *ngFor="let match of userPopup.matches">
+					<li id='matchList'>{{match}}</li>
+				</ul>	
+			</div>
 		</div>
 	</div>
 </div>

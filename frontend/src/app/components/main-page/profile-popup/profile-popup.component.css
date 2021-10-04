@@ -24,7 +24,7 @@ div{
 .box
 {
 	position: absolute;
-	height: 80%;
+	height: 90%;
 	width: 90%;
 	top: 0;
 	bottom: 0;
@@ -54,7 +54,7 @@ div{
 	position: absolute;
 	height: 10%;
 	width: 100%;
-	top: 37%;
+	top: 34%;
 	right: 0;
 	left: 0;
 	margin: auto;
@@ -76,7 +76,7 @@ div{
 	position: absolute;
 	height: 6%;
 	width: 100%;
-	top: 47%;
+	top: 44%;
 	right: 0;
 	left: 0;
 	margin: auto;
@@ -105,7 +105,7 @@ div{
 	position: absolute;
 	height: 10%;
 	width: 100%;
-	top: 55%;
+	top: 52%;
 	right: 0;
 	left: 0;
 	margin: auto;
@@ -139,7 +139,7 @@ div{
 	position: absolute;
 	height: 10%;
 	width: 90%;
-	top: 65%;
+	top: 62%;
 	right: 0;
 	left: 0;
 	margin: auto;
@@ -172,6 +172,25 @@ div{
 	color: rgba(19, 5, 11, .3);
 	border-radius: 100vh;
 }
+
+.matchHistorialBtn
+{
+	position: absolute;
+	height: 6%;
+	width: 100%;
+	top: 75%;
+	margin: auto;
+
+	font-size: 2vh;
+	letter-spacing: 0.2vh;
+	color: rgba(19, 5, 11, .3);
+}
+.matchHistorialBtn:hover
+{
+	color: rgba(19, 5, 11, .5);
+	cursor: pointer;
+}
+
 .statusStyle
 {
 	position: absolute;
@@ -182,4 +201,111 @@ div{
 	letter-spacing: 0.2vh;
 	margin: auto;
 
+}
+
+
+.overlayListContainer
+{
+	position: absolute;
+	width: 90%;
+	height: 70%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 20%;
+	margin: auto;
+	overflow: auto;
+}
+
+.overlayListElementsContainer
+{
+	position: absolute;
+	width: 95%;
+	margin: auto;
+}
+
+	.overlayList
+	{
+		width: 100%;
+		position: relative;
+
+		border: 0.5vh solid rgba(19, 5, 11, 0);
+		border-radius: 100px;
+		transition-duration: 0.1s;
+		font-size: 2vh;
+		text-align: center;
+		color: rgba(19, 5, 11, .65);
+		list-style: none;
+		margin-left: -0.4vw;
+	}
+
+.overlayListContainer::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.overlayListContainer::-webkit-scrollbar-thumb {
+	background: rgba(19, 5, 11, .2);
+}
+
+
+.match
+{
+	position: absolute;
+	height: 20%;
+	width: 100%;
+	top: 12%;
+	margin: auto;
+	text-align: center;
+
+	font-size: 3vh;
+	letter-spacing: 0.2vh;
+}
+
+  /* width */
+  ::-webkit-scrollbar {
+	width: 1vh;
+	height: 1vh;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: transparent;
+	border-radius: 100px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: rgba(19, 5, 11, .2);
+	border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-corner {
+	  background: transparent;
+	}
+
+.MatchHistorial
+{
+	display: none;
+}
+
+.close
+{
+	font-family: 'futura';
+    position: absolute;
+    right: 8%;
+    top: 4%;
+    appearance: none;
+    height: 3vh;
+    width: 3vh;
+    background-color: transparent;
+    border: transparent;
+    font-size: 3.5vh;
+	color: rgba(19, 5, 11);
+    opacity: 40%;
+}
+
+.close:hover
+{
+    color: rgb(252, 102, 102);
+    opacity: 100%;
 }
