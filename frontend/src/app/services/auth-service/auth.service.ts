@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import axios from 'axios';
 import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs';
-import { NavigationComponent } from '../../components/navigation/navigation.component';
 import { RoomI } from '../models/room.interface';
 import { User } from "../models/user";
 import { UserI } from '../models/user.interface';

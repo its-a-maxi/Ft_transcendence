@@ -3,17 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
-import { HomeComponent } from './components/home/home.component';
 import { GameComponent } from './components/game/game.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
-import { ProfileComponent } from './components/profile/profile.component';
-import { TwoFAComponent } from './components/two-fa/two-fa.component';
-import { ChatComponent } from './components/chat/chat.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ChatRoomComponent } from './components/chat/chat-room/chat-room.component';
 import { ChatChannelComponent } from './components/main-page/chat-page/chat-channel/chat-channel.component';
 import { ChatMessageComponent } from './components/main-page/chat-page/chat-message/chat-message.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
@@ -29,7 +21,7 @@ import { CreateRoomComponent } from './components/main-page/chat-page/create-roo
 import { GetPasswordComponent } from './components/main-page/chat-page/get-password/get-password.component';
 import { UserListHiddenComponent } from './components/main-page/chat-page/user-list-hidden/user-list-hidden.component';
 import { ChannelListHiddenComponent } from './components/main-page/chat-page/channel-list-hidden/channel-list-hidden.component';
-import { WaitingRoomComponent } from './components/game/waiting-room/waiting-room/waiting-room.component';
+import { WaitingRoomComponent } from './components/main-page/play/waiting-room/waiting-room/waiting-room.component';
 import { ProfilePopupComponent } from './components/main-page/profile-popup/profile-popup.component';
 import { PongGameComponent } from './components/pong-game/pong-game.component';
 import { ShowRoomComponent } from './components/main-page/play/show-room/show-room.component';
@@ -54,6 +46,7 @@ import { MatMenuModule} from '@angular/material/menu';
 import { NgxPaginationModule } from 'ngx-pagination'
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { LoginComponent } from './components/login/login.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -62,15 +55,8 @@ export function tokenGetter(): string | null {
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
-    HomeComponent,
     GameComponent,
     LoginComponent,
-    RegisterComponent,
-    ProfileComponent,
-    TwoFAComponent,
-    ChatComponent,
-    ChatRoomComponent,
     ChatChannelComponent,
     ChatMessageComponent,
     LandingPageComponent,

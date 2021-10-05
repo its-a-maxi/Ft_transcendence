@@ -7,7 +7,6 @@ import { GameI } from 'src/app/services/models/gameRoom.interface';
 import { RoomI } from 'src/app/services/models/room.interface';
 import { User } from 'src/app/services/models/user';
 import { UserI } from 'src/app/services/models/user.interface';
-import { WaitingRoomComponent } from '../../game/waiting-room/waiting-room/waiting-room.component';
 
 @Component({
 	selector: 'app-play',
