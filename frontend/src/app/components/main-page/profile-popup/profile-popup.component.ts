@@ -22,6 +22,7 @@ export class ProfilePopupComponent implements OnInit {
   {
     this.winsDefeats();
     this.updateStatusColor();
+    this.hideMatchHistorial();
   }
 
   winsDefeats(): void
@@ -89,6 +90,32 @@ export class ProfilePopupComponent implements OnInit {
       status!.style.border = "0.5vh solid rgba(19, 5, 11, .3)";
       avatar!.style.border = "0.5vh solid rgba(19, 5, 11, .3)";
     }
+  }
+
+  showMatchHistorial()
+  {
+    let MatchHistorial = document.getElementById("MatchHistorial");
+    let ProfileBox = document.getElementById("ProfileBox");
+
+    MatchHistorial!.style.display = 'block';
+    ProfileBox!.style.display = 'none';
+  }
+  hideMatchHistorial()
+  {
+    let MatchHistorial = document.getElementById("MatchHistorial");
+    let ProfileBox = document.getElementById("ProfileBox");
+
+    MatchHistorial!.style.display = 'none';
+    ProfileBox!.style.display = 'block';
+  }
+  styleMatch(match: string)
+  {
+    let matchList = document.getElementById("matchList");
+      if (match[0] == 'W')
+        matchList!.style.color = '#e08080';
+      else if (match[0] == 'L')
+        matchList!.style.color = '#59c977';
+    return (match);
   }
 
 

@@ -494,6 +494,10 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
        {
            const userOne: UserI = await this.userService.getUser(data.winner)
            const userTwo: UserI = await this.userService.getUser(data.losser)
+           if (!userOne.matches)
+            userOne.matches = [];
+            if (!userTwo.matches)
+             userTwo.matches = [];
            if (userTwo.id === data.winner)
            {
                 console.log('1 wins!')
