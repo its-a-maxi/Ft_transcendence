@@ -567,10 +567,10 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                         socketList: [this.specialUsers[i - 1].socketId, this.specialUsers[i].socketId],
                         powerList: this.listPowerUp
                     })
-                this.specialUsers.splice(i - 1, 2)
-                this.listRooms.push(newGame)
                 await this.userService.updateStatus(Status.inGame, this.specialUsers[i - 1].userId)
                 await this.userService.updateStatus(Status.inGame, this.specialUsers[i].userId)
+                this.specialUsers.splice(i - 1, 2)
+                this.listRooms.push(newGame)
                 break ;
             }
         }
