@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
 import { RoomI } from 'src/app/services/models/room.interface';
+import { User } from 'src/app/services/models/user';
 import { UserI } from 'src/app/services/models/user.interface';
 import { WaitingRoomComponent } from '../../game/waiting-room/waiting-room/waiting-room.component';
 
@@ -38,18 +39,21 @@ export class PlayComponent implements OnInit
     liveRooms!: GameI[];
     show: boolean = false
     roomSelected!: GameI;
+	private allUsers: UserI[] = [];
 
 	constructor(private gameService: GameService,
 				private router: Router,
 				public authService: AuthService) { }
 
-	ngOnInit(): void
+	async ngOnInit()
 	{
         this.gameService.showRooms()
         this.gameService.getLiveRooms().subscribe(res => {
             this.liveRooms = res
             console.log(res)
         })
+		await this.authService.showAllUsers()
+		   .then(response => this.allUsers = response.data);
 	}
 
 	changeToAi()
@@ -149,21 +153,25 @@ export class PlayComponent implements OnInit
             });
 	}
 
-	private async getUserName(userId: number, userName: string)
+	getIdName(id: number): string
 	{
-		await this.authService.getUserById(userId.toString())
-			.then(res => { userName = res.data.nick; })	
+		for (let i = 0; this.allUsers[i]; i++)
+			if (this.allUsers[i].id == id)
+				return (this.allUsers[i].nick);
+		return ('AI');
 	}
-	getMatch(room: GameI): string
+	getRoomName(room: GameI): string
 	{
-		let user1: string = '';
-		let user2: string = '';
-		let rst: string = '';
-		this.getUserName(room.playerOne!, user1);
-		this.getUserName(room.playerTwo!, user2);
-		rst = user1 + ' vs ' + user2;
-		console.log(rst);
-		return(rst);
+		return (this.getIdName(room.playerOne!) + ' vs ' + this.getIdName(room.playerTwo!));
+	}
+	getRoomOption(option: string): string
+	{
+		if (option == 'normal')
+			return ('online');
+		else if (option == 'demo')
+			return ('vs Ai');
+		else
+			return ('power-ups');
 	}
 
 }

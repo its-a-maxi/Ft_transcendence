@@ -242,3 +242,26 @@ div{
     color: rgb(252, 102, 102);
     opacity: 100%;
 }
+
+
+  /* width */
+  ::-webkit-scrollbar {
+	width: 1vh;
+	height: 1vh;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: rgba(237, 229, 242, .25);
+	border-radius: 100px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: #ede5f2ff;
+	border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-corner {
+	  background: transparent;
+	}
