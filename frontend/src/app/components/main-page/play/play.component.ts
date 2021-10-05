@@ -10,7 +10,7 @@ import { WaitingRoomComponent } from '../../game/waiting-room/waiting-room/waiti
 	templateUrl: './play.component.html',
 	styleUrls: ['./play.component.css']
 })
-export class PlayComponent implements OnInit, OnDestroy
+export class PlayComponent implements OnInit
 {
 	/* POWER UPS */
 	PowerUpx2: boolean = false;
@@ -46,12 +46,6 @@ export class PlayComponent implements OnInit, OnDestroy
             this.liveRooms = res
             console.log(res)
         })
-	}
-
-	ngOnDestroy()
-	{
-		//this.gameService.leaveRoom()
-        
 	}
 
 	changeToAi()
@@ -145,10 +139,10 @@ export class PlayComponent implements OnInit, OnDestroy
 	reloadPage()
 	{
 		this.router.navigate([`/mainPage/play/${this.userId}`])
-		.then(()=>{
-            this.gameService.disconnect()
-			window.location.reload();
-		});
+            .then(()=>{
+                this.gameService.disconnect()
+                window.location.reload();
+            });
 	}
 
 }
