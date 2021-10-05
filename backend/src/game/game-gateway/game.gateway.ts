@@ -304,11 +304,11 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                             option: OptionGame.challenge,
                             socketList: [this.challengeUsers[i].socketId, this.challengeUsers[j].socketId]
                         })
+                        await this.userService.updateStatus(Status.inGame, this.challengeUsers[i].userId)
+                        await this.userService.updateStatus(Status.inGame, this.challengeUsers[i].userId)
                         this.challengeUsers.splice(i, 1)
                         this.challengeUsers.splice(j, 1)
                         this.listRooms.push(newGame)
-                        await this.userService.updateStatus(Status.inGame, this.challengeUsers[i].userId)
-                        await this.userService.updateStatus(Status.inGame, this.challengeUsers[i].userId)
                         break ;
                     }
             }
