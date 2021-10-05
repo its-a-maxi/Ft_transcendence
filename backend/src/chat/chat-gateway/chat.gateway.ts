@@ -61,6 +61,7 @@ export class ChatGateway
 				const rooms = await this.roomService.findAllRoomById(user.id)
 				//console.log(rooms);
 				await this.connectedUserService.create({socketId: socket.id, userId: user.id, user})
+                this.userStatus(socket)
 				return this.server.to(socket.id).emit('rooms', rooms)
 			}
 		}
@@ -147,7 +148,7 @@ export class ChatGateway
 	}
 
     @SubscribeMessage('allUsersStatus')
-    async gameStatus(socket: Socket)
+    async userStatus(socket: Socket)
     {
         const users: UserI[] = await this.userService.getAllUsers()
         this.server.emit('allUsers', users)

@@ -516,7 +516,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             userOne.matches = [];
             if (!userTwo.matches)
              userTwo.matches = [];
-           if (userTwo.id === data.winner)
+           if (userOne.id === data.winner)
            {
                 console.log('1 wins!')
                 userOne.wins += 1;
@@ -530,7 +530,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 await this.userService.updateWins(userOne.wins, userOne.id)
                 await this.userService.updateDefeats(userTwo.defeats, userTwo.id)
            }
-           else if (userTwo.id === data.losser)
+           else if (userOne.id === data.losser)
            {
                 console.log('2 wins!')
                 userTwo.wins += 1;
