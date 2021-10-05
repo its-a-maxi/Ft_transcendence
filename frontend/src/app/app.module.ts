@@ -16,24 +16,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatRoomComponent } from './components/chat/chat-room/chat-room.component';
 import { ChatChannelComponent } from './components/main-page/chat-page/chat-channel/chat-channel.component';
 import { ChatMessageComponent } from './components/main-page/chat-page/chat-message/chat-message.component';
-
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatListModule } from "@angular/material/list";
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatMenuModule} from '@angular/material/menu';
-import { NgxPaginationModule } from 'ngx-pagination'
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { StartComponent } from './components/landing-page/start/start.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
@@ -54,6 +36,24 @@ import { ShowRoomComponent } from './components/main-page/play/show-room/show-ro
 import { CookieService } from 'ngx-cookie-service';
 import { TwoFaCheckComponent } from './components/landing-page/two-fa-check/two-fa-check.component';
 import { CookieModule } from 'ngx-cookie';
+
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatListModule } from "@angular/material/list";
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormField, MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatMenuModule} from '@angular/material/menu';
+import { NgxPaginationModule } from 'ngx-pagination'
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
