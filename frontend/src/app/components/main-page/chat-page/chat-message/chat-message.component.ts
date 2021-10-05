@@ -35,7 +35,7 @@ export class ChatMessageComponent
             this.message.user?.id : this.message.enemy
         this.gameService.connect()
         this.gameService.createChallenge(enemy as number)
-        this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
+        this.router.navigate([`mainPage/play/private`])
         
     }
 

@@ -1,6 +1,6 @@
 import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
@@ -40,13 +40,18 @@ export class PlayComponent implements OnInit
     roomSelected!: GameI;
     waiting: boolean = false
 	private allUsers: UserI[] = [];
+    roomPrivate: string = ""
 
 	constructor(private gameService: GameService,
 				private router: Router,
-				public authService: AuthService) { }
+				public authService: AuthService,
+                private activateRoute: ActivatedRoute) { }
 
 	async ngOnInit()
 	{
+        this.roomPrivate = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 7)!
+        if (this.roomPrivate === 'private')
+            this.waiting = true
         this.gameService.showRooms()
         this.gameService.getLiveRooms().subscribe(res => {
             this.liveRooms = res
@@ -114,7 +119,8 @@ export class PlayComponent implements OnInit
 				else
                 	this.gameService.createSpecialRoom(option)
                 this.PowerUpSelect = false
-                this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
+                //this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
+                this.waiting = true
                 this.gameService.connect()
                 return
             }

@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'mainPage', component: MainPageComponent, children: [
     {path: 'waitingRoom/:id', component: WaitingRoomComponent},
     {path: 'play/:id', component: PlayComponent, children: [
-      { path: 'matchmaking', component: WaitingRoomComponent },
+      { path: 'private', component: WaitingRoomComponent },
       { path: 'showRoom', component: ShowRoomComponent}
     ]},
     {path: 'chat/:id', component: ChatPageComponent},
