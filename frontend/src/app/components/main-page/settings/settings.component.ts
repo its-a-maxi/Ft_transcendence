@@ -60,7 +60,6 @@ export class SettingsComponent implements OnInit, OnDestroy
 			this.authentication = this.user.authentication;
 		}
 		this.profilePicture = this.user?.avatar;
-		//this.authService.showUsers_test().subscribe(res => res.filter(x => x.id != parseFloat(this.paramId!)))
         this.authService.showAllUsers()
 		  .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)))
           .catch(() => this.authService.refreshToken())

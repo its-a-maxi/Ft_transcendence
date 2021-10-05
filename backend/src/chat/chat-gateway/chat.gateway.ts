@@ -146,6 +146,13 @@ export class ChatGateway
 		socket.disconnect()
 	}
 
+    @SubscribeMessage('allUsersStatus')
+    async gameStatus(socket: Socket)
+    {
+        const users: UserI[] = await this.userService.getAllUsers()
+        this.server.emit('allUsers', users)
+    }
+
 	@SubscribeMessage('createRoom')
 	async onCreateRoom(socket: Socket, room: RoomI)
 	{

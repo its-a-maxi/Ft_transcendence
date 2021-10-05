@@ -30,10 +30,6 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 	{
 		if (this.paramId)
 			await this.findUser(this.paramId);
-		// this.chatService.findUsersConnected()
-		// this.chatService.getConnectedUsers().subscribe(res => {
-		// 	this.liveUsers = res.length
-		// })
         this.chatService.findUsersConnected()
 		this.chatService.getConnectedUsers().subscribe(res => {
 			this.liveUsers = res.length

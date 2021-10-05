@@ -58,11 +58,6 @@ export class GameService
         return this.socket.fromEvent('roomDemo')
     }
 
-    changeStatus()
-    {
-        this.socket.emit('gameStatus')
-    }
-
     ///////////////////////////////////////////////////////////////////////
 
     createGame(game: any)

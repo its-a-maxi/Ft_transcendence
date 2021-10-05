@@ -136,4 +136,14 @@ export class ChatService
     {
         return axios.put('http://localhost:3000/chatRoom/updateAdmins', {userId, room})
     }
+
+    allUsersStatus()
+    {
+        this.socket.emit('allUsersStatus')
+    }
+
+    getAllUsersStatus(): Observable<UserI[]>
+    {
+        return this.socket.fromEvent('allUsers')
+    }
 }

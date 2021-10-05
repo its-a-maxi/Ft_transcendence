@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { User } from 'src/app/services/models/user';
 import { UserI } from 'src/app/services/models/user.interface';
 
@@ -11,7 +12,9 @@ import { UserI } from 'src/app/services/models/user.interface';
 })
 export class RankingComponent implements OnInit {
 
-  constructor(public authService: AuthService, private router: Router) { }
+  constructor(public authService: AuthService,
+                private router: Router,
+                private chatService: ChatService) { }
 
   allUsers: UserI[] | undefined;
 
@@ -20,9 +23,14 @@ export class RankingComponent implements OnInit {
   async ngOnInit()
   {
     let i: number = 0;
-    //this.authService.showUsers_test().subscribe(response => this.allUsers = response)
+    // this.chatService.allUsersStatus()
+    // this.chatService.getAllUsersStatus().subscribe(res => {
+    //     console.log("Esto es ressss: ", res)
+    //     this.allUsers = res
+    //     this.userPopup = this.allUsers![0];
+    // })
     await this.authService.showAllUsers()
-      .then(response => this.allUsers = response.data);
+       .then(response => this.allUsers = response.data);
     this.rankByWins();
     this.userPopup = this.allUsers![0];
   }

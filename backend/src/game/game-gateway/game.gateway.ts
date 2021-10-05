@@ -104,7 +104,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             let losser: number = socket.data.user.id
             let winner: number = 0
             if (room.playerTwo === -1)
-            {
+            {   
                 this.onLeaveRoom(socket, room.id)
                 break
             }
@@ -281,13 +281,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         await this.userService.updateStatus(Status.inGame, userId)
 		this.server.to(socket.id).emit('roomDemo', newGame)
 	}
-
-    @SubscribeMessage('gameStatus')
-    async gameStatus(socket: Socket)
-    {
-        let userId: number = socket.data.user.id
-        await this.userService.updateStatus(Status.inGame, userId)
-    }
 
 	///////////////////////////////////////////////////////////////
 

@@ -114,7 +114,7 @@ export class GameComponent extends P5JSInvoker implements OnInit, OnDestroy
 
 	ngOnInit(): void
     {
-        this.gameService.changeStatus()
+        //this.gameService.changeStatus()
 		// Game model ticks 60 times per second. Doing this keeps same game speed
 		// on higher FPS environments.
 		setInterval(() => this.pongGame.tick(this.controlState),
