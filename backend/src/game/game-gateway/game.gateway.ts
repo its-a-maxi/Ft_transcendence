@@ -99,6 +99,16 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	{
 		console.log("DISCONNECT")
 		this.removeUser({userId: socket.data.user.id, socketId: socket.id})
+        for (let room of this.listRooms)
+        {
+            if (room.playerOne === socket.data.user.id ||
+                room.playerTwo === socket.data.user.id)
+                {
+                    this.getCable(socket)
+                    this.onLeaveRoom(socket, room.id)
+                    break ;
+                }
+        }
 		socket.disconnect();
 	}
 
@@ -489,6 +499,10 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 console.log('1 wins!')
                 userOne.wins += 1;
                 userTwo.defeats += 1;
+                if (!userOne.matches)
+                    userOne.matches = []
+                if (!userTwo.matches)
+                    userTwo.matches = []
                 userOne.matches.push('Wins vs ' + userTwo.nick);
                 userTwo.matches.push('Losses vs ' + userOne.nick);
                 await this.userService.updateWins(userOne.wins, userOne.id)
@@ -499,6 +513,10 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 console.log('2 wins!')
                 userTwo.wins += 1;
                 userOne.defeats += 1;
+                if (!userOne.matches)
+                    userOne.matches = []
+                if (!userTwo.matches)
+                    userTwo.matches = []
                 userOne.matches.push('Losses vs ' + userTwo.nick);
                 userTwo.matches.push('Wins vs ' + userOne.nick);
                 await this.userService.updateWins(userTwo.wins, userTwo.id)
@@ -539,8 +557,10 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     @SubscribeMessage('getCable')
     getCable(socket: Socket)
     {
-        this.leaveUsers.push({userId: socket.data.user.id, socketId: socket.id})
+        const user: UserSocketI = {userId: socket.data.user.id, socketId: socket.id}
+        this.leaveUsers.push(user)
         
+        console.log("GET CABLE: ", this.leaveUsers)
         if (this.leaveUsers.length === 2 &&
             this.leaveUsers[1].userId !== this.leaveUsers[0].userId)
         {
@@ -549,8 +569,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 losser: this.leaveUsers[0].userId
             }
             this.updateStats(socket, data)
-            for (let i = 0; i <= this.leaveUsers.length; i++)
-                this.leaveUsers.pop()
+            this.leaveUsers.splice(0, 2);
         }
     }
 }

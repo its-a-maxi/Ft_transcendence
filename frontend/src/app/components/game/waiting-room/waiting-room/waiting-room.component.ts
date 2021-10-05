@@ -46,7 +46,7 @@ export class WaitingRoomComponent implements OnInit {
 
 	ngOnDestroy()
     {
-		this.gameService.leaveRoom(this.roomId)
+		//this.gameService.leaveRoom(this.roomId)
 	}
 
 	changeCheck() {
