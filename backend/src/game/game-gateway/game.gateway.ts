@@ -101,13 +101,26 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		this.removeUser({userId: socket.data.user.id, socketId: socket.id})
         for (let room of this.listRooms)
         {
-            if (room.playerOne === socket.data.user.id ||
-                room.playerTwo === socket.data.user.id)
-                {
-                    this.getCable(socket)
-                    this.onLeaveRoom(socket, room.id)
-                    break ;
+            let losser: number = socket.data.user.id
+            let winner: number = 0
+            if (room.playerOne === losser)
+                winner = room.playerTwo
+            else if (room.playerTwo === losser)
+                winner = room.playerOne
+            if (winner)
+            {
+                let message = {
+                    roomId: room.id,
+                    text: "GameOver",
+                    winner, 
+                    losser
                 }
+                this.server.to(room.socketList[0]).emit('startGame', message)
+                this.server.to(room.socketList[1]).emit('startGame', message)
+                for (let user of this.liveShowUsers)
+                    this.server.to(user.socketId).emit('startGame', message)
+                break ;
+            }
         }
 		socket.disconnect();
 	}
@@ -216,7 +229,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	@SubscribeMessage('findUsers')
 	async findUsers(socket: Socket)
 	{
+       
         this.normalUsers.push({userId: socket.data.user.id, socketId: socket.id})
+
         for (let i = 0; i < this.normalUsers.length; i++)
         {
             if (i != 0 && this.normalUsers[i].userId !== this.normalUsers[i - 1].userId)

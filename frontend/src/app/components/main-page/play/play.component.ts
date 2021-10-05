@@ -51,6 +51,7 @@ export class PlayComponent implements OnInit, OnDestroy
 	ngOnDestroy()
 	{
 		//this.gameService.leaveRoom()
+        this.gameService.disconnect()
 	}
 
 	changeToAi()
