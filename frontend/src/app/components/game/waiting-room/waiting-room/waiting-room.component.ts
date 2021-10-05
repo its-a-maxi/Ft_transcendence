@@ -30,17 +30,19 @@ export class WaitingRoomComponent implements OnInit {
 
 	ngOnInit()
     {
+        //this.gameService.connect()
 		this.gameService.getListUsers().subscribe(res => {
+            
 			if (res === null)
             {
 				//this.gameService.leaveRoom(this.roomId)
-				this.router.navigate([`mainPage/settings/${this.userId}`])
-				
+				//this.router.navigate([`mainPage/play/${this.userId}`])
 				return
 			}
 
 			this.roomGame = res
 			this.roomId = this.roomGame.id!
+            
 		})
 	}
 
