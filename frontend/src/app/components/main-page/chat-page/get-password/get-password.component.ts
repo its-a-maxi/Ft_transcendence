@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChatService } from 'src/app/services/chat-service/chat-service';
+import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { RoomI } from 'src/app/services/models/room.interface';
 
 @Component({

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { userInfo } from 'os';
 import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
-import { ChatService } from 'src/app/services/chat-service/chat-service';
+import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { RoomI } from 'src/app/services/models/room.interface';
 import { UserI } from 'src/app/services/models/user.interface';
 import { ChatChannelComponent } from './chat-channel/chat-channel.component';

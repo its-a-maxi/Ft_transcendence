@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, Query } from '@angular/cor
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
-import { ChatService } from 'src/app/services/chat-service/chat-service';
+import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { User } from 'src/app/services/models/user';
 import { UserI } from 'src/app/services/models/user.interface';
 

@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
-import { ChatService } from 'src/app/services/chat-service/chat-service';
+import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { RoomI } from 'src/app/services/models/room.interface';
 import { User } from 'src/app/services/models/user';
 import { UserI } from 'src/app/services/models/user.interface';
