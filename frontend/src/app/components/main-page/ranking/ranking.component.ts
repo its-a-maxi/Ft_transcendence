@@ -97,7 +97,7 @@ export class RankingComponent implements OnInit {
       return ((user.wins! / user.defeats!).toFixed(2).toString())
   }
 
-  showOverlay(type: string, user?: UserI) : void
+  async showOverlay(type: string, user?: UserI)
   {
     let container = document.getElementById("container");
     let overlayBack = document.getElementById("overlayBack");
@@ -106,7 +106,9 @@ export class RankingComponent implements OnInit {
     overlayBack!.style.display = "block";
     if (type == 'profilePopup')
     {
-      this.userPopup = user;
+      await this.authService.getUserById(user!.id.toString())
+        .then(res => { this.userPopup = res.data; })
+      //this.userPopup = user;
       profilePopup!.style.display = 'block';
     }
       

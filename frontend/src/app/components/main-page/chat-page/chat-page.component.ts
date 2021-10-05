@@ -151,9 +151,10 @@ export class ChatPageComponent implements OnInit {
 		return (false);
 	}
 
-	showProfile(user: UserI)
+	async showProfile(user: UserI)
 	{
-		this.userPopup = user;
+		await this.authService.getUserById(user!.id.toString())
+		  .then(res => { this.userPopup = res.data; })
 		this.showOverlay("profilePopup");
 	}
 

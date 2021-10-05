@@ -8,14 +8,14 @@
 				<th>W/L</th>
 			</tr>
 			<tr *ngFor="let user of friends">
-				<td [className]="user.status == 'offline' ? 'notConnected' : ''">{{user.nick}}
+				<td>{{user.nick}}
 					&nbsp;
 					<img src="../../../assets/images/42icon.png" alt="42" class="icon" (click)="showOverlay('profilePopup', user)">
 					<img src="../../../assets/images/unfriendIcon.png" alt="Unfriend" class="icon" (click)="deleteFriend(user)">
 				</td>
-				<td [className]="user.status == 'offline' ? 'notConnected' : ''">{{user.wins}}</td>
-				<td [className]="user.status == 'offline' ? 'notConnected' : ''">{{user.defeats}}</td>
-				<td [className]="user.status == 'offline' ? 'notConnected' : ''">{{getWinToLossRatio(user)}}</td>
+				<td>{{user.wins}}</td>
+				<td>{{user.defeats}}</td>
+				<td>{{getWinToLossRatio(user)}}</td>
 			</tr>
 		</table>
 	</div>

@@ -41,7 +41,7 @@ export class FriendsComponent implements OnInit {
         this.getFriends();
     }
     this.userPopup = this.mainUser;
-    this.sortConnected();
+    //this.sortConnected();
     console.log(this.friends);
   }
 
@@ -82,7 +82,7 @@ export class FriendsComponent implements OnInit {
     window.open("https://profile.intra.42.fr/users/" + user);
   }
 
-  showOverlay(type: string, user?: UserI) : void
+  async showOverlay(type: string, user?: UserI)
   {
     let container = document.getElementById("container");
     let overlayBack = document.getElementById("overlayBack");
@@ -102,7 +102,9 @@ export class FriendsComponent implements OnInit {
     }
     else if (type == 'profilePopup')
     {
-      this.userPopup = user;
+      await this.authService.getUserById(user!.id.toString())
+        .then(res => { this.userPopup = res.data; })
+      //this.userPopup = user;
       profilePopup!.style.display = 'block';
     }
       
