@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { UserI } from 'src/app/services/models/user.interface';
 
 @Component({
@@ -8,7 +9,7 @@ import { UserI } from 'src/app/services/models/user.interface';
 })
 export class ProfilePopupComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   @Input() userPopup!: UserI;
   status: string = "Offline";
@@ -20,6 +21,7 @@ export class ProfilePopupComponent implements OnInit {
 
   ngOnChanges()
   {
+    //this.updateUser();
     this.winsDefeats();
     this.updateStatusColor();
     this.hideMatchHistorial();
@@ -118,5 +120,10 @@ export class ProfilePopupComponent implements OnInit {
     return (match);
   }
 
+    private async updateUser()
+    {
+      await this.authService.getUserById(this.userPopup.id.toString())
+        .then(res => { this.userPopup = res.data; })
+    }
 
 }
