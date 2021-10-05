@@ -92,7 +92,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                     losser: res.losser
                 }
 				//this.updatehistorial();
-                //this.gameService.updateStats(data)
+                this.gameService.updateStats(data)
 				this.end = true;
                 this.gameOver = true
 				return
