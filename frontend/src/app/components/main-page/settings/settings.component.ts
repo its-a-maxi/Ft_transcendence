@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, ViewChildren, OnDestroy } 
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
-import { ChatService } from 'src/app/services/chat-service/chat-service';
+import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { User } from 'src/app/services/models/user';
 import { UserI } from 'src/app/services/models/user.interface';

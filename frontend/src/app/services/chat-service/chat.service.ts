@@ -31,7 +31,6 @@ export class ChatService
 
 	getMyRooms(): Observable<RoomI[]>
 	{
-		//return axios.get<RoomI[]>('http://localhost:3000/chat/getAllRooms')
 		return this.socket.fromEvent<RoomI[]>('rooms')
 	}
 
@@ -46,7 +45,6 @@ export class ChatService
 		this.snackBar.open(`Rooms deleted successfully`, 'Close', {
 			duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
 		})
-		//return axios.post<RoomI[]>('http://localhost:3000/chat/deleteRooms', rooms)
 	}
 
 	async RoomLeave(room: RoomI)
@@ -112,7 +110,6 @@ export class ChatService
 	typing()
 	{
 		this.socket.emit('typing')
-		//this.socket.on('typing', () => console.log("IS TYPING"))
 	}
 
 	typingMessage(): Observable<string>

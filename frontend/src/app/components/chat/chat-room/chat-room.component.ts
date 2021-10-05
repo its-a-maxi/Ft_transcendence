@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
-import { ChatService } from 'src/app/services/chat-service/chat-service';
+import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { RoomI } from 'src/app/services/models/room.interface';
 import { UserI } from 'src/app/services/models/user.interface';
 import { map, startWith, tap } from 'rxjs/operators';

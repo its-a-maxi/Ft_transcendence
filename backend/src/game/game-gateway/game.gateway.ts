@@ -97,12 +97,17 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
 	async handleDisconnect(socket: Socket)
 	{
-		console.log("DISCONNECT")
+		console.log("DISCONNECT", socket.id)
 		this.removeUser({userId: socket.data.user.id, socketId: socket.id})
         for (let room of this.listRooms)
         {
             let losser: number = socket.data.user.id
             let winner: number = 0
+            if (room.playerTwo === -1)
+            {
+                this.onLeaveRoom(socket, room.id)
+                break
+            }
             if (room.playerOne === losser)
                 winner = room.playerTwo
             else if (room.playerTwo === losser)
@@ -243,8 +248,11 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                         option: OptionGame.normal,
                         socketList: [this.normalUsers[i - 1].socketId, this.normalUsers[i].socketId]
                     })
+                await this.userService.updateStatus(Status.inGame,  this.normalUsers[i - 1].userId)
+                await this.userService.updateStatus(Status.inGame,  this.normalUsers[i].userId)
                 this.normalUsers.splice(i - 1, 2)
                 this.listRooms.push(newGame)
+                
                 break ;
             }
         }
@@ -286,9 +294,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     @SubscribeMessage('challengeRoom')
     async challengeRoom(socket: Socket, enemy: number)
     {
-        console.log("ENENMY: ", enemy)
+
         this.challengeUsers.push({userId: socket.data.user.id, socketId: socket.id, enemy})
-        console.log("ESSTO: ", this.challengeUsers)
+
         for (let i = 0; i < this.challengeUsers.length; i++)
         {
             for (let j = i + 1; j < this.challengeUsers.length; j++)
@@ -306,6 +314,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                         this.challengeUsers.splice(i, 1)
                         this.challengeUsers.splice(j, 1)
                         this.listRooms.push(newGame)
+                        await this.userService.updateStatus(Status.inGame, this.challengeUsers[i].userId)
+                        await this.userService.updateStatus(Status.inGame, this.challengeUsers[i].userId)
                         break ;
                     }
             }
@@ -558,7 +568,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             {
                 const newGame: GameI = await this.gameService
                     .create({
-                        playerOne:this.specialUsers[i - 1].userId,
+                        playerOne: this.specialUsers[i - 1].userId,
                         playerTwo: this.specialUsers[i].userId,
                         option: OptionGame.special,
                         socketList: [this.specialUsers[i - 1].socketId, this.specialUsers[i].socketId],
@@ -566,6 +576,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                     })
                 this.specialUsers.splice(i - 1, 2)
                 this.listRooms.push(newGame)
+                await this.userService.updateStatus(Status.inGame, this.specialUsers[i - 1].userId)
+                await this.userService.updateStatus(Status.inGame, this.specialUsers[i].userId)
                 break ;
             }
         }

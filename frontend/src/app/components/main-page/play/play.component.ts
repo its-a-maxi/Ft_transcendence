@@ -51,7 +51,7 @@ export class PlayComponent implements OnInit, OnDestroy
 	ngOnDestroy()
 	{
 		//this.gameService.leaveRoom()
-        this.gameService.disconnect()
+        
 	}
 
 	changeToAi()
@@ -146,6 +146,7 @@ export class PlayComponent implements OnInit, OnDestroy
 	{
 		this.router.navigate([`/mainPage/play/${this.userId}`])
 		.then(()=>{
+            this.gameService.disconnect()
 			window.location.reload();
 		});
 	}
