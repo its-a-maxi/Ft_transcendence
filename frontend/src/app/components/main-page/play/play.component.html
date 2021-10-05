@@ -31,6 +31,7 @@
 			<button class="option PowerUpMode" (click)="changeToPowerUp()" id="special">Start!</button>
 		</div>
 		<router-outlet></router-outlet>
+        <app-waiting-room *ngIf="waiting"></app-waiting-room>
 		<app-pong-game *ngIf="AImode" [gameRoom]="roomGame"></app-pong-game>
 		<!--<app-waiting-room *ngIf="OnlineMode" [search]="OnlineMode"></app-waiting-room>-->
 		<!--<app-waiting-room></app-waiting-room>-->

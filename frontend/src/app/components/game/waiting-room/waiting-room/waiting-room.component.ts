@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
+import { RoomI } from 'src/app/services/models/room.interface';
 import { UserI } from 'src/app/services/models/user.interface';
 
 interface PlayerI {
@@ -30,13 +31,10 @@ export class WaitingRoomComponent implements OnInit {
 
 	ngOnInit()
     {
-        //this.gameService.connect()
 		this.gameService.getListUsers().subscribe(res => {
             
 			if (res === null)
             {
-				//this.gameService.leaveRoom(this.roomId)
-				//this.router.navigate([`mainPage/play/${this.userId}`])
 				return
 			}
 

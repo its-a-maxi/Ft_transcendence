@@ -1,8 +1,10 @@
 import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
+import { RoomI } from 'src/app/services/models/room.interface';
 import { WaitingRoomComponent } from '../../game/waiting-room/waiting-room/waiting-room.component';
 
 @Component({
@@ -35,6 +37,7 @@ export class PlayComponent implements OnInit
     liveRooms!: GameI[];
     show: boolean = false
     roomSelected!: GameI;
+    waiting: boolean = false
 
 	constructor(private gameService: GameService,
 				private router: Router) { }
@@ -74,9 +77,10 @@ export class PlayComponent implements OnInit
 	{
 		let pongContainer = document.getElementById("pongContainer");
 		pongContainer!.style.backgroundColor = 'rgba(19, 5, 11, 1)';
-		this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
+		//this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
 		this.OnlineMode = true;
 		this.Menu = false;
+        this.waiting = true
 		this.gameService.connect()
         this.gameService.findUsers()
 	}

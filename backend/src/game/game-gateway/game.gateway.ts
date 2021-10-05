@@ -234,8 +234,18 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	@SubscribeMessage('findUsers')
 	async findUsers(socket: Socket)
 	{
-       
-        this.normalUsers.push({userId: socket.data.user.id, socketId: socket.id})
+        console.log("ENTRA CREATE", socket.id)
+        const user: UserSocketI = {userId: socket.data.user.id, socketId: socket.id}
+        if (this.normalUsers.length === 0)
+            this.normalUsers.push(user)
+        else
+        {
+            for (let curr of this.normalUsers)
+            {
+                if (user.userId !== curr.userId)
+                    this.normalUsers.push(user)
+            }
+        }
 
         for (let i = 0; i < this.normalUsers.length; i++)
         {
@@ -576,6 +586,18 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         }
 
         this.sendRooms(socket)
+    }
+
+    @SubscribeMessage('checkConnection')
+    checkConnection(socket: Socket)
+    {
+        
+        if (this.normalUsers.length === 0)
+            this.server.to(socket.id).emit('listUsers', 'normal')
+        else if (this.specialUsers.length === 0)
+            this.server.to(socket.id).emit('listUsers', 'special')
+        else if (this.challengeUsers.length === 0)
+            this.server.to(socket.id).emit('listUsers', 'challenge')
     }
 
     @SubscribeMessage('getCable')

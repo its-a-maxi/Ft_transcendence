@@ -1,10 +1,12 @@
+<!-- <div class="" *ngIf="rutePlay"> -->
+    <div class="container" *ngIf="!roomGame; else room">
+        <h1 class="match">MatchMaking...</h1>
+        <div class="spinner"></div>
+    </div>
+    
+    <ng-template #room>
+        <app-pong-game [gameRoom]="roomGame!"></app-pong-game>
+    </ng-template>
+<!-- </div> -->
 
-<div class="container" *ngIf="!roomGame; else room">
-    <h1 class="match">MatchMaking...</h1>
-    <div class="spinner"></div>
-</div>
-
-<ng-template #room>
-    <app-pong-game [gameRoom]="roomGame!"></app-pong-game>
-</ng-template>
 

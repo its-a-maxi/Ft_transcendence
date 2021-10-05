@@ -111,4 +111,14 @@ export class GameService
     {
         this.socket.emit('challengeRoom', enemy)
     }
+
+    checkConnection()
+    {
+        this.socket.emit('checkConnection')
+    }
+
+    checked(): Observable<boolean>
+    {
+        return this.socket.fromEvent('checked')
+    }
 }

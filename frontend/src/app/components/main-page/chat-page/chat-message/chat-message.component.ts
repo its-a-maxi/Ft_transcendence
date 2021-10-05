@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { MessageI } from 'src/app/services/models/message.interface';
 import { UserI } from 'src/app/services/models/user.interface';
+import { PlayComponent } from '../../play/play.component';
 
 @Component({
 	selector: 'app-chat-message',
@@ -19,6 +20,7 @@ export class ChatMessageComponent
 	@Input() userId: any
 
 	title: string = "";
+    gameRoom: boolean = false
 
 	ngOnInit(): void {
 		this.title = this.message.user!.nick.toUpperCase();
@@ -34,6 +36,7 @@ export class ChatMessageComponent
         this.gameService.connect()
         this.gameService.createChallenge(enemy as number)
         this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
+        
     }
 
 }
