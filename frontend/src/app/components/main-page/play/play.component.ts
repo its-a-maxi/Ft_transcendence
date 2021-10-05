@@ -1,8 +1,11 @@
 import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
+import { RoomI } from 'src/app/services/models/room.interface';
+import { UserI } from 'src/app/services/models/user.interface';
 import { WaitingRoomComponent } from '../../game/waiting-room/waiting-room/waiting-room.component';
 
 @Component({
@@ -37,7 +40,8 @@ export class PlayComponent implements OnInit, OnDestroy
     roomSelected!: GameI;
 
 	constructor(private gameService: GameService,
-				private router: Router) { }
+				private router: Router,
+				public authService: AuthService) { }
 
 	ngOnInit(): void
 	{
@@ -149,6 +153,23 @@ export class PlayComponent implements OnInit, OnDestroy
             this.gameService.disconnect()
 			window.location.reload();
 		});
+	}
+
+	private async getUserName(userId: number, userName: string)
+	{
+		await this.authService.getUserById(userId.toString())
+			.then(res => { userName = res.data.nick; })	
+	}
+	getMatch(room: GameI): string
+	{
+		let user1: string = '';
+		let user2: string = '';
+		let rst: string = '';
+		this.getUserName(room.playerOne!, user1);
+		this.getUserName(room.playerTwo!, user2);
+		rst = user1 + ' vs ' + user2;
+		console.log(rst);
+		return(rst);
 	}
 
 }
