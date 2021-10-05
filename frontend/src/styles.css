@@ -1,5 +1,6 @@
+
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 
 @font-face {
     font-family: futura;
