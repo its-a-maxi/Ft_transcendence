@@ -8,9 +8,7 @@ import { MessageI, MessagePaginateI } from 'src/app/services/models/message.inte
 import { RoomI } from 'src/app/services/models/room.interface';
 import { map, startWith, tap } from 'rxjs/operators';
 import { UserI } from 'src/app/services/models/user.interface';
-import { Session } from 'inspector';
 import { User } from 'src/app/services/models/user';
-import { threadId } from 'worker_threads';
 
 @Component({
 	selector: 'app-chat-channel',

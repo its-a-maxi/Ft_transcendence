@@ -39,12 +39,11 @@
 	</div>
 	<div class="chatContainer">
 		<div class="currentChannel">
-			<h1 class="currentChannelText">Match historial
-			</h1>
+			<h1 class="currentChannelText">Playing now</h1>
 		</div>
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of liveRooms">
-				<li (click)="viewShowRoom(room)">ID: {{room.id}} -> '{{room.playerOne}}' vs '{{room.playerTwo}}'</li>  
+				<li (click)="viewShowRoom(room)">{{getRoomName(room)}}<br><span style="font-style: italic; opacity: 70%;"> - {{getRoomOption(room.option!)}}</span></li>  
 			</ul>
 		</div>
 	</div>

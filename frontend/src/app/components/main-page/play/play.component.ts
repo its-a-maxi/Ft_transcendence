@@ -1,11 +1,12 @@
 import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
 import { RoomI } from 'src/app/services/models/room.interface';
-import { WaitingRoomComponent } from '../../game/waiting-room/waiting-room/waiting-room.component';
+import { User } from 'src/app/services/models/user';
+import { UserI } from 'src/app/services/models/user.interface';
 
 @Component({
 	selector: 'app-play',
@@ -38,17 +39,21 @@ export class PlayComponent implements OnInit
     show: boolean = false
     roomSelected!: GameI;
     waiting: boolean = false
+	private allUsers: UserI[] = [];
 
 	constructor(private gameService: GameService,
-				private router: Router) { }
+				private router: Router,
+				public authService: AuthService) { }
 
-	ngOnInit(): void
+	async ngOnInit()
 	{
         this.gameService.showRooms()
         this.gameService.getLiveRooms().subscribe(res => {
             this.liveRooms = res
             console.log(res)
         })
+		await this.authService.showAllUsers()
+		   .then(response => this.allUsers = response.data);
 	}
 
 	changeToAi()
@@ -147,6 +152,27 @@ export class PlayComponent implements OnInit
                 this.gameService.disconnect()
                 window.location.reload();
             });
+	}
+
+	getIdName(id: number): string
+	{
+		for (let i = 0; this.allUsers[i]; i++)
+			if (this.allUsers[i].id == id)
+				return (this.allUsers[i].nick);
+		return ('AI');
+	}
+	getRoomName(room: GameI): string
+	{
+		return (this.getIdName(room.playerOne!) + ' vs ' + this.getIdName(room.playerTwo!));
+	}
+	getRoomOption(option: string): string
+	{
+		if (option == 'normal')
+			return ('online');
+		else if (option == 'demo')
+			return ('vs Ai');
+		else
+			return ('power-ups');
 	}
 
 }
