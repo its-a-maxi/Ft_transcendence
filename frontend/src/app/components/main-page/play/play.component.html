@@ -33,7 +33,7 @@
 		<router-outlet></router-outlet>
         <app-waiting-room *ngIf="waiting"></app-waiting-room>
 		<app-pong-game *ngIf="AImode" [gameRoom]="roomGame"></app-pong-game>
-		<app-show-room *ngIf="showRoom"></app-show-room>
+		<app-show-room *ngIf="showRoom" [gameRoom]="roomSelected"></app-show-room>
 		<button *ngIf="!Menu" class='close' (click)='reloadPage()'>x</button>
 	</div>
 	<div class="chatContainer">

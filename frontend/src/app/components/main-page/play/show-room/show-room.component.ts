@@ -64,36 +64,31 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 		
         // this.plOne = this.gameRoom.playerOne!.toString()
         // this.plTwo = this.gameRoom.playerTwo!.toString()
-        // await this.authService.getUserById(this.plOne)
-		// 	.then(res => {
-		// 		this.user1 = res.data.nick;
-		// 		this.user1id = res.data.id})
-		// if (this.gameRoom.playerTwo! == -1)
-		// 	this.user2 = 'AI';
-		// else
-		// 	await this.authService.getUserById(this.plTwo)
-		// 	.then(res => {
-		// 		this.user2 = res.data.nick;
-		// 		this.user2id = res.data.id})
+        await this.authService.getUserById(this.gameRoom.playerOne!.toString())
+			.then(res => {
+				this.user1 = res.data.nick;
+				this.user1id = res.data.id})
+		if (this.gameRoom.playerTwo! == -1)
+			this.user2 = 'AI';
+		else
+			await this.authService.getUserById(this.gameRoom.playerTwo!.toString())
+			.then(res => {
+				this.user2 = res.data.nick;
+				this.user2id = res.data.id})
 
-		// console.log(this.user1 + this.user2);
+		console.log(this.user1 + this.user2);
 
 		//this.gameService.createGame(this.gameRoom)
 		this.gameService.startGame().subscribe(res => {
 
-                //if (this.gameRoom.id === res.roomId)
-                //{
                     if (res.text === "GameOver" && !this.gameOver)
                     {
-                    //     if (res.winner == this.user1id)
-                    //         this.winner = this.user1;
-                    //     else
-                    //         this.winner = this.user2;
+                        if (res.winner == this.user1id)
+                            this.winner = this.user1;
+                        else
+                            this.winner = this.user2;
                         this.gameOver = true
                         console.log("GAMEOVER")
-                        //this.winner = res.winner
-                        //this.router.navigate([`/mainPage/settings/${this.userId}`])
-                        //window.location.reload()
                         return
                     }
                     if (this.gameRoom && this.gameRoom.id === res.roomId)
@@ -115,7 +110,6 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
                         }
                         this.render(res.plOne, res.plTwo, res.ball)
                     }
-                //}
             })
 	}
 
