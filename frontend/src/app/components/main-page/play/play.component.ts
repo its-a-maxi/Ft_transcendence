@@ -138,7 +138,6 @@ export class PlayComponent implements OnInit
         this.Menu = false;
         this.roomSelected = room
 		this.showRoom = true;
-        this.show = true
         //this.gameService.connect()
     }
 
