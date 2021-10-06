@@ -13,10 +13,8 @@ import { ShowRoomComponent } from './components/main-page/play/show-room/show-ro
 import { RankingComponent } from './components/main-page/ranking/ranking.component';
 import { SettingsComponent } from './components/main-page/settings/settings.component';
 import { CookieGuard } from './guards/cookie.guard';
-import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  {path: "login", component: LoginComponent},
   { path: 'landingPage', component: LandingPageComponent, children: [
     { path: 'start', component: StartComponent },
     { path: 'twoFaCheck', component: TwoFaCheckComponent }

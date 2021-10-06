@@ -46,7 +46,6 @@ import { MatMenuModule} from '@angular/material/menu';
 import { NgxPaginationModule } from 'ngx-pagination'
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { LoginComponent } from './components/login/login.component';
 
 export function tokenGetter(): string | null {
   return sessionStorage.getItem("token");
@@ -56,7 +55,6 @@ export function tokenGetter(): string | null {
   declarations: [
     AppComponent,
     GameComponent,
-    LoginComponent,
     ChatChannelComponent,
     ChatMessageComponent,
     LandingPageComponent,

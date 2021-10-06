@@ -30,7 +30,6 @@ export class FriendsComponent implements OnInit {
     //await this.authService.addMatch('Losses vs ', this.paramId!);
     if (this.paramId)
       await this.findUser(this.paramId);
-    console.log(this.mainUser);
     await this.authService.showAllUsers()
       .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)));
     if (this.mainUser && this.mainUser.friendsId)
@@ -41,8 +40,6 @@ export class FriendsComponent implements OnInit {
         this.getFriends();
     }
     this.userPopup = this.mainUser;
-    //this.sortConnected();
-    console.log(this.friends);
   }
 
 	async findUser(id: string)
