@@ -31,6 +31,7 @@ export class PlayComponent implements OnInit
 	AImode: boolean = false;
 	PowerUpMode: boolean = false;
 	PowerUpSelect: boolean = false;
+	showRoom: boolean = false;
 
 
 	roomGame!: GameI;
@@ -134,7 +135,7 @@ export class PlayComponent implements OnInit
         this.show = true
         this.Menu = false;
         this.roomSelected = room
-        this.router.navigate([`mainPage/play/${this.userId}/showRoom`])
+		this.showRoom = true;
         this.gameService.connect()
     }
 
