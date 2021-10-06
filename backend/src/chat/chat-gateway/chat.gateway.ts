@@ -45,7 +45,7 @@ export class ChatGateway
 	}
 
 	async handleConnection(socket: Socket)
-	{//console.log("SOCKET: ", socket.handshake.query.gate)
+	{
 		try
 		{
 			const token: any = socket.handshake.query.token
@@ -59,9 +59,9 @@ export class ChatGateway
 				this.addUserRoom(user as UserEntity)
 				this.addAdminRoom(user as UserEntity)
 				const rooms = await this.roomService.findAllRoomById(user.id)
-				//console.log(rooms);
 				await this.connectedUserService.create({socketId: socket.id, userId: user.id, user})
                 this.userStatus(socket)
+                this.findUsersConnected(socket)
 				return this.server.to(socket.id).emit('rooms', rooms)
 			}
 		}
@@ -138,6 +138,7 @@ export class ChatGateway
 		if (user)
 			await this.userService.updateStatus(Status.offline, user.id)
 		await this.connectedUserService.deleteSocket(socket.id)
+        this.findUsersConnected(socket)
 		socket.disconnect();
 	}
 
