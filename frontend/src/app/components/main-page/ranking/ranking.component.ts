@@ -23,16 +23,11 @@ export class RankingComponent implements OnInit {
   async ngOnInit()
   {
     let i: number = 0;
-    // this.chatService.allUsersStatus()
-    // this.chatService.getAllUsersStatus().subscribe(res => {
-    //     console.log("Esto es ressss: ", res)
-    //     this.allUsers = res
-    //     this.userPopup = this.allUsers![0];
-    // })
     await this.authService.showAllUsers()
        .then(response => this.allUsers = response.data);
     this.rankByWins();
     this.userPopup = this.allUsers![0];
+    this.chatService.findUsersConnected()
   }
 
   openUser(user: string): void

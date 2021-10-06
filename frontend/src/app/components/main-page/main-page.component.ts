@@ -32,8 +32,10 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 			await this.findUser(this.paramId);
         this.chatService.findUsersConnected()
 		this.chatService.getConnectedUsers().subscribe(res => {
+
 			this.liveUsers = res.length
 		})
+
 		this.nick = this.user?.nick;
 		this.picture = this.user?.avatar;
 	}
@@ -48,7 +50,7 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 
 	ngOnDestroy()
 	{
-		window.location.reload()
+		//window.location.reload()
 	}
 
 	async findUser(id: string) {
