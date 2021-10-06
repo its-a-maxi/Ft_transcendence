@@ -59,6 +59,8 @@ export class PlayComponent implements OnInit
         })
 		await this.authService.showAllUsers()
 		   .then(response => this.allUsers = response.data);
+		if (window.location.pathname != '/mainPage/play/' + this.userId)
+			this.Menu = false;
 	}
 
 	changeToAi()
