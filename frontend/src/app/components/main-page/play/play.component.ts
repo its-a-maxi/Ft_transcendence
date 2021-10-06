@@ -55,11 +55,10 @@ export class PlayComponent implements OnInit
         this.gameService.showRooms()
         this.gameService.getLiveRooms().subscribe(res => {
             this.liveRooms = res
-            console.log(res)
         })
 		await this.authService.showAllUsers()
 		   .then(response => this.allUsers = response.data);
-		if (window.location.pathname != '/mainPage/play/' + this.userId)
+		if (this.router.url != '/mainPage/play/' + this.userId)
 			this.Menu = false;
 	}
 
@@ -71,7 +70,6 @@ export class PlayComponent implements OnInit
 		this.gameService.playDemo()
 		this.gameService.getDemo().subscribe(res => {
 			this.roomGame = res
-			console.log("Esto es gameroom: ", this.roomGame)
 		})
 		setTimeout(() => {
 			this.AImode = true;
