@@ -38,6 +38,8 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 
 		this.nick = this.user?.nick;
 		this.picture = this.user?.avatar;
+		if (this.router.url == '/mainPage')
+			this.router.navigate([`/landingPage/start`]);
 	}
 
 	async ngAfterViewInit()
