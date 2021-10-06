@@ -96,6 +96,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
                 this.gameService.updateStats(data)
 				this.end = true;
                 this.gameOver = true
+                this.gameService.disconnect()
 				return
 			}
             if (this.gameRoom.powerList)
@@ -127,10 +128,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	ngOnDestroy()
 	{
-        //this.gameService.getCable()
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
-		//this.gameService.leaveRoom(this.gameRoom.id!)
-        this.gameService.disconnect()
 	}
 
 	keyboard()
@@ -245,7 +243,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	gameEnds()
 	{
-        this.gameService.leaveRoom(this.gameRoom.id!)
+        //this.gameService.leaveRoom(this.gameRoom.id!)
 		this.router.navigate([`/mainPage/play/${this.userId}`])
 		.then(()=>{
 			window.location.reload();

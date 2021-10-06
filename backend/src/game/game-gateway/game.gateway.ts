@@ -45,6 +45,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
     userEmit: UserSocketI
 
+    inter: NodeJS.Timer
+
     ///////////////
 
     paddleWidth: number = 10;
@@ -125,7 +127,11 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 this.server.to(room.socketList[0]).emit('startGame', message)
                 this.server.to(room.socketList[1]).emit('startGame', message)
                 for (let user of this.liveShowUsers)
+                {
+                    console.log("ENTRA EN DISSSSS")
                     this.server.to(user.socketId).emit('startGame', message)
+                }
+                this.onLeaveRoom(socket, room.id)
                 break ;
             }
         }
@@ -168,7 +174,10 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         }
 
         if (this.liveShowUsers.length === 1)
+        {
+            console.log("DENTRO DELETE")
             this.liveShowUsers.splice(0, 1)
+        }
         else
         {
             let index = this.liveShowUsers.indexOf(userSocket)
@@ -377,7 +386,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.canvasHeight / 2 - this.paddleHeight / 2, 0, game.playerTwo, game.id)
         let ball = new Ball(this.canvasWidth / 2, this.canvasHeight / 2, 7, 5, 5)
 		if (socket.id === game.socketList[0])
-        	setTimeout(() => setInterval(() => this.update(plOne, plTwo, ball, game), 1000 / 60), 1500) 
+        	setTimeout(() => {this.inter = setInterval(() => this.update(plOne, plTwo, ball, game), 1000 / 60)}, 1500) 
         
     }
 
@@ -494,6 +503,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		}
 		else
         {
+            console.log("PL1: ", plOne.score, "PL2: ", plTwo.score)
             let winner: number = (plOne.score > plTwo.score) ?  plOne.player : plTwo.player;
             let losser: number = (plOne.score > plTwo.score) ?  plTwo.player : plOne.player;
             let message = {
@@ -505,8 +515,11 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.server.to(game.socketList[0]).emit('startGame', message)
             this.server.to(game.socketList[1]).emit('startGame', message)
             for (let user of this.liveShowUsers)
+            {
                 if (game.playerOne !== user.userId && game.playerTwo !== user.userId)
                     this.server.to(user.socketId).emit('startGame', message)
+            }
+            clearInterval(this.inter)
 		}
 		
     }
@@ -548,10 +561,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 console.log('1 wins!')
                 userOne.wins += 1;
                 userTwo.defeats += 1;
-                if (!userOne.matches)
-                    userOne.matches = []
-                if (!userTwo.matches)
-                    userTwo.matches = []
                 userOne.matches.push('Wins vs ' + userTwo.nick);
                 userTwo.matches.push('Losses vs ' + userOne.nick);
                 await this.userService.updateWins(userOne.wins, userOne.id)
@@ -562,10 +571,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 console.log('2 wins!')
                 userTwo.wins += 1;
                 userOne.defeats += 1;
-                if (!userOne.matches)
-                    userOne.matches = []
-                if (!userTwo.matches)
-                    userTwo.matches = []
                 userOne.matches.push('Losses vs ' + userTwo.nick);
                 userTwo.matches.push('Wins vs ' + userOne.nick);
                 await this.userService.updateWins(userTwo.wins, userTwo.id)

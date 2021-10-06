@@ -54,7 +54,7 @@ export class PlayComponent implements OnInit
         this.roomPrivate = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 7)!
         if (this.roomPrivate === 'private')
             this.waiting = true
-        //this.gameService.addLiveUser()
+
         this.gameService.showRooms()
         this.gameService.getLiveRooms().subscribe(res => {
             
@@ -91,7 +91,6 @@ export class PlayComponent implements OnInit
 	{
 		let pongContainer = document.getElementById("pongContainer");
 		pongContainer!.style.backgroundColor = 'rgba(19, 5, 11, 1)';
-		//this.router.navigate([`mainPage/play/${this.userId}/matchmaking`])
 		this.OnlineMode = true;
 		this.Menu = false;
         this.waiting = true

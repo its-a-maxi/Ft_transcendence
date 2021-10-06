@@ -39,8 +39,6 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 	user2: string = '';
 	private user1id: number = -1;
 	private user2id: number = -1;
-    plOne: string = ''
-    plTwo: string = ''
 
 	constructor(private gameService: GameService,
 				private router: Router,
@@ -61,9 +59,7 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 
 		this.gameService.addLiveUser()
 		//this.gameRoom.option = "show"
-		
-        // this.plOne = this.gameRoom.playerOne!.toString()
-        // this.plTwo = this.gameRoom.playerTwo!.toString()
+
         await this.authService.getUserById(this.gameRoom.playerOne!.toString())
 			.then(res => {
 				this.user1 = res.data.nick;
@@ -78,11 +74,12 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 
 		console.log(this.user1 + this.user2);
 
-		//this.gameService.createGame(this.gameRoom)
+
 		this.gameService.startGame().subscribe(res => {
 
                     if (res.text === "GameOver" && !this.gameOver)
                     {
+                        // this.gameService.disconnect()
                         if (res.winner == this.user1id)
                             this.winner = this.user1;
                         else
@@ -122,6 +119,7 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
     gameEnds()
 	{
         //this.gameService.leaveRoom(this.gameRoom.id!)
+        
 		this.router.navigate([`/mainPage/play/${this.userId}`])
 		.then(()=>{
 			window.location.reload();
