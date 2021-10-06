@@ -37,10 +37,10 @@ export class WaitingRoomComponent implements OnInit {
             {
 				return
 			}
-
 			this.roomGame = res
 			this.roomId = this.roomGame.id!
-            
+            // if (this.roomGame)
+            //     this.gameService.showRooms()
 		})
 	}
 

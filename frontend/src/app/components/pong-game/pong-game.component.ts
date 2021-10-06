@@ -57,6 +57,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 	async ngAfterViewInit()
     {
 		//console.log(this.gameRoom);
+        
 		this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
 		//console.log(this.canvas.height);
 		//this.canvas.style.transform = 'scale(0.01)';
@@ -80,6 +81,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 		console.log(this.user1 + this.user2);
 
         this.gameService.startGame().subscribe(res => {
+            
 			if (res.text === "GameOver" && !this.gameOver)
 			{
 				if (res.winner == this.user1id)
@@ -117,6 +119,7 @@ export class PongGameComponent implements OnInit, AfterViewInit, OnDestroy
 
 	ngOnInit(): void
 	{
+        this.gameService.showRooms()
         setTimeout(() => this.start = true, 1500)
         this.gameOver = false
 		this.keyboard()

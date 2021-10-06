@@ -42,7 +42,10 @@
 		</div>
 		<div class="listContainer">
 			<ul class="list" *ngFor="let room of liveRooms">
-				<li (click)="viewShowRoom(room)">{{getRoomName(room)}}<br><span style="font-style: italic; opacity: 70%;"> - {{getRoomOption(room.option!)}}</span></li>  
+				<li *ngIf="room.playerOne !== numId && room.playerTwo !== numId"
+                    (click)="viewShowRoom(room)">{{getRoomName(room)}}<br>
+                    <span style="font-style: italic; opacity: 70%;"> - {{getRoomOption(room.option!)}}</span>
+                </li>  
 			</ul>
 		</div>
 	</div>

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/cor
 import { Router } from '@angular/router';
 import { Ball } from 'src/app/components/pong-game/classes/class-ball';
 import { Paddle } from 'src/app/components/pong-game/classes/class-paddle';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
 
@@ -33,16 +34,26 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 	wimbledon = false;
 
 	userId: string = sessionStorage.getItem('token')!
+    winner: string = '';
+	user1: string = '';
+	user2: string = '';
+	private user1id: number = -1;
+	private user2id: number = -1;
+    plOne: string = ''
+    plTwo: string = ''
 
 	constructor(private gameService: GameService,
-				private router: Router) { }
+				private router: Router,
+                private authService: AuthService) { }
 
 	ngOnInit(): void
 	{
+        
+        console.log("ESTO ES GAME ROOM", this.gameRoom)
 		this.gameOver = false
 	}
 
-	ngAfterViewInit()
+	async ngAfterViewInit()
 	{
 		this.canvas = <HTMLCanvasElement>document.getElementById("canvas")
 		this.context = this.canvas.getContext("2d")!
@@ -50,37 +61,61 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 
 		this.gameService.addLiveUser()
 		//this.gameRoom.option = "show"
-		console.log(this.gameRoom)
+		
+        // this.plOne = this.gameRoom.playerOne!.toString()
+        // this.plTwo = this.gameRoom.playerTwo!.toString()
+        // await this.authService.getUserById(this.plOne)
+		// 	.then(res => {
+		// 		this.user1 = res.data.nick;
+		// 		this.user1id = res.data.id})
+		// if (this.gameRoom.playerTwo! == -1)
+		// 	this.user2 = 'AI';
+		// else
+		// 	await this.authService.getUserById(this.plTwo)
+		// 	.then(res => {
+		// 		this.user2 = res.data.nick;
+		// 		this.user2id = res.data.id})
+
+		// console.log(this.user1 + this.user2);
 
 		//this.gameService.createGame(this.gameRoom)
 		this.gameService.startGame().subscribe(res => {
 
-                if (this.gameRoom.id === res.roomId)
-                {
+                //if (this.gameRoom.id === res.roomId)
+                //{
                     if (res.text === "GameOver" && !this.gameOver)
                     {
+                    //     if (res.winner == this.user1id)
+                    //         this.winner = this.user1;
+                    //     else
+                    //         this.winner = this.user2;
                         this.gameOver = true
-                        //console.log("GAMEOVER")
-                        this.router.navigate([`/mainPage/settings/${this.userId}`])
+                        console.log("GAMEOVER")
+                        //this.winner = res.winner
+                        //this.router.navigate([`/mainPage/settings/${this.userId}`])
+                        //window.location.reload()
                         return
                     }
-                    if (this.gameRoom.powerList)
+                    if (this.gameRoom && this.gameRoom.id === res.roomId)
                     {
-                        for (let power of this.gameRoom.powerList)
+                        if (this.gameRoom.powerList)
                         {
-                            if (power === 'PowerUpBigPalette')
+                            for (let power of this.gameRoom.powerList)
                             {
-                                this.paddleWidth = 20
-                                this.paddleHeight = 200;
+                                if (power === 'PowerUpBigPalette')
+                                {
+                                    this.paddleWidth = 20
+                                    this.paddleHeight = 200;
+                                }
+                                else if (power === 'PowerUpDisco')
+                                    this.randomColors = true;
+                                else if (power === 'PowerUpTennis')
+                                    this.wimbledon = true;
                             }
-                            else if (power === 'PowerUpDisco')
-                                this.randomColors = true;
-                            else if (power === 'PowerUpTennis')
-                                this.wimbledon = true;
                         }
+                        this.render(res.plOne, res.plTwo, res.ball)
                     }
-                    this.render(res.plOne, res.plTwo, res.ball)
-                }
+                //}
             })
 	}
 
@@ -88,6 +123,16 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 	{
 		this.gameService.removeLiveUser()
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+	}
+
+    gameEnds()
+	{
+        //this.gameService.leaveRoom(this.gameRoom.id!)
+		this.router.navigate([`/mainPage/play/${this.userId}`])
+		.then(()=>{
+			window.location.reload();
+		});
+        //this.gameService.disconnect()
 	}
 
 	render(userOne: Paddle, userTwo: Paddle, ball: Ball)

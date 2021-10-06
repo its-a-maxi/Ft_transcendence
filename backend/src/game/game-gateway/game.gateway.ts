@@ -43,6 +43,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
     challengeUsers: UserSocketI[] = []
 
+    userEmit: UserSocketI
+
     ///////////////
 
     paddleWidth: number = 10;
@@ -164,6 +166,15 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             if (index > -1)
                 this.challengeUsers.splice(index, 1)
         }
+
+        if (this.liveShowUsers.length === 1)
+            this.liveShowUsers.splice(0, 1)
+        else
+        {
+            let index = this.liveShowUsers.indexOf(userSocket)
+            if (index > -1)
+                this.liveShowUsers.splice(index, 1)
+        }
 	}
 
     private sendRooms(socket: Socket)
@@ -185,15 +196,17 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     addLiveUsers(socket: Socket)
     {
         let liveUser: UserSocketI = {
-            userId: socket.data.user.id,
-            socketId: socket.id
-        }
+                userId: socket.data.user.id,
+                socketId: socket.id
+            }
         this.liveShowUsers.push(liveUser)
     }
 
     @SubscribeMessage('removeLiveUsers')
     removeLiveUsers(socket: Socket)
     {
+        if (this.liveShowUsers.length === 1)
+            this.liveShowUsers.pop()
         for (let user of this.liveShowUsers)
         {
             if (user.socketId === socket.id)
@@ -251,6 +264,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         {
             if (i != 0 && this.normalUsers[i].userId !== this.normalUsers[i - 1].userId)
             {
+                this.userEmit = {userId: this.normalUsers[i].userId, socketId: this.normalUsers[i].socketId}
                 const newGame: GameI = await this.gameService
                     .create({
                         playerOne: this.normalUsers[i - 1].userId,
@@ -272,7 +286,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     @SubscribeMessage('showRooms')
     async showRooms(socket: Socket)
     {
-        this.server.to(socket.id).emit('liveRooms', this.listRooms)
+        this.server.emit('liveRooms', this.listRooms)
     }
 
 	@SubscribeMessage('playDemo')
@@ -474,7 +488,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.server.to(game.socketList[0]).emit('startGame', data)
             this.server.to(game.socketList[1]).emit('startGame', data)
             for (let user of this.liveShowUsers)
-                this.server.to(user.socketId).emit('startGame', data)
+                if (game.playerOne !== user.userId && game.playerTwo !== user.userId)
+                    this.server.to(user.socketId).emit('startGame', data)
+                
 		}
 		else
         {
@@ -489,7 +505,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.server.to(game.socketList[0]).emit('startGame', message)
             this.server.to(game.socketList[1]).emit('startGame', message)
             for (let user of this.liveShowUsers)
-                this.server.to(user.socketId).emit('startGame', message)
+                if (game.playerOne !== user.userId && game.playerTwo !== user.userId)
+                    this.server.to(user.socketId).emit('startGame', message)
 		}
 		
     }

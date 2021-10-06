@@ -123,7 +123,7 @@ export class ChatGateway
                     }*/
                     if (!check)
                     {
-                        //room.admins.unshift(newUser)
+                        //room.admins.unshift(newUser)/
                         await this.roomService.updateRoom(room)
                     }
 				}

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GameI } from '../models/gameRoom.interface';
+import { RoomI } from '../models/room.interface';
 import { UserI } from '../models/user.interface';
 import { GameSocket } from './socket-game/socket-game';
 

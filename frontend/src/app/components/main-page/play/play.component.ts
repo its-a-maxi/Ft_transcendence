@@ -35,26 +35,29 @@ export class PlayComponent implements OnInit
 
 
 	roomGame!: GameI;
-	userId: string = sessionStorage.getItem('token')!
+	userId: string = sessionStorage.getItem('token') as string
     liveRooms!: GameI[];
     show: boolean = false
     roomSelected!: GameI;
     waiting: boolean = false
 	private allUsers: UserI[] = [];
     roomPrivate: string = ""
+    numId: number = parseInt(this.userId)
 
 	constructor(private gameService: GameService,
 				private router: Router,
 				public authService: AuthService,
-                private activateRoute: ActivatedRoute) { }
+                private activateRoute: ActivatedRoute) {this.gameService.connect()}
 
 	async ngOnInit()
 	{
         this.roomPrivate = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 7)!
         if (this.roomPrivate === 'private')
             this.waiting = true
+        //this.gameService.addLiveUser()
         this.gameService.showRooms()
         this.gameService.getLiveRooms().subscribe(res => {
+            
             this.liveRooms = res
         })
 		await this.authService.showAllUsers()
@@ -132,11 +135,11 @@ export class PlayComponent implements OnInit
     {
 		let pongContainer = document.getElementById("pongContainer");
 		pongContainer!.style.backgroundColor = 'rgba(19, 5, 11, 1)';
-        this.show = true
         this.Menu = false;
         this.roomSelected = room
 		this.showRoom = true;
-        this.gameService.connect()
+        this.show = true
+        //this.gameService.connect()
     }
 
 	justOne(save: boolean)
