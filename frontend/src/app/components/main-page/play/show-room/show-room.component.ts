@@ -88,7 +88,8 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
                         console.log("GAMEOVER")
                         return
                     }
-                    if (this.gameRoom && this.gameRoom.id === res.roomId)
+                    if (this.gameRoom && this.gameRoom.id === res.roomId &&
+                        res.plOne && res.plTwo)
                     {
                         if (this.gameRoom.powerList)
                         {
@@ -118,13 +119,10 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 
     gameEnds()
 	{
-        //this.gameService.leaveRoom(this.gameRoom.id!)
-        
 		this.router.navigate([`/mainPage/play/${this.userId}`])
 		.then(()=>{
 			window.location.reload();
 		});
-        //this.gameService.disconnect()
 	}
 
 	render(userOne: Paddle, userTwo: Paddle, ball: Ball)

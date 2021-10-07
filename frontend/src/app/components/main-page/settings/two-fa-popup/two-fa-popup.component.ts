@@ -28,7 +28,6 @@ ngOnInit(): void
 
 getQrCode()
 {
-    //this.authService.twoFactor_test().subscribe(res => console.log("ESTO ES TWO FACTOR: ", res))
     this.authService.twoFactor().then(res => this.qrImage = res.data.url)
 }
 
