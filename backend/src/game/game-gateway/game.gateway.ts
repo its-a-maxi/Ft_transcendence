@@ -100,13 +100,20 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	async handleDisconnect(socket: Socket)
 	{
 		console.log("DISCONNECT", socket.id)
-		this.removeUser({userId: socket.data.user.id, socketId: socket.id})
+		const curr_user: UserSocketI = {userId: socket.data.user.id, socketId: socket.id}
         for (let room of this.listRooms)
         {
             let losser: number = socket.data.user.id
             let winner: number = 0
-            if (room.playerTwo === -1)
-            {   
+            if (curr_user.userId === room.playerOne && room.playerTwo === -1)
+            {
+                let message = {
+                    roomId: room.id,
+                    text: "GameOver"
+                }
+                this.server.to(room.socketList[0]).emit('startGame', message)
+                for (let user of this.liveShowUsers)
+                    this.server.to(user.socketId).emit('startGame', message)
                 this.onLeaveRoom(socket, room.id)
                 break
             }
@@ -130,6 +137,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 break ;
             }
         }
+        this.removeUser(curr_user)
 		socket.disconnect();
 	}
 

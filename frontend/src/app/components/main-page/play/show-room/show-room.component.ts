@@ -79,7 +79,7 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 
                     if (res.text === "GameOver" && !this.gameOver)
                     {
-                        // this.gameService.disconnect()
+                        console.log("ENTRA")
                         if (res.winner == this.user1id)
                             this.winner = this.user1;
                         else
