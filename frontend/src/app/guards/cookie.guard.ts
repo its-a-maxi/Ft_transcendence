@@ -26,9 +26,7 @@ export class CookieGuard implements CanActivate
 	canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
 	{
         const token = this.cookieService.get('clientID')
-        const decoded: TokenI = jwt_decode(token)
-        //console.log("TOKEN: ", decoded.iat - decoded.exp)
-        console.log("NEW DATE", new Date(decoded.exp * 1000))
+
 		if (token)
 		{
 			return true;

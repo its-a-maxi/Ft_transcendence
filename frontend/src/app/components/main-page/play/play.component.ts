@@ -51,6 +51,7 @@ export class PlayComponent implements OnInit
 
 	async ngOnInit()
 	{
+        this.authService.refreshToken()
         this.roomPrivate = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 7)!
         if (this.roomPrivate === 'private')
             this.waiting = true
@@ -155,11 +156,13 @@ export class PlayComponent implements OnInit
 
 	reloadPage()
 	{
-		this.router.navigate([`/mainPage/play/${this.userId}`])
-            .then(()=>{
-                this.gameService.disconnect()
-                window.location.reload();
-            });
+        this.ngOnInit()
+		// this.router.navigate([`/mainPage/play/${this.userId}`])
+        //     .then(()=>{
+        //         //this.gameService.disconnect()
+        //         this.ngOnInit()
+        //         //window.location.reload();
+        //     });
 	}
 
 	getIdName(id: number): string

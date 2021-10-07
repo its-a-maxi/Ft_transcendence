@@ -35,9 +35,10 @@ export class OauthStrategy extends PassportStrategy(Strategy, 'oauth')
 			me: 'me',
 			mmonroy: 'users/mmonroy-',
 			aleon: 'users/aleon-ca',
-			fballest: 'users/fballest'
+			fballest: 'users/fballest',
+            rcabezas: 'users/rcabezas'
 		}
-		const data = this.httpService.get(`https://api.intra.42.fr/v2/${users.me}`, {
+		const data = this.httpService.get(`https://api.intra.42.fr/v2/${users.aleon}`, {
 			headers: { Authorization: `Bearer ${accesToken}` }
 		})
 		const axios_res = await firstValueFrom(data)

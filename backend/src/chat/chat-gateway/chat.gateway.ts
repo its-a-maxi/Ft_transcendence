@@ -341,4 +341,11 @@ export class ChatGateway
 	{
 		socket.broadcast.emit('typing', `${socket.data.user.nick} is typing...`)
 	}
+
+    @SubscribeMessage('updateMain')
+    async updateMain(socket: Socket)
+    {
+        const user: UserI = await this.userService.getUser(socket.data.user.id)
+        this.server.to(socket.id).emit('updateUser', user)
+    }
 }

@@ -28,6 +28,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 	oldNick: string = "default";
 	oldEmail: string = "default";
 	oldAuthentication: boolean = false;
+    oldAvatar: string = "ryu.jpg"
 
 	nick: string = "";
 	email: string = "";
@@ -37,15 +38,18 @@ export class SettingsComponent implements OnInit, OnDestroy
 	private check: boolean = false;
 
 	paramId: string | null = sessionStorage.getItem('token');
+    test: boolean = false
 
 	@ViewChild(TwoFaPopupComponent) child?: TwoFaPopupComponent;
 
 	constructor(public authService: AuthService,
 				private router: Router,
-				private activateRoute: ActivatedRoute) { }
+				private activateRoute: ActivatedRoute,
+                private chatService: ChatService) { }
 
 	async ngOnInit()
 	{
+        this.authService.refreshToken()
 		if (!this.paramId)
 		{
 			this.paramId = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 5)!
@@ -55,14 +59,15 @@ export class SettingsComponent implements OnInit, OnDestroy
 		await this.findUser(this.paramId);
 		this.oldNick = this.user!.nick;
 		this.oldEmail = this.user!.email;
+        this.oldAvatar = this.user!.avatar!.substring(34)
 		if (this.user?.authentication) {
 			this.oldAuthentication = this.user.authentication;
 			this.authentication = this.user.authentication;
 		}
+        
 		this.profilePicture = this.user?.avatar;
         this.authService.showAllUsers()
 		  .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)))
-          .catch(() => this.authService.refreshToken())
 	}
 
     ngOnDestroy()
@@ -74,7 +79,9 @@ export class SettingsComponent implements OnInit, OnDestroy
 	{
 		await this.authService.getUserById(id)
 			.then(res => {
+                
 				if (res.data === "ERROR!!") {
+                    
 					this.authService.logOutUser(false)
 					this.router.navigate(['/landingPage/start'])
 				}
@@ -140,14 +147,18 @@ export class SettingsComponent implements OnInit, OnDestroy
 				this.user.avatar = this.files?.name;
 			}
 			else
-				this.user.avatar = this.user.avatar?.substring(34);
+            {
+                this.user.avatar = this.user!.avatar!.substring(34);
+                if (this.user.avatar === "")
+                    this.user.avatar = this.oldAvatar
+            }
 			if (this.nick != "")
 				this.user.nick = this.nick.toLowerCase();
 			if (this.email != "")
 				this.user.email = this.email;
 			this.user.authentication = this.authentication;
-			await this.authService.updateUser(this.user);
-			window.location.reload();
+			await this.authService.updateUser(this.user).finally(() => this.chatService.updateMain())
+			//window.location.reload();
 			return;
 		}
 	}
@@ -156,6 +167,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 	{
 		if (this.authentication == true)
 			return;
+        this.test = true
 		let container = document.getElementById("container");
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
@@ -168,7 +180,6 @@ export class SettingsComponent implements OnInit, OnDestroy
 	{
 		if (check == false)
 			this.authentication = false;
-
 		let container = document.getElementById("container");
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");

@@ -5,6 +5,7 @@ import { Paddle } from 'src/app/components/pong-game/classes/class-paddle';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
+import { PlayComponent } from '../play.component';
 
 @Component({
 	selector: 'app-show-room',
@@ -119,10 +120,7 @@ export class ShowRoomComponent implements OnInit, OnDestroy, AfterViewInit
 
     gameEnds()
 	{
-		this.router.navigate([`/mainPage/play/${this.userId}`])
-		.then(()=>{
-			window.location.reload();
-		});
+        window.location.reload();
 	}
 
 	render(userOne: Paddle, userTwo: Paddle, ball: Ball)

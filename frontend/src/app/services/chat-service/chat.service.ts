@@ -146,4 +146,14 @@ export class ChatService
     {
         return this.socket.fromEvent('allUsers')
     }
+
+    updateMain()
+    {
+        this.socket.emit('updateMain')
+    }
+
+    updateUserMain(): Observable<UserI>
+    {
+        return this.socket.fromEvent<UserI>('updateUser')
+    }
 }

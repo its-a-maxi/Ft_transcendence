@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { CookieService } from 'ngx-cookie';
@@ -22,7 +23,8 @@ export class AuthService
     cookie: string = this.cookieService.get('clientID')
 
 	constructor(private router: Router,
-                private cookieService: CookieService,) { this.selectedUser = new User()}
+                private cookieService: CookieService,
+                private snackBar: MatSnackBar) { this.selectedUser = new User()}
 
 	// async getAuthUser()
 	// {
@@ -92,7 +94,11 @@ export class AuthService
 
 	async updateUser(user: User)
 	{
-		return await axios.put<User>('http://localhost:3000/auth/updateUser', user)
+		return await axios.put<User>('http://localhost:3000/auth/updateUser', user).finally(() => {
+            this.snackBar.open(`${user.nick} updated successfully`, 'Close', {
+                duration: 2000, horizontalPosition: 'right', verticalPosition: 'top'
+            })
+        })
 	}
 
 	async updateFriends(friends: Array<UserI>, id: string)
