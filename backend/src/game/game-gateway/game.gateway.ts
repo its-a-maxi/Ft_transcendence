@@ -45,8 +45,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
     userEmit: UserSocketI
 
-    inter: NodeJS.Timer
-
     ///////////////
 
     paddleWidth: number = 10;
@@ -127,10 +125,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 this.server.to(room.socketList[0]).emit('startGame', message)
                 this.server.to(room.socketList[1]).emit('startGame', message)
                 for (let user of this.liveShowUsers)
-                {
-                    console.log("ENTRA EN DISSSSS")
                     this.server.to(user.socketId).emit('startGame', message)
-                }
                 this.onLeaveRoom(socket, room.id)
                 break ;
             }
@@ -174,10 +169,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         }
 
         if (this.liveShowUsers.length === 1)
-        {
-            console.log("DENTRO DELETE")
             this.liveShowUsers.splice(0, 1)
-        }
         else
         {
             let index = this.liveShowUsers.indexOf(userSocket)
@@ -256,24 +248,12 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 	@SubscribeMessage('findUsers')
 	async findUsers(socket: Socket)
 	{
-        console.log("ENTRA CREATE", socket.id)
         const user: UserSocketI = {userId: socket.data.user.id, socketId: socket.id}
-        if (this.normalUsers.length === 0)
-            this.normalUsers.push(user)
-        else
-        {
-            for (let curr of this.normalUsers)
-            {
-                if (user.userId !== curr.userId)
-                    this.normalUsers.push(user)
-            }
-        }
-
+        this.normalUsers.push(user)
         for (let i = 0; i < this.normalUsers.length; i++)
         {
             if (i != 0 && this.normalUsers[i].userId !== this.normalUsers[i - 1].userId)
             {
-                this.userEmit = {userId: this.normalUsers[i].userId, socketId: this.normalUsers[i].socketId}
                 const newGame: GameI = await this.gameService
                     .create({
                         playerOne: this.normalUsers[i - 1].userId,
@@ -355,6 +335,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         this.PowerUpx2 = false
         this.PowerUpOnePoint = false
         this.PowerUpQuickPalette= 8
+        this.paddleWidth = 10;
+	    this.paddleHeight = 100;
         if (game.powerList)
         {
             for (let power of game.powerList)
@@ -386,7 +368,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.canvasHeight / 2 - this.paddleHeight / 2, 0, game.playerTwo, game.id)
         let ball = new Ball(this.canvasWidth / 2, this.canvasHeight / 2, 7, 5, 5)
 		if (socket.id === game.socketList[0])
-        	setTimeout(() => {this.inter = setInterval(() => this.update(plOne, plTwo, ball, game), 1000 / 60)}, 1500) 
+        	setTimeout(() => {let interId: any = setInterval(() => {
+                this.update(plOne, plTwo, ball, game, interId)}
+                , 1000 / 60)}, 1500) 
         
     }
 
@@ -422,7 +406,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             ballRight > paddleLeft && ballBottom > paddleTop);
 	}
 
-    private update(plOne: Paddle, plTwo: Paddle, ball: Ball, game: GameI)
+    private update(plOne: Paddle, plTwo: Paddle, ball: Ball, game: GameI, interId: any)
     {
 		ball.x += ball.velocityX;
 		ball.y += ball.velocityY;
@@ -503,7 +487,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		}
 		else
         {
-            console.log("PL1: ", plOne.score, "PL2: ", plTwo.score)
             let winner: number = (plOne.score > plTwo.score) ?  plOne.player : plTwo.player;
             let losser: number = (plOne.score > plTwo.score) ?  plTwo.player : plOne.player;
             let message = {
@@ -519,7 +502,7 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
                 if (game.playerOne !== user.userId && game.playerTwo !== user.userId)
                     this.server.to(user.socketId).emit('startGame', message)
             }
-            clearInterval(this.inter)
+            clearInterval(interId)
 		}
 		
     }
@@ -531,18 +514,12 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
         {
             this.upArrowPressed =  data.keyUp 
             this.downArrowPressed = data.keyDown
-            // this.upArrowPressed2 =  false
-            // this.downArrowPressed2 = false
         }
         else if (socket.id === data.game.socketList[1])
         {
-            // this.upArrowPressed =  false
-            // this.downArrowPressed = false
             this.upArrowPressed2 =  data.keyUp
             this.downArrowPressed2 = data.keyDown
         }
-        // this.key_wPressed = data.keyW
-        // this.key_sPressed = data.keyS
 	}
 
     @SubscribeMessage('updateStats')
@@ -584,7 +561,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     @SubscribeMessage('createSpecialRooms')
     async createSpecialRooms(socket: Socket, option: any)
     {
-        this.specialUsers.push({userId: socket.data.user.id, socketId: socket.id})
+        const user: UserSocketI = {userId: socket.data.user.id, socketId: socket.id}
+        this.specialUsers.push(user)
         this.listPowerUp.push(Object.keys(option).toString())
         
         for (let i = 0; i < this.specialUsers.length; i++)
