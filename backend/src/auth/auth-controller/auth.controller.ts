@@ -105,6 +105,7 @@ export class AuthController
         const secret = authenticator.generateSecret()
         if (!client.secret)
         {
+            console.log('hey');
             await this.userService.saveUserSecret(secret, userID)
             const optUrl = authenticator.keyuri(client.email, "FT_TRANSCENDENCE", secret)
             await QRCode.toFile('./assets/qrImage.png', optUrl)

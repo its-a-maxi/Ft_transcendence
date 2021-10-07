@@ -32,6 +32,8 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 
 	message: string = "";
 
+	title: string = "";
+
 	//chatMessage: FormControl = new FormControl(null, [Validators.required])
 
 	messagesPaginate$: Observable<MessagePaginateI> = combineLatest([this.chatService.getMessages(),
@@ -56,10 +58,22 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 	ngOnInit(): void
 	{
 		this.userId = sessionStorage.getItem('token')
+		if (this.chatRoom.name[0] == '#')
+			this.title = this.chatRoom.name;
+		else
+			for (let i = 0; this.chatRoom.users![i]; i++)
+				if (this.chatRoom.users![i].id != this.userId)
+					this.title = this.chatRoom.users![i].nick;
 	}
 
 	ngOnChanges(changes: SimpleChanges)
 	{
+		if (this.chatRoom.name[0] == '#')
+			this.title = this.chatRoom.name;
+		else
+			for (let i = 0; this.chatRoom.users![i]; i++)
+				if (this.chatRoom.users![i].id != this.userId)
+					this.title = this.chatRoom.users![i].nick;
 		this.chatService.leaveRoom(changes['chatRoom'].previousValue);
 		if (this.chatRoom)
 		{

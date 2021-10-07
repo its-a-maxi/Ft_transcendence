@@ -1,6 +1,6 @@
 <div *ngIf="chatRoom; else no_chatroom_selected" >
 	<div class="currentChannel">
-		<h1 class="currentChannelText">{{chatRoom.name}}</h1>
+		<h1 class="currentChannelText">{{title}}</h1>
 		<div *ngIf='userId == chatRoom.ownerId' class="iconBox">
 			<img *ngIf='chatRoom.name[0] == "#"' src="/assets/images/settingsIcon.png" class="settingsIcon"
 			title="Channel settings" [matMenuTriggerFor]="menuhidden">
