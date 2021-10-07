@@ -120,12 +120,12 @@ export class AuthController
         const client = await this.userService.getUser(userID)
         const secret = authenticator.generateSecret()
 
-       // if (!client.secret)
-        ///{
+        if (!client.secret)
+        {
             await this.userService.saveUserSecret(secret, userID)
             const optUrl = authenticator.keyuri(client.email, "FT_TRANSCENDENCE", secret)
             await QRCode.toFile('./assets/qrImage.png', optUrl)
-       // }
+        }
         return res.send({url: 'http://localhost:3000/auth/assets/qrImage.png'})
     }
 
