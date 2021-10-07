@@ -156,4 +156,5 @@ export class ChatService
     {
         return this.socket.fromEvent<UserI>('updateUser')
     }
+
 }

@@ -16,6 +16,8 @@ import { JoinedRoomI } from '../models/joined-room/joined-room.interface';
 import { MessageI } from '../models/messages/messages.interface';
 import { RoomEntity } from '../models/room/room.entity';
 import { RoomI } from '../models/room/room.interface';
+import { authenticator } from 'otplib'
+import  QRCode  from "qrcode";
 
 
 @WebSocketGateway({
@@ -348,4 +350,5 @@ export class ChatGateway
         const user: UserI = await this.userService.getUser(socket.data.user.id)
         this.server.to(socket.id).emit('updateUser', user)
     }
+
 }

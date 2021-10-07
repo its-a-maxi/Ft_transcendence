@@ -27,7 +27,7 @@ export class FriendsComponent implements OnInit {
 
   async ngOnInit()
   {
-    this.authService.refreshToken()
+    //this.authService.refreshToken()
     //await this.authService.addMatch('Losses vs ', this.paramId!);
     if (this.paramId)
       await this.findUser(this.paramId);

@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { ChatService } from 'src/app/services/chat-service/chat.service';
 
 @Component({
   selector: 'app-two-fa-popup',
@@ -19,7 +20,7 @@ paramId: string | null = sessionStorage.getItem('token');
 
 @Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
 
-constructor(public authService: AuthService, private router: Router) { }
+constructor(public authService: AuthService) { }
 
 ngOnInit(): void
 {

@@ -38,7 +38,6 @@ export class AuthService
 
     async refreshToken()
     {
-        console.log("ENTRA REFRESH")
         return await axios.post("http://localhost:3000/auth/refresh")
     }
 

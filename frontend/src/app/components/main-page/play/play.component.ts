@@ -51,7 +51,7 @@ export class PlayComponent implements OnInit
 
 	async ngOnInit()
 	{
-        this.authService.refreshToken()
+        //this.authService.refreshToken()
         this.roomPrivate = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 7)!
         if (this.roomPrivate === 'private')
             this.waiting = true

@@ -119,6 +119,7 @@ export class AuthController
         const userID = await this.authService.clientID(req)
         const client = await this.userService.getUser(userID)
         const secret = authenticator.generateSecret()
+
        // if (!client.secret)
         ///{
             await this.userService.saveUserSecret(secret, userID)
@@ -136,6 +137,7 @@ export class AuthController
         const userID = await this.authService.clientID(req)
         const client = await this.userService.getUser(userID)
         const verify = authenticator.verify({token: code, secret: client.secret})
+
         if (!verify)
         {
             throw new UnauthorizedException('Wrong authentication code');

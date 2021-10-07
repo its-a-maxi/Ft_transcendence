@@ -34,7 +34,7 @@ export class ChatPageComponent implements OnInit {
 
 	async ngOnInit()
     {
-        this.authService.refreshToken()
+        //this.authService.refreshToken()
 		if (this.paramId)
 			await this.findUser(this.paramId);
         //this.authService.showUsers_test().subscribe(response => this.allUsers = response.filter(x => x.id != this.mainUser?.id))

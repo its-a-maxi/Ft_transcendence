@@ -49,7 +49,6 @@ export class SettingsComponent implements OnInit, OnDestroy
 
 	async ngOnInit()
 	{
-        this.authService.refreshToken()
 		if (!this.paramId)
 		{
 			this.paramId = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 5)!
@@ -64,15 +63,15 @@ export class SettingsComponent implements OnInit, OnDestroy
 			this.oldAuthentication = this.user.authentication;
 			this.authentication = this.user.authentication;
 		}
-        
-		this.profilePicture = this.user?.avatar;
+
+		this.profilePicture = this.user?.avatar
         this.authService.showAllUsers()
 		  .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)))
 	}
 
     ngOnDestroy()
     {
-       //this.gameService.findUsers()
+       this.authService.refreshToken()
     }
 
 	async findUser(id: string)
@@ -167,7 +166,6 @@ export class SettingsComponent implements OnInit, OnDestroy
 	{
 		if (this.authentication == true)
 			return;
-        this.test = true
 		let container = document.getElementById("container");
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");
