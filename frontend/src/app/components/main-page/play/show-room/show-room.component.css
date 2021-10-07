@@ -74,3 +74,26 @@
     border: 0px solid #ede5f2ff;
 	color: #805849ff;
 }
+
+
+
+.user1
+{
+    position: absolute;
+    width: 50%;
+    left: 0%;
+    top: 5%;
+    opacity: 40%;
+    text-align: center;
+    color: #ede5f2ff;
+}
+.user2
+{
+    position: absolute;
+    width: 50%;
+    right: 0%;
+    top: 5%;
+    opacity: 40%;
+    text-align: center;
+    color: #ede5f2ff;
+}

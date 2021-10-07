@@ -1,4 +1,8 @@
-<canvas id="canvas" width="800" height="600"  *ngIf='!gameOver'></canvas>
+<div *ngIf='!gameOver'>
+	<canvas id="canvas" width="800" height="600"></canvas>
+	<p class=user1>{{user1}}</p>
+	<p class=user2>{{user2}}</p>
+</div>
 
 <div *ngIf='gameOver' class='winScreen'>
 	<div class='selection'>
