@@ -17,7 +17,7 @@ import { CookieGuard } from './guards/cookie.guard';
 const routes: Routes = [
   { path: 'landingPage', component: LandingPageComponent, children: [
     { path: 'start', component: StartComponent },
-    { path: 'twoFaCheck', component: TwoFaCheckComponent }
+    { path: 'twoFaCheck/:id', component: TwoFaCheckComponent }
   ]},
   { path: 'mainPage', component: MainPageComponent, children: [
     {path: 'waitingRoom/:id', component: WaitingRoomComponent},

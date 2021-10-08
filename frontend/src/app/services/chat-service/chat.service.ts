@@ -157,4 +157,14 @@ export class ChatService
         return this.socket.fromEvent<UserI>('updateUser')
     }
 
+    findQR()
+    {
+        this.socket.emit('findQR')
+    }
+
+    getQR(): Observable<string>
+    {
+        return this.socket.fromEvent<string>('getQR')
+    }
+
 }

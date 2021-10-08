@@ -13,7 +13,7 @@ import { UserI } from 'src/app/services/models/user.interface';
 	templateUrl: './play.component.html',
 	styleUrls: ['./play.component.css']
 })
-export class PlayComponent implements OnInit
+export class PlayComponent implements OnInit, OnDestroy
 {
 	/* POWER UPS */
 	PowerUpx2: boolean = false;
@@ -66,6 +66,11 @@ export class PlayComponent implements OnInit
 		if (this.router.url != '/mainPage/play/' + this.userId)
 			this.Menu = false;
 	}
+
+    ngOnDestroy()
+    {
+        this.gameService.disconnect()
+    }
 
 	changeToAi()
     {
@@ -156,13 +161,13 @@ export class PlayComponent implements OnInit
 
 	reloadPage()
 	{
-        this.ngOnInit()
-		// this.router.navigate([`/mainPage/play/${this.userId}`])
-        //     .then(()=>{
-        //         //this.gameService.disconnect()
-        //         this.ngOnInit()
-        //         //window.location.reload();
-        //     });
+        //this.ngOnInit()
+		this.router.navigate([`/mainPage/play/${this.userId}`])
+            .then(()=>{
+                //this.gameService.disconnect()
+                //this.ngOnInit()
+                window.location.reload();
+            });
 	}
 
 	getIdName(id: number): string

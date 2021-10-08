@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
@@ -8,21 +8,32 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
   templateUrl: './two-fa-check.component.html',
   styleUrls: ['./two-fa-check.component.css']
 })
-export class TwoFaCheckComponent implements OnInit {
+export class TwoFaCheckComponent implements OnInit, OnDestroy {
 
   code: string = ""
   userPhone: string = ""
   userEmail: string = ""
+  paramId: string = ""
   
-  constructor(public authService: AuthService, private router: Router,) { }
+  constructor(public authService: AuthService, private router: Router, private activateRoute: ActivatedRoute) { }
   
   ngOnInit(): void
   {
+    if (!this.paramId)
+    {
+        this.paramId = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 5)!
+        sessionStorage.setItem('token', this.paramId)
+    }
+  }
+
+  ngOnDestroy()
+  {
+      window.location.reload()
   }
   
   verifyCode(form: NgForm)
   {
-    this.authService.verifyCode(form.value)
+    this.authService.verifyCode(form.value, parseInt(this.paramId))
       .then((res) => {
         alert('2 Factor Authentication Success!!');
         console.log(res.data.nick);

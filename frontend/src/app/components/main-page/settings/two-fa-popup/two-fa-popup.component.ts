@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, DoCheck, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
@@ -20,11 +20,16 @@ paramId: string | null = sessionStorage.getItem('token');
 
 @Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
 
-constructor(public authService: AuthService) { }
+constructor(public authService: AuthService, private chatService: ChatService) { }
 
 ngOnInit(): void
 {
-  this.getQrCode()
+    this.chatService.getQR().subscribe(res => {
+        console.log("ENTRAAAAAA")
+        this.qrImage = res
+        
+    })
+    //this.getQrCode()
 }
 
 getQrCode()
@@ -34,7 +39,7 @@ getQrCode()
 
 verifyCode(form: NgForm)
 {
-  this.authService.verifyCode(form.value)
+  this.authService.verifyCode(form.value, parseInt(this.paramId!))
     .then((res) => {
       alert('2 Factor Authentication Success!!');
       this.closeOverlay.emit();

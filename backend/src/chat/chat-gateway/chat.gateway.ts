@@ -347,8 +347,14 @@ export class ChatGateway
     @SubscribeMessage('updateMain')
     async updateMain(socket: Socket)
     {
+        console.log("GATEWAY CHAT")
         const user: UserI = await this.userService.getUser(socket.data.user.id)
         this.server.to(socket.id).emit('updateUser', user)
     }
 
+    @SubscribeMessage('findQR')
+    findQR(socket: Socket)
+    {
+        this.server.to(socket.id).emit('getQR', 'http://localhost:3000/auth/assets/qrImage.png')
+    }
 }

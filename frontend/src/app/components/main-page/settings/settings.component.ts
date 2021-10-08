@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 	private check: boolean = false;
 
 	paramId: string | null = sessionStorage.getItem('token');
-    test: boolean = false
+    cont: boolean = false
 
 	@ViewChild(TwoFaPopupComponent) child?: TwoFaPopupComponent;
 
@@ -71,7 +71,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 
     ngOnDestroy()
     {
-       this.authService.refreshToken()
+       //this.authService.refreshToken()
     }
 
 	async findUser(id: string)
@@ -166,6 +166,10 @@ export class SettingsComponent implements OnInit, OnDestroy
 	{
 		if (this.authentication == true)
 			return;
+        
+        this.authService.createQR(parseInt(this.paramId!)).then(() => {
+            this.chatService.findQR()
+        })
 		let container = document.getElementById("container");
 		let overlayBack = document.getElementById("overlayBack");
 		let popup = document.getElementById("popup");

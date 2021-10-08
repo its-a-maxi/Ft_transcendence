@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, Query } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat.service';
@@ -16,6 +16,7 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 
 	constructor(public authService: AuthService,
                 private router: Router,
+                private activateRoute: ActivatedRoute,
                 private chatService: ChatService) { }
 
 	private user?: User;
@@ -26,10 +27,10 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 
 	paramId: string | null = sessionStorage.getItem('token');
 
-	async ngOnInit()
+	ngOnInit()
 	{
 		if (this.paramId)
-			await this.findUser(this.paramId);
+		    this.findUser(this.paramId);
         this.chatService.updateUserMain().subscribe(res => {
             this.nick = res.nick;
 		    this.picture = res.avatar;
@@ -67,7 +68,11 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 					this.router.navigate(['/landingPage/start'])
 				}
 				else
+                {
 					this.user = res.data;
+                    this.nick = this.user?.nick;
+		            this.picture = this.user?.avatar;
+                }
 			})
             .catch(() => this.authService.refreshToken())
 	}

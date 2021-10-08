@@ -69,6 +69,11 @@ export class AuthService
 	// 	return !!localStorage.getItem('nick')
 	// }
 
+    async createQR(userId: number)
+    {
+        return await axios.post('http://localhost:3000/auth/createQR', {userId} )
+    }
+
 	async twoFactor()
 	{
 		return await axios.get('http://localhost:3000/auth/2fa')
@@ -79,9 +84,9 @@ export class AuthService
 	// 	return this.http.get<any>('http://localhost:3000/auth/2fa_test')
 	// }
 
-	async verifyCode(num: any)
+	async verifyCode(num: any, userId: number)
 	{
-		return await axios.post('http://localhost:3000/auth/verify', num)
+		return await axios.post('http://localhost:3000/auth/verify', {num, userId})
 	}
 
 	async createAvatar(image: File | undefined)
