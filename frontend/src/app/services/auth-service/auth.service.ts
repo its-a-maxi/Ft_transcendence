@@ -124,4 +124,10 @@ export class AuthService
 		const url: string = `http://localhost:3000/auth/getUserById/${id}`
 		return axios.get(url)
 	}
+
+    async getRuteQr()
+    {
+        return await axios.get('http://localhost:3000/auth/assets/qrImage.png')
+        
+    }
 }

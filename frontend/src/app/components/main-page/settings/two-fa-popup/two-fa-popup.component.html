@@ -1,5 +1,5 @@
 <div class=body id=body>
-    <img class='qrImage' [src]="this.qrImage || '/assets/no-image.png'" alt="">
+    <img class='qrImage' [src]="this.qrImage || '/assets/no-image.png'" alt="" *ngIf="dataQR">
     <form #Verify2factor="ngForm" (ngSubmit)="verifyCode(Verify2factor)">
         <div class='inputCode'>
             <div class='searchBar'>
@@ -10,3 +10,6 @@
     </form>
     <h1>Uses Google Authenticator</h1>
 </div>
+<!-- <div class="" *ngIf="dataQR">
+    <img class='qrImage' [src]="this.qrImage || '/assets/no-image.png'" alt="">
+</div> -->

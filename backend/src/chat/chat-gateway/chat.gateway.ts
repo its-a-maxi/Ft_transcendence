@@ -63,7 +63,7 @@ export class ChatGateway
 				const rooms = await this.roomService.findAllRoomById(user.id)
 				await this.connectedUserService.create({socketId: socket.id, userId: user.id, user})
                 this.userStatus(socket)
-                this.findUsersConnected(socket)
+                this.findUsersConnected(socket) 
 				return this.server.to(socket.id).emit('rooms', rooms)
 			}
 		}
@@ -274,6 +274,7 @@ export class ChatGateway
 	@SubscribeMessage('usersConnected')
 	async findUsersConnected(socket: Socket)
 	{
+       
 		let listUsers: UserI[] = []
 		const userConnected: ConnectedUserI[] = await this.connectedUserService.findAllUserConnected()
 		for (let i = 0; i < userConnected.length; i++)
@@ -324,7 +325,7 @@ export class ChatGateway
 	{
 		user.isBanned = true
 		await this.userService.updateUser(user as UpdateDto, user.id)
-		console.log("BBAAANNEED: ", user)
+		//console.log("BBAAANNEED: ", user)
 		setTimeout(() => {
 			user.isBanned = false
 			this.userService.updateUser(user as UpdateDto, user.id)
@@ -347,7 +348,6 @@ export class ChatGateway
     @SubscribeMessage('updateMain')
     async updateMain(socket: Socket)
     {
-        console.log("GATEWAY CHAT")
         const user: UserI = await this.userService.getUser(socket.data.user.id)
         this.server.to(socket.id).emit('updateUser', user)
     }

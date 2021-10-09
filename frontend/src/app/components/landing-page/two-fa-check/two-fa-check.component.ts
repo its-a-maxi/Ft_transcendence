@@ -28,7 +28,7 @@ export class TwoFaCheckComponent implements OnInit, OnDestroy {
 
   ngOnDestroy()
   {
-      window.location.reload()
+      setTimeout(() =>  window.location.reload(), 0)
   }
   
   verifyCode(form: NgForm)

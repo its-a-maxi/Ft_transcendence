@@ -17,6 +17,8 @@ userPhone: string = ""
 userEmail: string = ""
 qrImage: string = ""
 paramId: string | null = sessionStorage.getItem('token');
+test: string = ""
+dataQR: boolean = false
 
 @Output('closeOverlay') closeOverlay: EventEmitter<any> = new EventEmitter();
 
@@ -25,9 +27,17 @@ constructor(public authService: AuthService, private chatService: ChatService) {
 ngOnInit(): void
 {
     this.chatService.getQR().subscribe(res => {
-        console.log("ENTRAAAAAA")
-        this.qrImage = res
+        if (this.qrImage === 'http://localhost:3000/auth/assets/qrImage.png')
+        {
+            this.qrImage = ""
+            this.authService.getRuteQr().then(() => setTimeout(() => { this.dataQR = true } , 0) )
+        }
+        setTimeout(() => {
+            this.qrImage = res
+            this.dataQR = true
+        }, 0)
         
+       
     })
     //this.getQrCode()
 }

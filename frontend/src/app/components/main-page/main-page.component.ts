@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, Query } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { User } from 'src/app/services/models/user';
@@ -16,7 +15,6 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 
 	constructor(public authService: AuthService,
                 private router: Router,
-                private activateRoute: ActivatedRoute,
                 private chatService: ChatService) { }
 
 	private user?: User;
@@ -47,9 +45,9 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 			this.router.navigate([`/landingPage/start`]);
 	}
 
-	async ngAfterViewInit()
+	ngAfterViewInit()
 	{
-		// await this.chatService.findUsersConnected()
+		// setTimeout(() => this.chatService.findUsersConnected(), 100) 
 		// await this.chatService.getConnectedUsers().subscribe(res => {
 		// 	this.liveUsers = res.length
 		// })
@@ -74,7 +72,7 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 		            this.picture = this.user?.avatar;
                 }
 			})
-            .catch(() => this.authService.refreshToken())
+            //.catch(() => this.authService.refreshToken())
 	}
 
 	showTabs(): void {

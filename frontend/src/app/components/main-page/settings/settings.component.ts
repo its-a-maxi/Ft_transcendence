@@ -6,6 +6,7 @@ import { ChatService } from 'src/app/services/chat-service/chat.service';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { User } from 'src/app/services/models/user';
 import { UserI } from 'src/app/services/models/user.interface';
+import { MainPageComponent } from '../main-page.component';
 import { TwoFaPopupComponent } from './two-fa-popup/two-fa-popup.component';
 
 interface HtmlInputEvent extends Event {
@@ -67,6 +68,7 @@ export class SettingsComponent implements OnInit, OnDestroy
 		this.profilePicture = this.user?.avatar
         this.authService.showAllUsers()
 		  .then(response => this.allUsers = response.data.filter(x => x.id != parseFloat(this.paramId!)))
+
 	}
 
     ngOnDestroy()
@@ -169,6 +171,7 @@ export class SettingsComponent implements OnInit, OnDestroy
         
         this.authService.createQR(parseInt(this.paramId!)).then(() => {
             this.chatService.findQR()
+            this.ngOnInit()
         })
 		let container = document.getElementById("container");
 		let overlayBack = document.getElementById("overlayBack");
