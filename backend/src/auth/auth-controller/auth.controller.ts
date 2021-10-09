@@ -26,7 +26,7 @@ export class AuthController
     @Get('/callback')
     async callback(@Req() req, @Res({passthrough: true}) res: Response)
     {
-        res.cookie('clientID', req.user, {httpOnly: true});
+        res.cookie('clientID', req.user, {httpOnly: false});
         const client = await this.jwtService.verifyAsync(req.user);
         const clientData = await this.userService.getUser(client['id']);
 
