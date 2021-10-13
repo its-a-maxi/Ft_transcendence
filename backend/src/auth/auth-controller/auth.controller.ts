@@ -54,28 +54,6 @@ export class AuthController
             return res.redirect(`http://localhost:4200/mainPage/settings/${clientData.id}`)
     }
 
-    // @UseGuards(verifyUser)
-    // @Post('/refresh')
-    // async refreshToken(@Req() req: any, @Res() res: Response)
-    // {
-    //     const decoded: any = this.jwtService.decode(req.cookies['clientID'])
-    //     const dateTime = new Date().getTime();
-    //     const timestamp = Math.floor(dateTime / 1000);
-    //     const token_iat = decoded.iat
-    //     const time: number = Math.round((timestamp - token_iat) / 60)
-    //     if (time < 120 && time > 30)
-    //     {
-    //         const jwt = await this.jwtService.signAsync({
-    //             id: decoded.id,
-    //             loginName: decoded.login,
-    //             userEmail: decoded.email
-    //         })
-    //         res.cookie('clientID', jwt, {httpOnly: false});
-    //         return res.send({message: 'refresh token!'})
-    //     }
-        
-    // }
-
     @UseGuards(verifyUser)
     @Get('authUser')
     async authUser(@Req() req: Request)
@@ -124,25 +102,6 @@ export class AuthController
         await QRCode.toFile('./assets/qrImage.png', optUrl)
         return res.json({nick: client.id})
     }   
-
-    // @UseGuards(verifyUser)
-    // @Get('2fa')
-    // async twoFactor(@Res() res: Response, @Req() req: Request, @Body() data: any)
-    // {
-    //     // const userID = await this.authService.clientID(req)
-    //     // const client = await this.userService.getUser(userID)
-    //     // console.log("LLEGA: ", client, "DATA", data)
-    //     // const secret = authenticator.generateSecret()
-
-    //     // //if (!client.secret)
-    //     // //{
-    //     //     await this.userService.saveUserSecret(secret, userID)
-    //     //     const optUrl = authenticator.keyuri(client.email, "FT_TRANSCENDENCE", secret)
-    //     //     await QRCode.toFile('./assets/qrImage.png', optUrl)
-    //     // //}
-    //     console.log("LLEGAGAAAAAAA")
-    //     return res.send({url: 'http://localhost:3000/auth/assets/qrImage.png'})
-    // }
 
     @UseGuards(verifyUser)
     @Post('verify')

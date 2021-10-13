@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GameComponent } from './components/game/game.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatChannelComponent } from './components/main-page/chat-page/chat-channel/chat-channel.component';
@@ -31,14 +30,11 @@ import { CookieModule } from 'ngx-cookie';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from "@angular/material/list";
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
@@ -54,7 +50,6 @@ export function tokenGetter(): string | null {
 @NgModule({
   declarations: [
     AppComponent,
-    GameComponent,
     ChatChannelComponent,
     ChatMessageComponent,
     LandingPageComponent,

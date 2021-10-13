@@ -16,14 +16,10 @@ import { JoinedRoomI } from '../models/joined-room/joined-room.interface';
 import { MessageI } from '../models/messages/messages.interface';
 import { RoomEntity } from '../models/room/room.entity';
 import { RoomI } from '../models/room/room.interface';
-import { authenticator } from 'otplib'
-import  QRCode  from "qrcode";
-
 
 @WebSocketGateway({
     path: "/chat",
-    cors: { origin: ['https://hoppscotch.io',
-				'http://localhost:3000', 'http://localhost:4200'],
+    cors: { origin: ['http://localhost:3000', 'http://localhost:4200'],
             credentials: true} })
 export class ChatGateway
 		implements OnGatewayConnection, OnGatewayDisconnect, OnModuleInit
@@ -115,19 +111,8 @@ export class ChatGateway
 			{
 				if (room.option !== 'Direct')
 				{
-                    /*if (!room.admins)
-                        room.admins = []
-                    check = false
-                    for (let user of room.admins)
-                    {
-                        if (user.id === newUser.id)
-                            check = true
-                    }*/
                     if (!check)
-                    {
-                        //room.admins.unshift(newUser)/
                         await this.roomService.updateRoom(room)
-                    }
 				}
 			}
 		}
@@ -179,7 +164,6 @@ export class ChatGateway
 	@SubscribeMessage('findRooms')
 	async findRooms(socket: Socket)
 	{
-		let id: number = socket.data.user.id
 		const userConnected: ConnectedUserI[] = await this.connectedUserService.findAllUserConnected()
 		
 		for (let user of userConnected)
@@ -325,7 +309,6 @@ export class ChatGateway
 	{
 		user.isBanned = true
 		await this.userService.updateUser(user as UpdateDto, user.id)
-		//console.log("BBAAANNEED: ", user)
 		setTimeout(() => {
 			user.isBanned = false
 			this.userService.updateUser(user as UpdateDto, user.id)

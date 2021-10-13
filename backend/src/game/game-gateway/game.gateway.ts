@@ -17,8 +17,7 @@ import { GameService } from '../service/game/game.service';
 @WebSocketGateway({
     path: "/game",
 	cors: {
-		origin: ['https://hoppscotch.io',
-			'http://localhost:3000', 'http://localhost:4200']
+		origin: ['http://localhost:3000', 'http://localhost:4200']
 	}
 })
 export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, OnModuleInit
@@ -42,8 +41,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
     leaveUsers: UserSocketI[] = []
 
     challengeUsers: UserSocketI[] = []
-
-    userEmit: UserSocketI
 
     ///////////////
 
@@ -99,7 +96,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 
 	async handleDisconnect(socket: Socket)
 	{
-		console.log("DISCONNECT", socket.id)
 		const curr_user: UserSocketI = {userId: socket.data.user.id, socketId: socket.id}
         for (let room of this.listRooms)
         {
@@ -388,11 +384,11 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
 		ball.y = this.canvasHeight / 2;
 		ball.speed = 7;
         if (ball.velocityX < 0)
-            ball.velocityX = +5//-ball.velocityX;
+            ball.velocityX = +5
         else
             ball.velocityX = -5
         if (ball.velocityY < 0)
-		    ball.velocityY = +5//-ball.velocityY;
+		    ball.velocityY = +5
         else
             ball.velocityY = -5
 		
@@ -543,7 +539,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
              userTwo.matches = [];
            if (userOne.id === data.winner)
            {
-                console.log('1 wins!')
                 userOne.wins += 1;
                 userTwo.defeats += 1;
                 userOne.matches.push('Wins vs ' + userTwo.nick);
@@ -553,7 +548,6 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
            }
            else if (userOne.id === data.losser)
            {
-                console.log('2 wins!')
                 userTwo.wins += 1;
                 userOne.defeats += 1;
                 userOne.matches.push('Losses vs ' + userTwo.nick);
@@ -606,24 +600,5 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect, On
             this.server.to(socket.id).emit('listUsers', 'special')
         else if (this.challengeUsers.length === 0)
             this.server.to(socket.id).emit('listUsers', 'challenge')
-    }
-
-    @SubscribeMessage('getCable')
-    getCable(socket: Socket)
-    {
-        const user: UserSocketI = {userId: socket.data.user.id, socketId: socket.id}
-        this.leaveUsers.push(user)
-        
-        console.log("GET CABLE: ", this.leaveUsers)
-        if (this.leaveUsers.length === 2 &&
-            this.leaveUsers[1].userId !== this.leaveUsers[0].userId)
-        {
-            let data = {
-                winner: this.leaveUsers[1].userId,
-                losser: this.leaveUsers[0].userId
-            }
-            this.updateStats(socket, data)
-            this.leaveUsers.splice(0, 2);
-        }
     }
 }

@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, DoCheck, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { GameService } from 'src/app/services/game-service/game.service';
 import { GameI } from 'src/app/services/models/gameRoom.interface';
 import { RoomI } from 'src/app/services/models/room.interface';
@@ -25,7 +24,7 @@ export class WaitingRoomComponent implements OnInit {
 	userId: string = sessionStorage.getItem('token')!
 
 	constructor(private gameService: GameService,
-		private router: Router) { }//this.gameService.connect() }
+		private router: Router) { }
 
 	@Input() search: boolean = false;
 
@@ -40,11 +39,6 @@ export class WaitingRoomComponent implements OnInit {
 			this.roomGame = res
 			this.roomId = this.roomGame.id!
 		})
-	}
-
-	ngOnDestroy()
-    {
-		//this.gameService.leaveRoom(this.roomId)
 	}
 
 	changeCheck() {

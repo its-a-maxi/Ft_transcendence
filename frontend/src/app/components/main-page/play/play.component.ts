@@ -1,5 +1,4 @@
-import { dashCaseToCamelCase } from '@angular/compiler/src/util';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { GameService } from 'src/app/services/game-service/game.service';
@@ -51,7 +50,6 @@ export class PlayComponent implements OnInit, OnDestroy
 
 	async ngOnInit()
 	{
-        //this.authService.refreshToken()
         this.roomPrivate = this.activateRoute.snapshot.paramMap.get('id')?.substr(0, 7)!
         if (this.roomPrivate === 'private')
             this.waiting = true
