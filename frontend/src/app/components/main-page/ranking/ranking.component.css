@@ -8,6 +8,7 @@ div{
 	position: relative;
 	width: 100%;
 	height: 100%;
+    max-width: 1900px;
 	background-color: rgba(19, 5, 11, .50);
 	box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
 	border-radius: 3.8vh;

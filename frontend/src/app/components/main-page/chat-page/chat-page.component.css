@@ -4,6 +4,7 @@ div{
 
 .container
 {
+    max-width: 1900px;
 	position: relative;
 	position: relative;
 	width: 100%;
@@ -13,7 +14,8 @@ div{
 .friendsContainer
 {
 	position: absolute;
-	width: 20vh;
+	width: 18%;
+	min-width: 20vh;
 	height: 100%;
 	background-color: rgba(19, 5, 11, .50);
 	box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
@@ -140,8 +142,9 @@ div{
 
 .channelsContainer
 {
+	width: 18%;
+	min-width: 20vh;
 	position: absolute;
-	width: 20vh;
 	height: 100%;
 	background-color: rgba(19, 5, 11, .50);
 	box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
@@ -202,7 +205,7 @@ div{
 
 
 
-	@media only screen and (max-width: 1200px)
+	@media only screen and (max-width: 1400px)
 	{
 		.channelsContainer
 		{
