@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GameComponent } from './components/game/game.component';
 import { WaitingRoomComponent } from './components/main-page/play/waiting-room/waiting-room/waiting-room.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { StartComponent } from './components/landing-page/start/start.component';
@@ -30,13 +29,6 @@ const routes: Routes = [
     {path: 'ranking/:id', component: RankingComponent},
     {path: 'settings/:id', component: SettingsComponent},
   ], canActivate: [CookieGuard]},
-  //{path: "mainPage/:id", component: NavigationComponent},
-  //{path: "game", component: GameComponent},
-  //{path: "register", component: RegisterComponent},
-  //{path: "profile/:id", component: ProfileComponent},
-  //{path: "twofa", component: TwoFAComponent},
-  //{path: "chat/:id", component: ChatComponent},
-  //{path: "chatRooms/:id", component: ChatRoomComponent},
   {path: '', redirectTo: "landingPage/start", pathMatch: "full"},
   {path: '**', redirectTo: 'landingPage/start', pathMatch: 'full'}
 ];

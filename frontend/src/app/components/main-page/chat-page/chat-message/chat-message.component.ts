@@ -30,7 +30,6 @@ export class ChatMessageComponent
 
     challengeUser()
     {
-        console.log("ETOE: ", this.message)
         let enemy: number | undefined = (this.message.enemy! == this.userId) ?
             this.message.user?.id : this.message.enemy
         this.gameService.connect()

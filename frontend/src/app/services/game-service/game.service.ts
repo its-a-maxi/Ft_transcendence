@@ -45,7 +45,6 @@ export class GameService
 
 	findUsers()
 	{
-		console.log("FIND")
 		this.socket.emit('findUsers')
 	}
 
@@ -103,23 +102,8 @@ export class GameService
         this.socket.emit('createSpecialRooms', options)
     }
 
-    getCable()
-    {
-        this.socket.emit('getCable')
-    }
-
     createChallenge(enemy: number)
     {
         this.socket.emit('challengeRoom', enemy)
-    }
-
-    checkConnection()
-    {
-        this.socket.emit('checkConnection')
-    }
-
-    checked(): Observable<boolean>
-    {
-        return this.socket.fromEvent('checked')
     }
 }

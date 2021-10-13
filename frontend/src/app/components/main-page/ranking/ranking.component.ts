@@ -22,7 +22,6 @@ export class RankingComponent implements OnInit {
 
   async ngOnInit()
   {
-    //this.authService.refreshToken()
     let i: number = 0;
     await this.authService.showAllUsers()
        .then(response => this.allUsers = response.data);

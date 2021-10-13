@@ -10,7 +10,7 @@ import { UserI } from 'src/app/services/models/user.interface';
 	templateUrl: './main-page.component.html',
 	styleUrls: ['./main-page.component.css']
 })
-export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
+export class MainPageComponent implements OnInit
 {
 
 	constructor(public authService: AuthService,
@@ -43,19 +43,6 @@ export class MainPageComponent implements OnInit, AfterViewInit, OnDestroy
 		this.picture = this.user?.avatar;
 		if (this.router.url == '/mainPage')
 			this.router.navigate([`/landingPage/start`]);
-	}
-
-	ngAfterViewInit()
-	{
-		// setTimeout(() => this.chatService.findUsersConnected(), 100) 
-		// await this.chatService.getConnectedUsers().subscribe(res => {
-		// 	this.liveUsers = res.length
-		// })
-	}
-
-	ngOnDestroy()
-	{
-		//window.location.reload()
 	}
 
 	async findUser(id: string) {

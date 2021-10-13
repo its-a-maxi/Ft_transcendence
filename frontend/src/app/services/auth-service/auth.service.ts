@@ -26,16 +26,6 @@ export class AuthService
                 private cookieService: CookieService,
                 private snackBar: MatSnackBar) { this.selectedUser = new User()}
 
-	// async getAuthUser()
-	// {
-	// 	return await axios.get<User>(this.API_URL_GET)
-	// }
-
-	// async postAuthUser(user: UserI)
-	// {
-	// 	return await axios.post(this.API_URL_POST, user)
-	// }
-
     async refreshToken()
     {
         return await axios.post("http://localhost:3000/auth/refresh")
@@ -45,11 +35,6 @@ export class AuthService
 	{
 		return await axios.get<User[]>('http://localhost:3000/auth/AllUsers')
 	}
-
-    // showUsers_test(): Observable<UserI[]>
-    // {
-    //     return this.http.get<UserI[]>('http://localhost:3000/auth/AllUsers_test')
-    // }
 
 	async logOutUser(check: boolean)
 	{
@@ -64,11 +49,6 @@ export class AuthService
 						.then(() => this.router.navigate(['']))
 	}
 
-	// statusLogin()
-	// {
-	// 	return !!localStorage.getItem('nick')
-	// }
-
     async createQR(userId: number)
     {
         return await axios.post('http://localhost:3000/auth/createQR', {userId} )
@@ -78,11 +58,6 @@ export class AuthService
 	{
 		return await axios.get('http://localhost:3000/auth/2fa')
 	}
-
-    // twoFactor_test(): Observable<any>
-	// {
-	// 	return this.http.get<any>('http://localhost:3000/auth/2fa_test')
-	// }
 
 	async verifyCode(num: any, userId: number)
 	{
@@ -112,11 +87,6 @@ export class AuthService
 	async addMatch(match: string, id: string)
 	{
 		return await axios.put('http://localhost:3000/auth/addMatch', {match, id})
-	}
-
-	async enableTwofactor()
-	{
-		//return await axios.put<User>('http://localhost:3000/auth/updateUser', user)
 	}
 
 	async getUserById(id: string)
