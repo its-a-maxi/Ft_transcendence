@@ -104,6 +104,8 @@ export class ChatChannelComponent implements OnInit, OnChanges, OnDestroy, After
 
 	sendMessage()
 	{
+		if (this.message == '')
+			return;
 		this.chatService.sendMessage({ text: this.message, room: this.chatRoom});
 		this.message = "";
 		//this.chatMessage.reset();

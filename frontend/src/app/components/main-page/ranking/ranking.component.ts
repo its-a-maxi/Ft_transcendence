@@ -72,7 +72,7 @@ export class RankingComponent implements OnInit {
     {
       let j = i - 1;
       let temp = this.allUsers[i];
-      while (j >= 0 && (this.getWinToLossRatio(this.allUsers[j]) < this.getWinToLossRatio(temp) || this.getWinToLossRatio(this.allUsers[j]) == 'None'))
+      while (j >= 0 && (this.getWinToLossRatio(this.allUsers[j]) < this.getWinToLossRatio(temp)))
       {
         this.allUsers[j + 1] = this.allUsers[j];
         j--;
@@ -81,16 +81,16 @@ export class RankingComponent implements OnInit {
     }
   }
 
-  getWinToLossRatio(user: UserI): string
+  getWinToLossRatio(user: UserI): number
   {
     if (user.wins == 0 && user.defeats == 0)
-      return ('None');
+      return (0);
     else if (user.defeats == 0)
-      return (user.wins!.toString());
+      return (user.wins!);
     else if (user.wins == 0)
-      return ((0).toString());
+      return (0);
     else
-      return ((user.wins! / user.defeats!).toFixed(2).toString())
+      return (parseInt((user.wins! / user.defeats!).toFixed(2), 10))
   }
 
   async showOverlay(type: string, user?: UserI)

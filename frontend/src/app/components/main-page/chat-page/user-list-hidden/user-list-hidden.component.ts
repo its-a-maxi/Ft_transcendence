@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { RoomI } from 'src/app/services/models/room.interface';
+import { User } from 'src/app/services/models/user';
 import { UserI } from 'src/app/services/models/user.interface';
 
 @Component({

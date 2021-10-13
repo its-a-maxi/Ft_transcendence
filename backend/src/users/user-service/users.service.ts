@@ -26,7 +26,7 @@ export class UsersService
 		user.id = clientID
 		user.nick = user.nick
 		user.email = user.email
-		user.avatar = 'http://localhost:3000/auth/assets/ryu.jpg'
+		user.avatar = 'http://localhost:3000/auth/assets/marvin.png'
 		user.authentication = false
 		const newUser = this.usersRepository.create(user)
 		//console.log(newUser)
@@ -35,7 +35,7 @@ export class UsersService
 
 	async customCreateUser(user: CreateUserDto)
 	{
-		user.avatar = 'http://localhost:3000/auth/assets/ryu.jpg'
+		user.avatar = 'http://localhost:3000/auth/assets/marvin.png'
 		user.authentication = false
         user.user42 = user.nick
 		const newUser = this.usersRepository.create(user)

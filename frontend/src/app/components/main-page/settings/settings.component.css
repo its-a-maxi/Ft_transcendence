@@ -204,15 +204,15 @@ input::placeholder
 {
 	appearance: none;
 	position: absolute;
-	width: 70%;
-	height: 70%;
+	width: 4vh;
+	height: 4vh;
 	left: 0;
 	bottom: 0;
 	top: 0;
 	margin: auto;
 
 	background-color: #ede5f2ff;
-	border-radius: 50px;
+	border-radius: 1000px;
 }
 
 .checkBox:checked

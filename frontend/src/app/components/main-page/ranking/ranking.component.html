@@ -14,7 +14,7 @@
 				</td>
 				<td>{{user.wins}}</td>
 				<td>{{user.defeats}}</td>
-				<td>{{getWinToLossRatio(user)}}</td>
+				<td>{{user.wins == 0 && user.defeats == 0 ? 'None' : getWinToLossRatio(user)}}</td>
 			</tr>
 		</table>
 	</div>

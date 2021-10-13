@@ -25,7 +25,11 @@ export class GetPasswordComponent implements OnInit
 
 	async changeChannel()
 	{
-		this.function.emit(this.password);
+		let check = /^[a-zA-Z0-9-]+$/;
+		if (!this.password.match(check) && this.password != "")
+			alert("Please, use valid characters for your channel password");
+		else
+			this.function.emit(this.password);
 		this.password = "";
 	}
 
