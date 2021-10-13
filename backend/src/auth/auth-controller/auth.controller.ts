@@ -1,4 +1,4 @@
-import { Body, Controller, ExecutionContext, Get, Param, Post, Put, Req, Res,
+import { Body, Controller, Get, Param, Post, Put, Req, Res,
         UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { LoginDto, UpdateDto } from '../dto';
@@ -12,8 +12,6 @@ import { diskStorage } from "multer";
 import { authenticator } from 'otplib'
 import  QRCode  from "qrcode";
 import { UserI } from 'src/users/user-service/models/user.interface';
-import { Observable, from, of } from 'rxjs';
-
 
 @Controller('auth')
 export class AuthController

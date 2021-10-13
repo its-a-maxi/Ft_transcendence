@@ -29,7 +29,6 @@ export class UsersService
 		user.avatar = 'http://localhost:3000/auth/assets/ryu.jpg'
 		user.authentication = false
 		const newUser = this.usersRepository.create(user)
-		//console.log(newUser)
 		return await this.usersRepository.save(newUser)
 	}
 
@@ -48,9 +47,8 @@ export class UsersService
 		return user.id
 	}
 
-	async updateUser(user: UpdateDto, clientID: number)//: Promise<User>
+	async updateUser(user: UpdateDto, clientID: number)
 	{
-		//user.avatar = `http://localhost:3000/auth/assets/${user.avatar}`
 		return await this.usersRepository.update(clientID, user)
 	}
 
