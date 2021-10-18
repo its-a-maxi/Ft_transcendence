@@ -9,7 +9,7 @@
 <br />
 <div align="center">
   <h1>ft_transcendence</h1>
-  <img src="product.gif" />
+  <img src="product.png" />
 </div>
 
 <!-- ABOUT THE PROJECT -->
