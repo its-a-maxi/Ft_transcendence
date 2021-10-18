@@ -18,7 +18,7 @@
 _42 Project_
 
 The project consisted on making a webpage where you could play PONG and which had a chat system, user profiles, friends and ranking included.
-We were demanded to have our backend in NestJs, database in PostgreSQL and our frontend in any ts framework. Everything would be mounted with docker-compose.
+We were demanded to have our backend in NestJS, database in PostgreSQL and our frontend in any ts framework. Everything would be mounted with docker-compose.
 
 ### Subject
 
@@ -27,7 +27,7 @@ We were demanded to have our backend in NestJs, database in PostgreSQL and our f
 ### Built With
 
 * [Angular](https://angular.io/)
-* [Nest.js](https://nestjs.com/)
+* [NestJS](https://nestjs.com/)
 * [PostgreSQL](https://www.postgresql.org/)
 * [Docker](https://www.docker.com/)
 
