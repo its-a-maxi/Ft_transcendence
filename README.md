@@ -49,9 +49,9 @@ We were demanded to have our backend in NestJS, database in PostgreSQL and our f
 ### Installation
 
 * Clone the repo
-  ```sh
+```sh
   git clone https://github.com/its-a-maxi/ft_transcendence.git
-  ```
+```
   
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -63,6 +63,8 @@ We were demanded to have our backend in NestJS, database in PostgreSQL and our f
 ```sh
   docker-compose up --build
 ```
+
+* Navigate to [_localhost:4200_](http://localhost:4200/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
