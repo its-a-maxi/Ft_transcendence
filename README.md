@@ -64,7 +64,7 @@ We were demanded to have our backend in NestJS, database in PostgreSQL and our f
   docker-compose up --build
 ```
 
-* Navigate to [_localhost:4200_](http://localhost:4200/)
+* Navigate to [localhost:4200](http://localhost:4200/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
